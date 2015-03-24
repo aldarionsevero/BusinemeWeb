@@ -1,0 +1,8 @@
+# -*- coding: utf-8 -*-
+
+# Security configurations
+
+SECRET_KEY = 'secret_key'
+DEBUG = True
+TEMPLATE_DEBUG = True
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
