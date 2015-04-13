@@ -1,0 +1,26 @@
+language: python
+
+env:
+  - DJANGO=1.7
+
+python:
+ - "2.7"
+
+install:
+ - sudo apt-get install python2.7 python-pip
+ - pip install -r requirements.txt
+
+before_script:
+ - cp configuration/databases.py.template configuration/databases.py
+ - cp configuration/security.py.template configuration/security.py
+ - python manage.py makemigrations
+ - python manage.py migrate
+
+script:
+ - python manage.py test
+
+after_success:
+ - coveralls
+
+notifications:
+  slack: busine-me:vHgBvWEGnKVRabVoYSTzd1tq

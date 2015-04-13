@@ -19,10 +19,13 @@ DJANGO_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles')
+    'django.contrib.staticfiles'
+)
 
 # Django plugins apps
-PLUGINS_APPS = ()
+PLUGINS_APPS = (
+    'django_nose',
+)
 
 # Busine.me application apps
 BUSINEME_APPS = ()

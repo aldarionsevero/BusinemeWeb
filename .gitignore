@@ -56,6 +56,10 @@ docs/_build/
 configuration/*
 !configuration/*.template
 !configuration/settings.py
+!configuration/apps.py
+!configuration/statics.py
+!configuration/tests.py
+!configuration/__init__.py
 
 # SQLite
 *.sqlite*
