@@ -1,4 +1,6 @@
 [run]
+source =
+    BusinemeWeb/
 omit =
     */migrations/*
     test_*.py
