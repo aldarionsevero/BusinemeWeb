@@ -7,7 +7,7 @@
 	    {% load staticfiles %}
 	    <link rel="stylesheet" href="{% static 'css/foundation.css' %}" />
 	    <script src="{% static 'js/vendor/modernizr.js' %}"></script>
-	    <script src="{% static 'js/foundation/foundation.topbar.js' %}"></script>
+	    <script src="{% static 'js/foundation/foundation.min.js' %}"></script>
   	</head>
 	<body>
 	<!-- <div class="fixed">
@@ -82,5 +82,8 @@
 		        </section>
 		     </nav>
 		</div>
+	    <script src="{% static 'js/foundation/jquery.js' %}"></script>
+	    <script src="{% static 'js/vendor/fastclick.js' %}"></script>
+	    <script> $(document).foundation(); </script>
   	</body>
 </html>
