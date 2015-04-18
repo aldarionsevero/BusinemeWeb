@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 def register_user_page(request):
     return render_to_response('register.html')
 
+
 def register_user(request):
     user = User()
     user.first_name = request.GET["name"]
