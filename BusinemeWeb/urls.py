@@ -6,5 +6,6 @@ urlpatterns = patterns('',
     # url(r'^$', 'BusinemeWeb.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^', 'controllers.main.main'),
     url(r'^admin/', include(admin.site.urls)),
 )
