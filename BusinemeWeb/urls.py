@@ -10,6 +10,6 @@ urlpatterns = patterns('',
                            'controllers.user.register_user_page'),
                        url(r'^cadastrar/usuario',
                            'controllers.user.register_user'),
-                       url(r'^home/', 'controllers.home.home'),
+                       url(r'^login/', 'controllers.app.login'),
                        url(r'^admin/', include(admin.site.urls)),
                        )

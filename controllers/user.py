@@ -14,4 +14,4 @@ def register_user(request):
     user.username = request.GET["username"]
     user.set_password(request.GET["password"])
     user.save()
-    return render_to_response("register.html")
+    return render_to_response("login.html")

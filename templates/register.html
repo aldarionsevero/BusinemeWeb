@@ -1,4 +1,30 @@
-<h1>Cadastrar Usuário</h1>
+{% extends 'base.html' %}
+{% block title %}
+    Busine.me | Register
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="small-12 medium-6 large-6 small-centered columns">
+            {% load staticfiles %}
+            <img class="login-logo" src="{% static 'busineme-logo.png' %}" alt="Logo">
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-10 medium-4 large-4 small-centered columns">
+            <form action="/cadastrar/usuario/" method="GET">
+                <input type="text" name="name" placeholder="Nome">
+                <input type="text" name="email" placeholder="Email">
+                <input type="text" name="username" placeholder="Nome de Usuario">
+                <input type="password" name="password" placeholder="Senha">
+                <button class="postfix">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- <h1>Cadastrar Usuário</h1>
 
 <form action="/cadastrar/usuario/" method="GET">
     <input type="text" name="name" placeholder="Nome">
@@ -7,4 +33,4 @@
     <input type="password" name="password" placeholder="Senha">
 
     <button>Enviar</button>
-</form>
+</form> -->
