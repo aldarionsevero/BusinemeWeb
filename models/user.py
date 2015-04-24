@@ -1,16 +1,9 @@
-# Class user
-from django.db import models
+# Class user imported from Django
+from django.contrib.auth.models import User as DjangoUser
 
 
-class User(models.Model):
+class User(DjangoUser):
 
     """docstring for User"""
 
-    # Definir uma constante para esse valor
-    name = models.CharField(max_lenght=200)
-    # Definir uma constante para max e min de senha
-    password = models.CharField(min_lenght=8, max_lenght=15)
-    # Definir uma constante para maxEmail. blank = false nao perminte entrada
-    # em branco
-    email = models.CharField(max_lenght=50, blank=False)
-    userName = models.CharField(max_lenght=20)  # ||
+    pass
