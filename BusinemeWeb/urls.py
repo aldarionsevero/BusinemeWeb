@@ -8,6 +8,8 @@ urlpatterns = patterns('',
 
                        url(r'^cadastro/',
                            'controllers.user.register_user_page'),
+                       url(r'^feed/',
+                           'controllers.app.feed_page'),
                        url(r'^cadastrar/usuario',
                            'controllers.user.register_user'),
                        url(r'^login/', 'controllers.app.login'),

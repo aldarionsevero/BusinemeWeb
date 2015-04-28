@@ -6,6 +6,7 @@ from django.template import RequestContext
 
 
 def register_user_page(request):
+
     return render_to_response('register.html',
                               context_instance=RequestContext(request))
 
@@ -20,4 +21,9 @@ def register_user(request):
     user.set_password(request.POST["password"])
     user.save()
     return render_to_response("login.html",
+                              context_instance=RequestContext(request))
+
+
+def log_user(request):
+    return render_to_response("feed.html",
                               context_instance=RequestContext(request))
