@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate, login
 # from django.template.context_processors import csrf
 from django.template import RequestContext
 from django.shortcuts import redirect
+from exception.existing_user import ExistingUser
+from django.db import IntegrityError
 
 
 def register_user_page(request):
@@ -21,9 +23,19 @@ def register_user(request):
     user.email = request.POST["email"]
     user.username = request.POST["username"]
     user.set_password(request.POST["password"])
-    user.save()
-    return render_to_response("login.html",
-                              context_instance=RequestContext(request))
+    html_vars = {}
+    try:
+        user.save()
+    except IntegrityError, e:
+        html_vars["error"] = "teste"
+
+    if html_vars is {}:
+        response = redirect("/login/",
+                            context_instance=RequestContext(request))
+    else:
+        response = render_to_response("register.html", html_vars,
+                                      context_instance=RequestContext(request))
+    return response
 
 
 def log_user(request):
