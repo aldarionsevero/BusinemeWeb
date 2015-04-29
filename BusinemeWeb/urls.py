@@ -20,6 +20,4 @@ urlpatterns = patterns('',
                        url(r'^perfil/sair/', 'controllers.user.logout_user'),
                        url(r'^perfil/alterar_dados/',
                            'controllers.user.change_userdata'),
-                       # /\ Url for the
-                       # current try to change the user data
                        )

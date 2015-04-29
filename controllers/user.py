@@ -55,7 +55,7 @@ def log_user(request):
 @login_required
 def logout_user(request):
     logout(request)
-    return redirect('/perfil/sair/')
+    return redirect('/login/')
 
 
 def user_account(request):
@@ -68,9 +68,15 @@ def user_account(request):
 
 
 def change_userdata(request):
-    # Try to change the data of the user
-    user = User.object.get(first_name=first_name)  # Declare the variabels
-    user.first_name = newfirstname
-    user.username = newusername
-    user.email = newuseremail
-    user.save()
+    # Try to change the data of the usere
+    if request.user.is_authenticated():
+        user = request.user
+        user.first_name = request.POST["name"]
+        user.email = request.POST["email"]
+        user.username = request.POST["username"]
+        print user.username
+        print user.first_name
+        print user.email
+        user.save()
+    return redirect("/perfil/",
+                    context_instance=RequestContext(request))
