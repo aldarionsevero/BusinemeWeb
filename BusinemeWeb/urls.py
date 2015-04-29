@@ -16,4 +16,5 @@ urlpatterns = patterns('',
                            'controllers.user.log_user'),
                        url(r'^login/', 'controllers.app.login'),
                        url(r'^admin/', include(admin.site.urls)),
+                       url(r'^perfil/', 'controllers.user.user_account'),
                        )

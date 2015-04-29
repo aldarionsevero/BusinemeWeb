@@ -34,8 +34,16 @@ def log_user(request):
         if user.is_active:
             login(request, user)
             return redirect('/', context_instance=RequestContext(request))
-            # return render_to_response('feed_page.html', context_instance=RequestContext(request))
         # else:
         # return disable acoount
     # else:
         # invalid login
+
+
+def user_account(request):
+    if request.user.is_authenticated():
+        user = request.user
+    else:
+        user = None
+    return render_to_response('account.html', {'user': user},
+                              context_instance=RequestContext(request))

@@ -1,18 +1,33 @@
 {% include 'base-logged.html' %}
-{% block title %}
+<!-- {% block title %}
 	Busine.me | Conta
-{% endblock %}
+{% endblock %} -->
 
  {% block content %}
 
- <div>
-	<span class"label Secondary">Nome</span>
-	
-	
-	<span class "label Secondary">Username</span>
 
-	<span class "label Secondary">Senha</span>
+ <div class="row">
+ 	<span class="label big">Nome</span>
+ 	<input type="text" value="{{user.first_name}}"> 	
+ </div>
+ <div class="row"> 
+	<span class="label big">Username</span>
+	<input type="text" value="{{user.username}}">
+</div>
+<div class="row"> 
+	<span class="label big">Email</span>
+	<input type="text" value="{{user.email}}">
+</div>
 
+<div class="row">
+	<a href="#" class="button radius">Salvar Alterações</a>
+</div>
+
+<div class="row">
+	<a href="#">Alterar senha</a>
+</div>
+<div class="row">
+	<a href="#">Excluir Conta</a>
 </div>
 
 
