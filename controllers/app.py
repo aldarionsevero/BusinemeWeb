@@ -9,4 +9,4 @@ def login(request):
 
 #@login_required
 def feed_page(request):
-    return render_to_response('feed.html', context_instance=RequestContext(request))
+    return render_to_response('feed_page.html', context_instance=RequestContext(request))

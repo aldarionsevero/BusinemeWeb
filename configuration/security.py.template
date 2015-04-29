@@ -3,6 +3,7 @@
 # Security configurations
 
 SECRET_KEY = 'secret_key'
+LOGIN_URL = '/login/'
 DEBUG = True
 TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
