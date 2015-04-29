@@ -59,3 +59,8 @@ def user_account(request):
         user = None
     return render_to_response('account.html', {'user': user},
                               context_instance=RequestContext(request))
+
+
+def change_password(request):
+    return render_to_response('change_password_page.html', {'user': user},
+                              context_instance=RequestContext(request))
