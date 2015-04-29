@@ -17,4 +17,5 @@ urlpatterns = patterns('',
                        url(r'^login/', 'controllers.app.login'),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^perfil/', 'controllers.user.user_account'),
+                       url(r'^perfil/sair/', 'controllers.user.logout_user')
                        )
