@@ -6,8 +6,8 @@
     <title>{% block title %}Busine.me{% endblock %}</title>
 
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'app.css' %}" />
-    <script src="{% static 'modernizr.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'stylesheets/foundation.css' %}" />
+    <script src="{% static ' stylesheets/modernizr.js' %}"></script>
     {% block css %}
     {% endblock %}
   </head>
@@ -19,8 +19,8 @@
     {% block content %}
     {% endblock %}
 
-    <script src="{% static 'jquery.min.js' %}"></script>
-    <script src="{% static 'foundation.min.js' %}"></script>
-    <script src="{% static 'app.js' %}"></script>
+    <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/foundation/js/foundation.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
   </body>
 </html>

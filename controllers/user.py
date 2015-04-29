@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 # from django.template.context_processors import csrf
 from django.template import RequestContext
+from django.shortcuts import redirect
 
 
 def register_user_page(request):
@@ -32,7 +33,8 @@ def log_user(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            return render_to_response('feed_page.html', context_instance=RequestContext(request))
+            return redirect('/', context_instance=RequestContext(request))
+            # return render_to_response('feed_page.html', context_instance=RequestContext(request))
         # else:
         # return disable acoount
     # else:
