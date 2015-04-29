@@ -55,8 +55,7 @@ def log_user(request):
 @login_required
 def logout_user(request):
     logout(request)
-    return render_to_response('cadastro/',
-                              context_instance=RequestContext(request))
+    return redirect('/perfil/sair/')
 
 
 def user_account(request):
@@ -66,3 +65,12 @@ def user_account(request):
         user = None
     return render_to_response('account.html', {'user': user},
                               context_instance=RequestContext(request))
+
+
+def change_userdata(request):
+    # Try to change the data of the user
+    user = User.object.get(first_name=first_name)  # Declare the variabels
+    user.first_name = newfirstname
+    user.username = newusername
+    user.email = newuseremail
+    user.save()

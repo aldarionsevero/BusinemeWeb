@@ -1,36 +1,28 @@
-{% include 'base-logged.html' %}
-<!-- {% block title %}
+{% extends 'base-logged.html' %}
+{% block title %}
 	Busine.me | Conta
-{% endblock %} -->
+{% endblock %}
 
  {% block content %}
+ <div class="small-10 medium-4 large-4 small-centered columns">
+     <form action="#" method="POST">  <!--instead of #, include the url to the method for change the user data -->
+     	<span class="label big">Nome</span>
+     	<input type="text" value="{{user.first_name}}"> 
+    	<span class="label big">Username</span>
+    	<input type="text" value="{{user.username}}">
+    	<span class="label big">Email</span>
+    	<input type="text" value="{{user.email}}">
+        <div class="row">
+        	<a href="#" class="button radius">Salvar Alterações</a>
+        </div>
+        <div class="row">
+        	<a href="#">Alterar senha</a>
+        </div>
+        <div class="row">
+        	<a href="#">Excluir Conta</a>
+        </div>
 
-
- <div class="row">
- 	<span class="label big">Nome</span>
- 	<input type="text" value="{{user.first_name}}"> 	
- </div>
- <div class="row"> 
-	<span class="label big">Username</span>
-	<input type="text" value="{{user.username}}">
+    </form> 
 </div>
-<div class="row"> 
-	<span class="label big">Email</span>
-	<input type="text" value="{{user.email}}">
-</div>
-
-<div class="row">
-	<a href="#" class="button radius">Salvar Alterações</a>
-</div>
-
-<div class="row right">
-	<a href="#">Alterar senha</a>
-</div>
-<div class="row right">
-	<a href="#">Excluir Conta</a>
-</div>
-
-
-
 
  {% endblock %}
