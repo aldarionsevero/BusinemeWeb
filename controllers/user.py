@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 # from django.template.context_processors import csrf
 from django.template import RequestContext
 from django.shortcuts import redirect
-from exception.existing_user import ExistingUser
+# from exception.existing_user import ExistingUser
 from django.db import IntegrityError
 
 
@@ -26,15 +26,15 @@ def register_user(request):
     html_vars = {}
     try:
         user.save()
-    except IntegrityError, e:
+    except IntegrityError:
         html_vars["error"] = "teste"
 
-    if html_vars is {}:
-        response = redirect("/login/",
-                            context_instance=RequestContext(request))
-    else:
+    if html_vars:
         response = render_to_response("register.html", html_vars,
                                       context_instance=RequestContext(request))
+    else:
+        response = redirect("/login/",
+                            context_instance=RequestContext(request))
     return response
 
 
@@ -46,7 +46,6 @@ def log_user(request):
         if user.is_active:
             login(request, user)
             return redirect('/', context_instance=RequestContext(request))
-            # return render_to_response('feed_page.html', context_instance=RequestContext(request))
         # else:
         # return disable acoount
     # else:
