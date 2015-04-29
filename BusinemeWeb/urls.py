@@ -12,6 +12,8 @@ urlpatterns = patterns('',
                            'controllers.app.feed_page'),
                        url(r'^cadastrar/usuario',
                            'controllers.user.register_user'),
+                       url(r'^logar/usuario',
+                           'controllers.user.log_user'),
                        url(r'^login/', 'controllers.app.login'),
                        url(r'^admin/', include(admin.site.urls)),
                        )
