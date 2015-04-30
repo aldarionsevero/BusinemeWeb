@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 # from django.template.context_processors import csrf
 from django.template import RequestContext
 from django.shortcuts import redirect
-# from exception.existing_user import ExistingUser
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
 
@@ -52,6 +52,12 @@ def log_user(request):
         # invalid login
 
 
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect('/login/')
+
+
 def user_account(request):
     if request.user.is_authenticated():
         user = request.user
@@ -61,6 +67,17 @@ def user_account(request):
                               context_instance=RequestContext(request))
 
 
-def change_password(request):
-    return render_to_response('change_password_page.html', {'user': user},
-                              context_instance=RequestContext(request))
+# def change_password(request):
+#     return render_to_response('change_password_page.html', {'user': user},
+#                               context_instance=RequestContext(request))
+
+def change_userdata(request):
+    # Try to change the data of the usere
+    if request.user.is_authenticated():
+        user = request.user
+        user.first_name = request.POST["name"]
+        user.email = request.POST["email"]
+        user.username = request.POST["username"]
+        user.save()
+    return redirect("/perfil/",
+                    context_instance=RequestContext(request))
