@@ -15,11 +15,10 @@
   <body>
 
     {% include 'topbar-logged.html' %}
-
     {% block content %}
     {% endblock %}
 
-    <script src="{% static 'vendor/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/foundation/js/vendor/jquery.js' %}"></script>
     <script src="{% static 'vendor/foundation/js/foundation.min.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
   </body>
