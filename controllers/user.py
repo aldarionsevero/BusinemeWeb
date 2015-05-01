@@ -104,6 +104,7 @@ def change_password(request):
     return response
 
 
+@login_required
 def change_userdata(request):
     # Try to change the data of the usere
     if request.user.is_authenticated():
@@ -114,3 +115,32 @@ def change_userdata(request):
         user.save()
     return redirect("/",
                     context_instance=RequestContext(request))
+
+
+@login_required
+def delete_account_page(request):
+    if request.user.is_authenticated():
+        user = request.user
+    else:
+        user = None
+    return render_to_response('delete_account_page.html', {'user': user},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def delete_account(request):
+    if request.user.is_authenticated():
+        user = request.user
+    else:
+        user = None
+
+    password = request.POST["password"]
+
+    if not user.check_password(password):
+        response = HttpResponse("Sua senha está incorreta.")
+    else:
+        user.delete()
+        response = redirect("/login/",
+                            context_instance=RequestContext(request))
+        logout(request)
+    return response

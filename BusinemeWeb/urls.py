@@ -24,4 +24,8 @@ urlpatterns = patterns('',
                        url(r'^sair/', 'controllers.user.logout_user'),
                        url(r'^alterar_dados/',
                            'controllers.user.change_userdata'),
+                       url(r'^exclusao_perfil/',
+                           'controllers.user.delete_account_page'),
+                       url(r'^excluir_perfil/',
+                           'controllers.user.delete_account'),
                        )
