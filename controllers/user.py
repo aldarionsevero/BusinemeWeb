@@ -11,7 +11,6 @@ from django.http import HttpResponse
 
 
 def register_user_page(request):
-
     return render_to_response('register.html',
                               context_instance=RequestContext(request))
 
