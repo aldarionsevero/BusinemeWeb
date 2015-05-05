@@ -16,3 +16,7 @@ class Busline(models.Model):
 
     def __unicode__(self):
         return self.line_number + "-" + self.description
+
+    @classmethod
+    def all(cls):
+        return cls.objects.all()

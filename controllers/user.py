@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from django.contrib.auth.models import User
+from models.user import User
 
 
 def register_user_page(request):
+    User.filter_by_username(request.POST["username"])
     return render_to_response('register.html')
 
 
