@@ -12,3 +12,7 @@ class Review(models.Model):
         return self.comment
         # Don't know how exactly use this def.
         # if i'm wrong, please set right
+
+    @classmethod
+    def filter_all(cls):
+        return cls.object.all()

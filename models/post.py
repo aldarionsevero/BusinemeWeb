@@ -16,3 +16,15 @@ class Post(models.Model):
         return self.comment
         # Don't know how exactly use this def.
         # if i'm wrong, please set right
+
+    @classmethod
+    def all(cls):
+        return cls.objects.all()
+
+    @classmethod
+    def filter_by_date(cls, date):
+        return cls.objects.all(date__contains=date)
+
+    @classmethod
+    def filter_by_time(cls, time):
+        return cls.objects.all(time__contains=time)

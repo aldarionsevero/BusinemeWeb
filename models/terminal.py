@@ -11,3 +11,11 @@ class Terminal(models.Model):
 
     def __unicode__(self):
         return self.description
+
+    @classmethod
+    def all(cls):
+        return cls.objects.all()
+
+    @classmethod
+    def filter_by_address(cls, address):
+        return cls.objects.filter(address__contains=address)

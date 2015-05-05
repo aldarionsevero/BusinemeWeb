@@ -9,3 +9,11 @@ class Company(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @classmethod
+    def all(cls):
+        return cls.objects.all()
+
+    @classmethod
+    def filter_by_name(cls, name):
+        return cls.objects.filter(name__contains=name)

@@ -20,3 +20,11 @@ class Busline(models.Model):
     @classmethod
     def all(cls):
         return cls.objects.all()
+
+    @classmethod
+    def filter_by_line_number(cls, line_number):
+        return cls.objects.filter(line_number__startswith=line_number)
+
+    @classmethod
+    def filter_by_via(cls, via):
+        return cls.objects.filter(via__startswith=via)
