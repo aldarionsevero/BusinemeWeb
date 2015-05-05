@@ -2,12 +2,13 @@
 from django.db import models
 
 
-class Busline(models.model):
+class Busline(models.Model):
+
     """docstring for Busline"""
 
-    line_number = models.Charfield(max_length=5, unique=True)
-    description = models.Charfield(max_length=255)
-    via = models.Charfield(max_length=255)
+    line_number = models.CharField(max_length=5, unique=True)
+    description = models.CharField(max_length=255)
+    via = models.CharField(max_length=255)
     route_size = models.FloatField()  # unit: kilometers
     fee = models.FloatField()  # unit: BRL (R$)
     company = models.ForeignKey('Company', null=True)

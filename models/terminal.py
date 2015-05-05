@@ -3,10 +3,11 @@
 from django.db import models
 
 
-class Terminal(models.model):
+class Terminal(models.Model):
+
     """docstring for Terminal"""
     description = models.CharField(max_length=255)
-    adress = models.CharField(max_length=255, null=True)
+    address = models.CharField(max_length=255, null=True)
 
     def __unicode__(self):
         return self.description

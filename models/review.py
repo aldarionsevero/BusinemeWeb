@@ -2,10 +2,10 @@
 from django.db import models
 
 
-class Review(models.model):
-    date = models.ManyToMany('Post')
-    time = models.ManyToMany('Post')
-    comment = models.CharField(max_length=10)
+class Review(models.Model):
+    date = models.DateField(auto_now=True)
+    time = models.TimeField(auto_now=True)
+    review_type = models.BooleanField(default=False)
     # Belive thats a text, but if it's a "likeButton", please rectify
 
     def __unicode__(self):
