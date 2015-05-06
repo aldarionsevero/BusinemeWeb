@@ -14,8 +14,8 @@
         <div class="small-10 medium-4 large-4 small-centered columns">
             <form action="/logar/usuario/" method="POST">
             {% csrf_token %}
-                <input type="text"  name="username"  placeholder="Usuário"> 
-                <input type="password" name="password" placeholder="Senha">
+                <input type="text"  name="username"  placeholder="Usuário" required> 
+                <input type="password" name="password" placeholder="Senha" required>
                 <div class="row">
                     <div class="small-6 medium-6 large-6 columns">
                         <a href="/cadastro/" class="button postfix success">Cadastre-se!</a>
