@@ -56,6 +56,7 @@ class UserControllerTest(SimpleTestCase):
         response = self.client.get('/login/?next=/sair/')
         self.assertEquals(response.status_code, STATUS_OK)
 
+# ------ #
     def test_user_account(self):
         response = self.client.get('/perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
