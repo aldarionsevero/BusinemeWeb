@@ -1,9 +1,9 @@
 # Class user
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as DjangoUser
 from django.db import models
 
 
-class User(User):
+class User(DjangoUser):
 
     """docstring for User"""
     pontuation = models.IntegerField(default=0)
