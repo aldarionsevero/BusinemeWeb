@@ -47,3 +47,7 @@ class UserControllerTest(SimpleTestCase):
         data = self.login_post_data()
         response = self.client.post('/logar/usuario/', data)
         self.assertEquals(response.status_code, STATUS_REDIRECT)
+
+    def test_logout_user(self):
+        response = self.client.get('/login/?next=/sair/')
+        self.assertEquals(response.status_code, STATUS_OK)

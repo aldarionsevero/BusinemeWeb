@@ -47,20 +47,19 @@ def log_user(request):
     username = request.POST["username"]
     password = request.POST["password"]
     user = authenticate(username=username, password=password)
-    if user is not None:
+    if user is None:
+        return redirect("/login/", context_instance=RequestContext(request))
+    else:
         if user.is_active:
             login(request, user)
             return redirect('/', context_instance=RequestContext(request))
-    else:
-<<<<<<< HEAD
-        return redirect("/login/", context_instance=RequestContext(request))
-=======
-        return redirect("/cadastro/", context_instance=RequestContext(request))
->>>>>>> 87c304271396713514db21b74705b468e2139b7a
-    # else:
-    # return disable acoount
-    # else:
-    # invalid login
+        # else:
+            # return redirect("/login/",
+            #                context_instance=RequestContext(request))
+# else:
+# return disable acoount
+# else:
+# invalid login
 
 
 @login_required
