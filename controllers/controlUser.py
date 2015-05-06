@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from user import User
 # Classe validadora
 
@@ -5,7 +6,6 @@ from user import User
 class ControlUser():
 
     # def validaNome(nome):
-
         # Cadastra usuario
     def save_user(self, request):  # recebe requisicao que vem da pagina
         new_user = User()
@@ -17,6 +17,5 @@ class ControlUser():
         new_user.email = request.POST["email"] 		# ||
         new_user.userName = request.POST["userName"]  # ||
         new_user.save()
-
     # (? request ou resource) metodo para abrir paginas do formulario
     # def callForm(request):
