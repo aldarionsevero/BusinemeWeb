@@ -51,10 +51,12 @@ def log_user(request):
         if user.is_active:
             login(request, user)
             return redirect('/', context_instance=RequestContext(request))
-        # else:
-        # return disable acoount
+    else:
+        return redirect("/login/", context_instance=RequestContext(request))
     # else:
-        # invalid login
+    # return disable acoount
+    # else:
+    # invalid login
 
 
 @login_required
