@@ -44,17 +44,39 @@ def register_user(request):
 
 
 def log_user(request):
+    if request.method == 'GET':
+        response = log_user_get(request)
+    elif request.method == 'POST':
+        response = log_user_post(request)
+    return response
+
+
+def log_user_get(request):
+    if request.user.is_authenticated():
+        response = redirect("/",
+                            context_instance=RequestContext(request))
+    else:
+        response = render_to_response('login.html',
+                                      context_instance=RequestContext(request))
+    return response
+
+
+def log_user_post(request):
     username = request.POST["username"]
     password = request.POST["password"]
     user = authenticate(username=username, password=password)
+    htmlvars = {}
     if user is not None:
         if user.is_active:
             login(request, user)
-            return redirect('/', context_instance=RequestContext(request))
-        # else:
-        # return disable acoount
-    # else:
-        # invalid login
+            response = redirect('/', context_instance=RequestContext(request))
+    else:
+        htmlvars["error_lead"] = "Usuário não encontrado."
+        htmlvars[
+            "error_message"] = "Verifique se o nome de usuário e a senha informados estão corretos."
+        response = render_to_response("login.html", htmlvars,
+                                      context_instance=RequestContext(request))
+    return response
 
 
 @login_required
