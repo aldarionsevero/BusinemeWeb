@@ -52,7 +52,11 @@ def log_user(request):
             login(request, user)
             return redirect('/', context_instance=RequestContext(request))
     else:
+<<<<<<< HEAD
         return redirect("/login/", context_instance=RequestContext(request))
+=======
+        return redirect("/cadastro/", context_instance=RequestContext(request))
+>>>>>>> 87c304271396713514db21b74705b468e2139b7a
     # else:
     # return disable acoount
     # else:
