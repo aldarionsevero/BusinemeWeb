@@ -11,8 +11,13 @@ from django.http import HttpResponse
 
 
 def register_user_page(request):
-    return render_to_response('register.html',
-                              context_instance=RequestContext(request))
+    if request.user.is_authenticated():
+        response = redirect("/",
+                            context_instance=RequestContext(request))
+    else:
+        response = render_to_response('register.html',
+                                      context_instance=RequestContext(request))
+    return response
 
 
 def register_user(request):
