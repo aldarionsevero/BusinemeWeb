@@ -1,11 +1,13 @@
 [run]
 source =
-    BusinemeWeb/
+    controllers/
+    models/
 omit =
     */migrations/*
     test_*.py
     __init__.py
     */urls.py
+    */tests/*
     */tests.py
 
 [report]
