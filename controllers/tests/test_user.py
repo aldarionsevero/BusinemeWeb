@@ -11,11 +11,19 @@ class UserControllerTest(SimpleTestCase):
 
     def setUp(self):
         self.client = Client()
+        self.user = User()
+        self.user.username = 'test_user'
+        self.user.password = '1234'
 
     def register_post_data(self):
         data = {'name': 'test_user',
                 'email': 'test@email.com',
                 'username': 'test_user',
+                'password': '1234'}
+        return data
+
+    def login_post_data(self):
+        data = {'username': 'test_user',
                 'password': '1234'}
         return data
 
