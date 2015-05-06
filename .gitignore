@@ -67,3 +67,4 @@ configuration/*
 # Others
 .sass-cache/
 .sonar/
+models/migrations/
