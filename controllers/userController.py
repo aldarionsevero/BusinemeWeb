@@ -30,6 +30,15 @@ def register_user(request):
     html_vars = {}
     htmlvars = {}
     try:
+        if not user.validate_email():
+            htmlvars["alert_title"] = "Erro :("
+            htmlvars["error_lead"] = "E-mail invalido."
+            htmlvars[
+                "error_message"
+            ] = "E-mail invalido ."
+            response = render_to_response("register.html", htmlvars,
+                                          context_instance=RequestContext(request))
+            return response
         response = render_to_response("login.html", html_vars,
                                       context_instance=RequestContext(request))
         user.save()
@@ -43,7 +52,6 @@ def register_user(request):
             ] = "o nome de usuario escolhido ja esta em uso ."
             response = render_to_response("register.html", htmlvars,
                                           context_instance=RequestContext(request))
-
     return response
 
 

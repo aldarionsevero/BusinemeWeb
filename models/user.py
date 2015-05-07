@@ -1,6 +1,7 @@
 # Class user
 from django.contrib.auth.models import User as DjangoUser
 from django.db import models
+import re
 
 
 class User(DjangoUser):
@@ -21,3 +22,9 @@ class User(DjangoUser):
             return True
         else:
             return False
+
+    def validate_email(self):
+        if len(self.email) > 6:
+            if re.match(r'\b[\w.-]+@[\w.-]+.\w{2,4}\b', self.email) is not None:
+                return True
+        return False
