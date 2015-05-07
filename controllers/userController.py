@@ -165,17 +165,17 @@ def change_userdata(request):
 
 
 @login_required
-def delete_account_page(request):
-    if request.user.is_authenticated():
+def deactivate_account_page(request):
+    if requesdeactivatet.user.is_authenticated():
         user = request.user
     else:
         user = None
-    return render_to_response('delete_account_page.html', {'user': user},
+    return render_to_response('deactivate_account_page.html', {'user': user},
                               context_instance=RequestContext(request))
 
 
 @login_required
-def delete_account(request):
+def deactivate_account(request):
     htmlvars = {}
     user = request.user
 
@@ -188,15 +188,15 @@ def delete_account(request):
             "error_message"
         ] = "A senha está incorreta."
         response = render_to_response(
-            "delete_account_page.html", htmlvars,
+            "deactivate_account_page.html", htmlvars,
             context_instance=RequestContext(request))
     else:
-        user.delete()
-        htmlvars["alert_title"] = "Usuário deletado"
-        htmlvars["error_lead"] = "Até logo"
+        user.is_active = False
+        htmlvars["alert_title"] = "Sucesso!"
+        htmlvars["error_lead"] = "Usuário desativado com sucesso."
         htmlvars[
             "error_message"
-        ] = "Esperamos que você volte."
+        ] = "Esperamos o seu retorno, até logo! :)"
         logout(request)
         response = render_to_response(
             "login.html", htmlvars,
