@@ -71,7 +71,7 @@ def log_user_post(request):
             login(request, user)
             response = redirect('/', context_instance=RequestContext(request))
     else:
-        htmlvars["error_lead"] = "Usuário não encontrado."
+        htmlvars["error_lead"] = "Falha no login."
         htmlvars[
             "error_message"] = "Verifique se o nome de usuário e a senha informados estão corretos."
         response = render_to_response("login.html", htmlvars,
