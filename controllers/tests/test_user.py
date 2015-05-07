@@ -59,7 +59,7 @@ class UserControllerTest(SimpleTestCase):
 # ------ #
     def test_user_account(self):
         response = self.client.get('/perfil/')
-        self.assertEquals(response.status_code, STATUS_REDIRECT)
+        self.assertEquals(response.status_code, STATUS_OK)
 
     def test_change_password_page(self):
         response = self.client.get('/alterarcao_senha/ ')
@@ -68,4 +68,13 @@ class UserControllerTest(SimpleTestCase):
     def test_change_password(self):
         response = self.client.get(
             '/alterar_senha/', self.new_password())
+        self.assertEquals(response.status_code, STATUS_REDIRECT)
+
+    def test_change_userdate(self):
+        data = self.register_post_data()
+        response = self.client.post('/alterar_dados/', data)
+        self.assertEquals(response.status_code, STATUS_REDIRECT)
+
+    def test_delete_account_page(self):
+        response = self.client.get('/exclusao_perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
