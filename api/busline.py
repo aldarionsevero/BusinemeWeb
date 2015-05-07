@@ -5,7 +5,6 @@ from api.models.terminal import Terminal
 from django.conf import settings
 import requests
 import json
-import sys
 
 
 class BuslineAPI():
