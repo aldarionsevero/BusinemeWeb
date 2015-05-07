@@ -4,7 +4,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
     '--with-coverage',
-    '--cover-package=BusinemeWeb',
+    '--cover-package=BusinemeWeb, api',
     '--cover-erase',
-    '--cover-min-percentage=80',
+    # '--cover-min-percentage=80',
 ]
