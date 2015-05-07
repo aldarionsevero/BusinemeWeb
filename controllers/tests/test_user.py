@@ -9,11 +9,16 @@ STATUS_REDIRECT = 302
 
 class UserControllerTest(SimpleTestCase):
 
-    def setup(self):
+    def setUp(self):
         self.client = Client()
+
+    def create_user(self):
         self.user = User()
-        self.user.username = 'test_user'
-        self.user.password = '1234'
+        self.user.username = 'test_username'
+        self.user.password = 'test_password'
+        self.user.name = 'test_name'
+        self.user.email = 'test@email.tes'
+        self.user.save()
 
     def register_post_data(self):
         data = {'name': 'test_user',
@@ -48,15 +53,17 @@ class UserControllerTest(SimpleTestCase):
         self.assertTrue(db_after > db_before)
 
     def test_loged_user(self):
-        data = self.login_post_data()
-        response = self.client.post('/logar/usuario/', data)
-        self.assertEquals(response.status_code, STATUS_REDIRECT)
+        self.create_user()
+        self.client.login(username='test_username', password='test_password')
+        response = self.client.get('/login/')
+        self.assertEquals(response.status_code, STATUS_OK)
+        self.client.logout()
+        self.user.delete()
 
     def test_logout_user(self):
         response = self.client.get('/login/?next=/sair/')
         self.assertEquals(response.status_code, STATUS_OK)
 
-# ------ #
     def test_user_account(self):
         response = self.client.get('/perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
