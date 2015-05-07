@@ -29,8 +29,9 @@ class testBusilineAPI(SimpleTestCase):
         self.assertIsNotNone(instance)
 
     def test_all(self):
-        from requests import ConnectionError
-        with self.assertRaises(ConnectionError):
+        from requests import *
+        from requests.sessions import *
+        with self.assertRaises(InvalidSchema):
             self.busline.all()
         ret = json.loads(all())
         self.assertIsNotNone(self.busline._busline_list(ret))
