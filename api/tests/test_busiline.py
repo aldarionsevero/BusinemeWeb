@@ -21,5 +21,5 @@ class testBusilineAPI(SimpleTestCase):
         self.assertIsNotNone(instance)
 
     def test_all(self):
-        # self.assertRaises(InvalidSchema, self.busline.all())
+        self.assertIsNotNone(self.busline.all())
         pass
