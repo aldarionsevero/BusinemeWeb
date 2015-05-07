@@ -3,6 +3,14 @@ from api.busline import BuslineAPI
 from api.models import *
 
 from django.test import SimpleTestCase
+import json
+
+
+def all():
+    f = open('api/tests/out.json', 'r')
+    data = f.read()
+    f.close()
+    return data
 
 
 class testBusilineAPI(SimpleTestCase):
@@ -21,5 +29,8 @@ class testBusilineAPI(SimpleTestCase):
         self.assertIsNotNone(instance)
 
     def test_all(self):
-        self.assertIsNotNone(self.busline.all())
-        pass
+        from requests import ConnectionError
+        with self.assertRaises(ConnectionError):
+            self.busline.all()
+        ret = json.loads(all())
+        self.assertIsNotNone(self.busline._busline_list(ret))
