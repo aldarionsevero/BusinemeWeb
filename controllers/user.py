@@ -7,7 +7,6 @@ from django.template import RequestContext
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.http import HttpResponse
 
 
 def register_user_page(request):
@@ -71,9 +70,12 @@ def log_user_post(request):
             login(request, user)
             response = redirect('/', context_instance=RequestContext(request))
     else:
-        htmlvars["error_lead"] = "Falha no login."
+
+        htmlvars["alert_title"] = "Erro :("
+        htmlvars["error_lead"] = "Usuário não encontrado."
         htmlvars[
-            "error_message"] = "Verifique se o nome de usuário e a senha informados estão corretos."
+            "error_message"
+        ] = "Verifique se o nome de usuário e a senha informados estão corretos."
         response = render_to_response("login.html", htmlvars,
                                       context_instance=RequestContext(request))
     return response
@@ -115,12 +117,26 @@ def change_password(request):
     old_password = request.POST["old_password"]
     new_password1 = request.POST["new_password1"]
     new_password2 = request.POST["new_password2"]
-
+    htmlvars = {}
     if not user.check_password(old_password):
-        response = HttpResponse("Sua senha antiga está incorreta.")
+        htmlvars["alert_title"] = "Erro :("
+        htmlvars["error_lead"] = "Senha incorreta."
+        htmlvars[
+            "error_message"
+        ] = "A senha antiga esta incorreta."
+        response = render_to_response("change_password_page.html", htmlvars,
+                                      context_instance=RequestContext(request))
+
     else:
         if not (new_password1 == new_password2):
-            response = HttpResponse("Sua senha nova não bate com a comparação")
+            htmlvars["alert_title"] = "Erro :("
+            htmlvars["error_lead"] = "Senha incorreta."
+            htmlvars[
+                "error_message"
+            ] = "Os campos de nova senha nao conferem."
+            response = render_to_response(
+                "change_password_page.html", htmlvars,
+                context_instance=RequestContext(request))
         else:
             user.set_password(new_password1)
             user.save()
@@ -155,18 +171,29 @@ def delete_account_page(request):
 
 @login_required
 def delete_account(request):
-    if request.user.is_authenticated():
-        user = request.user
-    else:
-        user = None
+    htmlvars = {}
+    user = request.user
 
     password = request.POST["password"]
 
     if not user.check_password(password):
-        response = HttpResponse("Sua senha está incorreta.")
+        htmlvars["alert_title"] = "Erro :("
+        htmlvars["error_lead"] = "Senha incorreta."
+        htmlvars[
+            "error_message"
+        ] = "A senha está incorreta."
+        response = render_to_response(
+            "delete_account_page.html", htmlvars,
+            context_instance=RequestContext(request))
     else:
         user.delete()
-        response = redirect("/login/",
-                            context_instance=RequestContext(request))
+        htmlvars["alert_title"] = "Usuário deletado"
+        htmlvars["error_lead"] = "Até logo"
+        htmlvars[
+            "error_message"
+        ] = "Esperamos que você volte."
         logout(request)
+        response = render_to_response(
+            "login.html", htmlvars,
+            context_instance=RequestContext(request))
     return response
