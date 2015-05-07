@@ -13,5 +13,11 @@ class User(DjangoUser):
         return cls.objects.all()
 
     @classmethod
-    def filter_by_username(cls, name):
-        return cls.objects.filter(username__startswith=name)
+    def filter_by_username(cls, username):
+        return cls.objects.filter(username=username)
+
+    def validate_user_name(self):
+        if self.filter_by_username(self.username) is None:
+            return True
+        else:
+            return False

@@ -28,17 +28,22 @@ def register_user(request):
     user.username = request.POST["username"]
     user.set_password(request.POST["password"])
     html_vars = {}
+    htmlvars = {}
     try:
+        response = render_to_response("login.html", html_vars,
+                                      context_instance=RequestContext(request))
         user.save()
     except IntegrityError:
-        html_vars["error"] = "teste"
+        # html_vars["error"] = "teste"
+        if not user.validate_user_name():
+            htmlvars["alert_title"] = "Erro :("
+            htmlvars["error_lead"] = "Usuário ja cadastrado."
+            htmlvars[
+                "error_message"
+            ] = "o nome de usuario escolhido ja esta em uso ."
+            response = render_to_response("register.html", htmlvars,
+                                          context_instance=RequestContext(request))
 
-    if html_vars:
-        response = render_to_response("register.html", html_vars,
-                                      context_instance=RequestContext(request))
-    else:
-        response = redirect("/login/",
-                            context_instance=RequestContext(request))
     return response
 
 
@@ -153,8 +158,8 @@ def change_userdata(request):
         user = request.user
         user.first_name = request.POST["name"]
         user.email = request.POST["email"]
-        user.username = request.POST["username"]
         user.save()
+
     return redirect("/",
                     context_instance=RequestContext(request))
 

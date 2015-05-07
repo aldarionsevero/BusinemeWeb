@@ -17,7 +17,7 @@
     {% endblock %}
 
     <div id="modal_error" class="small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-      <h2>Erro! :(</h2>
+      <h2>{% block "modal_alert_title" %}{% endblock %}</h2>
       <p class="lead">{% block "modal_error_lead" %}{% endblock %}</p>
       <p>{% block "modal_error_message" %}{% endblock %}</p>
       <a class="close-reveal-modal" aria-label="Close">&#215;</a>
