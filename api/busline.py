@@ -13,6 +13,11 @@ class BuslineAPI():
         url = settings.API_URL + 'busline/'
         return self._get_filtered_list(url)
 
+    def filter_by_multiple(self, line_number, description):
+        url = settings.API_URL + 'busline/?line_number__contains=' + line_number
+        url += '&description__contains=' + description + '&limit=0'
+        return self._get_filtered_list(url)
+
     def filter_by_line(self, line_number):
         url = settings.API_URL + 'busline/?line_number__contains=' + line_number + '&limit=0'
         return self._get_filtered_list(url)
