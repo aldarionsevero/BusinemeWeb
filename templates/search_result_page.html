@@ -3,20 +3,20 @@
     Busine.me | Resultados
 {% endblock %}
 {% block content %}
-    <div class="row show-for-medium-up">
+    <div class="row">
         <h1 class="text-center">Resultado</h1>
     </div>
-    <div class="small-11 medium-8 large-6 small-centered row">
-        <div class="large-6 columns">
+    <div class="row">
+        <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
             {% for busline in buslines %}
                <div class="panel"> 
               
-               <h4>{{ busline.line_number }}.</h4> 
-                <p>{{ busline.description }}</p> 
+               <h3>{{ busline.line_number }}</h3> 
+                <p>Rota: {{ busline.description }}</p> 
                 <p>{{ busline.via }}</p> 
-                <p>{{ busline.route_size }}</p> 
-                <p>{{ busline.fee }}</p> 
+                <p>Percurso: {{ busline.route_size }} KM</p> 
+                <p>Tarifa: R${{ busline.fee }}</p> 
             
                </div>
             {% endfor %}
