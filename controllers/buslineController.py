@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from busline.py import Busline
+from busline import Busline
+# from api import BuslineAPI
+from django.template import RequestContext
 
 
 def register_busline(request):
@@ -20,3 +22,10 @@ def register_busline(request):
     #    where busline going to after save in db
     # 2) Create a new html, if necessary.
     # 3) include the new html page in 'urls.py'
+
+
+def search_line(request):
+    buslines = Busline.filter_by_line_number(request.POST['busline'])
+    return render_to_response("search_result_page.html",
+                              {'buslines': buslines},
+                              context_instance=RequestContext(request))
