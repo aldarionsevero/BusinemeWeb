@@ -30,15 +30,7 @@ def register_user(request):
     html_vars = {}
     htmlvars = {}
     try:
-        if not user.validate_email():
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "E-mail invalido."
-            htmlvars[
-                "error_message"
-            ] = "E-mail invalido ."
-            response = render_to_response("register.html", htmlvars,
-                                          context_instance=RequestContext(request))
-        elif not user.validate_unique_email():
+        if not user.validate_unique_email():
             htmlvars["alert_title"] = "Erro :("
             htmlvars["error_lead"] = "Email ja cadastrado."
             htmlvars[
@@ -49,6 +41,14 @@ def register_user(request):
             return response
         response = render_to_response("login.html", html_vars,
                                       context_instance=RequestContext(request))
+        if not user.validate_email():
+            htmlvars["alert_title"] = "Erro :("
+            htmlvars["error_lead"] = "E-mail invalido."
+            htmlvars[
+                "error_message"
+            ] = "E-mail invalido ."
+            response = render_to_response("register.html", htmlvars,
+                                          context_instance=RequestContext(request))
         user.save()
     except IntegrityError:
         if not user.validate_user_name():
