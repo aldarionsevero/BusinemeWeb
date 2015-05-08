@@ -89,33 +89,37 @@ $include-html-global-classes: $include-html-classes;
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // We use these to define default font stacks
-// $font-family-sans-serif: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 // $font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
 // $font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
+$font-roboto: 'Roboto', sans-serif;
+$font-lobster: 'Lobster', cursive;
+$font-lobster2: 'Lobster2', cursive;
+$body-font-family: $font-roboto;
+$font-family-sans-serif: $font-roboto;
 
 // We use these to define default font weights
-// $font-weight-normal: normal;
-// $font-weight-bold: bold;
+$font-weight-normal: normal;
+$font-weight-bold: bold;
 
-// $white       : #FFFFFF;
-// $ghost       : #FAFAFA;
-// $snow        : #F9F9F9;
-// $vapor       : #F6F6F6;
-// $white-smoke : #F5F5F5;
-// $silver      : #EFEFEF;
-// $smoke       : #EEEEEE;
-// $gainsboro   : #DDDDDD;
-// $iron        : #CCCCCC;
-// $base        : #AAAAAA;
-// $aluminum    : #999999;
-// $jumbo       : #888888;
-// $monsoon     : #777777;
-// $steel       : #666666;
-// $charcoal    : #555555;
-// $tuatara     : #444444;
-// $oil         : #333333;
-// $jet         : #222222;
-// $black       : #000000;
+$white       : #FFFFFF;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+$silver      : #EFEFEF;
+$smoke       : #EEEEEE;
+$gainsboro   : #DDDDDD;
+$iron        : #CCCCCC;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #333333;
+$jet         : #222222;
+$black       : #000000;
 
 $busineme-blue: #2c82c9;
 $busineme-ligth-blue: #80d5df;
@@ -151,7 +155,7 @@ $body-font-color: $busineme-brown;
 // $last-child-float: $opposite-direction;
 
 // We use these to make sure border radius matches unless we want it different.
-// $global-radius: 3px;
+$global-radius: 3px;
 // $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -207,10 +211,10 @@ $body-font-color: $busineme-brown;
 // $include-html-type-classes: $include-html-classes;
 
 // We use these to control header font styles
-// $header-font-family: $body-font-family;
+$header-font-family: $font-lobster;
 // $header-font-weight: $font-weight-normal;
-// $header-font-style: normal;
-// $header-font-color: $jet;
+$header-font-style: bold;
+$header-font-color: $busineme-brown;
 // $header-line-height: 1.4;
 // $header-top-margin: .2rem;
 // $header-bottom-margin: .5rem;
@@ -804,15 +808,15 @@ $body-font-color: $busineme-brown;
 // $include-html-label-classes: $include-html-classes;
 
 // We use these to style the labels
-// $label-padding: rem-calc(4 8 4);
-// $label-radius: $global-radius;
+$label-padding: rem-calc(4 8 4);
+$label-radius: $global-radius;
 
 // We use these to style the label text
-// $label-font-sizing: rem-calc(11);
-// $label-font-weight: $font-weight-normal;
-// $label-font-color: $oil;
-// $label-font-color-alt: $white;
-// $label-font-family: $body-font-family;
+$label-font-sizing: rem-calc(11);
+$label-font-weight: $font-weight-normal;
+$label-font-color: $oil;
+$label-font-color-alt: $white;
+$label-font-family: $body-font-family;
 
 // 17. Magellan
 // - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1398,21 +1402,21 @@ $topbar-height: rem-calc(65);
 $topbar-margin-bottom: rem-calc(10);
 
 // Controlling the styles for the title in the top bar
-// $topbar-title-weight: $font-weight-normal;
-// $topbar-title-font-size: rem-calc(17);
+$topbar-title-weight: $font-lobster;
+$topbar-title-font-size: rem-calc(30);
 
 // Set the link colors and styles for top-level nav
-// $topbar-link-color: $white;
-// $topbar-link-color-hover: $white;
+$topbar-link-color: white;
+// $topbar-link-color-hover: $busineme-brown;
 // $topbar-link-color-active: $white;
-// $topbar-link-color-active-hover: $white;
+// $topbar-link-color-active-hover: $busineme-brown;
 // $topbar-link-weight: $font-weight-normal;
-// $topbar-link-font-size: rem-calc(13);
+$topbar-link-font-size: rem-calc(15);
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
 // $topbar-link-bg: $topbar-bg;
-// $topbar-link-bg-hover: $oil;
-// $topbar-link-bg-color-hover: $charcoal;
-// $topbar-link-bg-active: $primary-color;
+$topbar-link-bg-hover: $busineme-orange;
+$topbar-link-bg-color-hover: $busineme-brown;
+$topbar-link-bg-active: $primary-color;
 // $topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%);
 // $topbar-link-font-family: $body-font-family;
 // $topbar-link-text-transform: none;
@@ -1423,11 +1427,11 @@ $topbar-margin-bottom: rem-calc(10);
 // $topbar-button-top: 7px;
 
 // Style the top bar dropdown elements
-// $topbar-dropdown-bg: $oil;
+$topbar-dropdown-bg: $topbar-bg-color;
 // $topbar-dropdown-link-color: $white;
 // $topbar-dropdown-link-color-hover: $topbar-link-color-hover;
-// $topbar-dropdown-link-bg: $oil;
-// $topbar-dropdown-link-bg-hover: $oil;
+$topbar-dropdown-link-bg: darken($topbar-bg-color, 10);
+$topbar-dropdown-link-bg-hover: darken($busineme-orange, 7);
 // $topbar-dropdown-link-weight: $font-weight-normal;
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: $white;
