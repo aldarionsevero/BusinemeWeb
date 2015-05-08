@@ -6,3 +6,17 @@
     display: block;
 }
 
+.feed-logo {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    .large {
+    	width: 50%;
+    }
+
+    .small {
+    	width: 30%;
+    }
+
+}

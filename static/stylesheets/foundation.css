@@ -9165,3 +9165,18 @@ th.hide-for-touch {
   margin-bottom: 0.9375rem;
   display: block;
 }
+
+/* line 9, ../scss/_custom-classes.scss */
+.feed-logo {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+/* line 14, ../scss/_custom-classes.scss */
+.feed-logo .large {
+  width: 50%;
+}
+/* line 18, ../scss/_custom-classes.scss */
+.feed-logo .small {
+  width: 30%;
+}
