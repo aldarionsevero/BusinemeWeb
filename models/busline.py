@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from api import BuslineAPI
+from api.busline import BuslineAPI
 
 
 class Busline(models.Model):
