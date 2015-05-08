@@ -16,4 +16,6 @@ NOSE_ARGS = [
     # '--cover-tests', # test tests
     '--nologcapture',
     '--verbosity=2',
+    '--cover-package=BusinemeWeb, api',
+    # '--cover-min-percentage=80',
 ]
