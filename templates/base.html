@@ -6,21 +6,28 @@
     <title>{% block title %}Busine.me{% endblock %}</title>
 
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'app.css' %}" />
-    <script src="{% static 'modernizr.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'stylesheets/foundation.css' %}" />
+    <link href='http://fonts.googleapis.com/css?family=Lobster|Lobster+Two:400,700|Roboto:400,700' rel='stylesheet' type='text/css'>
+    <script src="{% static 'vendor/modernizr/modernizr.js' %}"></script>
     {% block css %}
     {% endblock %}
   </head>
-
   <body>
-
     {% include 'topbar.html' %}
-
     {% block content %}
     {% endblock %}
 
-    <script src="{% static 'jquery.min.js' %}"></script>
-    <script src="{% static 'foundation.min.js' %}"></script>
-    <script src="{% static 'app.js' %}"></script>
+    <div id="modal_error" class="small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+      <h2>{% block "modal_alert_title" %}{% endblock %}</h2>
+      <p class="lead">{% block "modal_error_lead" %}{% endblock %}</p>
+      <p>{% block "modal_error_message" %}{% endblock %}</p>
+      <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+
+    <script src="{% static 'vendor/foundation/js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'vendor/foundation/js/foundation.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+
+    {% block "scripts" %}{% endblock %}
   </body>
 </html>

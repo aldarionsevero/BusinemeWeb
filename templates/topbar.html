@@ -2,9 +2,45 @@
     <nav class="top-bar" data-topbar>
         <ul class="title-area">
             <li class="name">
-                <h1><a href="#">Busine.me</a></h1>
+                <h1><a href="/">Busine.me</a></h1>
             </li>
-            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Painel</span></a></li>
         </ul>
+        <section class="top-bar-section">
+        {% if user.is_authenticated %}
+	        <ul class="left">
+	            <li><a href="/">Terminal</a></li>
+	            <li><a href="#">Busine</a></li>
+	            <li><a href="#">Favoritos</a></li>
+			</ul>
+		{% endif %}
+			<ul class="right">	
+				<li class="has-form">
+                 <form action="/buscar_linha/" method="POST">
+                  {% csrf_token %}
+    				  <div class="row collapse">
+    				    <div class="large-8 small-9 medium-6 columns">
+    				      <input type="text" name="busline" placeholder="Buscar Linhas">
+    				    </div>
+    				    <div class="large-4 small-3 medium-6 columns">
+    				      <input type="submit" class="success button expand" value="Pesquisar">
+    				    </div>
+    				  </div>
+                    </form>
+			 	</li>
+		{% if user.is_authenticated %}
+			 	<li class="has-dropdown">
+	                <a href="#">Painel</a>
+	                <ul class="dropdown">
+	                    <li><a href="/perfil/">Perfil</a></li>
+	                    <li><a href="/sair/">Sair</a></li>
+                	</ul>
+            	</li>
+		{% else %}
+			<li><a href="/login/">Login</a></li>
+		{% endif %}
+			</ul>
+			<!---->
+        </section>	
     </nav>
 </div>

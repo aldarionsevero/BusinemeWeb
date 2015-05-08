@@ -1,6 +1,7 @@
 # Class user
 from django.contrib.auth.models import User as DjangoUser
 from django.db import models
+import re
 
 
 class User(DjangoUser):
@@ -13,5 +14,28 @@ class User(DjangoUser):
         return cls.objects.all()
 
     @classmethod
-    def filter_by_username(cls, name):
-        return cls.objects.filter(username__startswith=name)
+    def filter_by_username(cls, username):
+        return cls.objects.filter(username=username)
+
+    @classmethod
+    def filter_by_email(cls, email):
+        return cls.objects.filter(email=email)
+
+    def validate_user_name(self):
+        if User.filter_by_username(self.username) is None:
+            return True
+        else:
+            return False
+
+    def validate_email(self):
+        if len(self.email) > 6:
+            if re.match(r'\w[\w\.-]*@\w[\w\.-]+\.\w+', self.email) is not None:
+                return True
+        return False
+
+    def validate_unique_email(self):
+        users = User.filter_by_email(self.email)
+        if len(users) == 0:
+            return True
+        else:
+            return False

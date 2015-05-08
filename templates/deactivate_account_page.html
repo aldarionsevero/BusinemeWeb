@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+	Busine.me | Desativar Perfil
+{% endblock %}
+
+{% block content %}
+	<div class="small-10 medium-4 large-4 small-centered columns">
+	<p>{{user.first_name}}, tem certeza de que deseja desativar seu perfil?</p>
+		<form action="/desativar_perfil/" method="POST">
+		{% csrf_token %}
+			<span class="label big">Sua Senha</span>
+			<input type="password" name="password" placeholder="Senha">
+		    <div class="small-6 medium-6 large-6 columns">
+		        <input type="submit" value="Desativar" class="alert button postfix">
+		    </div>
+		    <div class="small-6 medium-6 large-6 columns">
+                <a href="/perfil/" class="button postfix">Cancelar</a>
+        	</div>
+		</form>
+	</div>
+
+
+ {% endblock %}
+{% block "scripts" %}
+{% if error_lead %}
+<script>
+    $('#modal_error').foundation('reveal', 'open');
+</script>
+{% endif %}
+{% endblock %}
+
+{% block "modal_error_lead" %} {{error_lead}}{% endblock %}
+{% block "modal_error_message" %} {{error_message}} {% endblock %} 
+{% block "modal_alert_title" %} {{alert_title}} {% endblock %} 
