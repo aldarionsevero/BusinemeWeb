@@ -24,20 +24,13 @@ class Busline(models.Model):
 
     @classmethod
     def filter_by_line_number(cls, line_number):
+        api = BuslineAPI()
         try:
-            objects = filter_by_line(line_number)
+            objects = api.filter_by_line(line_number)
         except:
-            objetcts = cls.objects.filter(line_number__startswith=line_number)
+            objects = cls.objects.filter(line_number__startswith=line_number)
         return objects
 
     @classmethod
     def filter_by_via(cls, via):
         return cls.objects.filter(via__startswith=via)
-
-   # @classmethod
-    # def  filter_by_description(cls,description):
-     #   try:
-      #      objects=filter_by_line(description)
-       # except:
-        #    objetcts=cls.objects.filter(line_number__startswith=description)
-        # return objects

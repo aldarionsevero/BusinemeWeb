@@ -9,12 +9,17 @@
     <div class="small-11 medium-8 large-6 small-centered row">
         <div class="large-6 columns">
             <div class="row collapse prefix-round">
-                <!-- <div class="small-9 columns">
-                    <input class="postfix-round" type="text" placeholder="Value">
-                </div>
-                <div class="small-3 columns">
-                    <a href="#" class="button round postfix">Go</a>
-                </div> -->
+            {% for busline in buslines %}
+               <div class="panel"> 
+              
+               <h4>{{ busline.line_number }}.</h4> 
+                <p>{{ busline.description }}</p> 
+                <p>{{ busline.via }}</p> 
+                <p>{{ busline.route_size }}</p> 
+                <p>{{ busline.fee }}</p> 
+            
+               </div>
+            {% endfor %}
             </div>
         </div>
     </div>

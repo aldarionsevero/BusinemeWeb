@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
-from busline import Busline
+from models.busline import Busline
 # from api import BuslineAPI
 from django.template import RequestContext
 

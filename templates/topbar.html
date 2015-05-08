@@ -16,14 +16,17 @@
 		{% endif %}
 			<ul class="right">	
 				<li class="has-form">
-				  <div class="row collapse">
-				    <div class="large-8 small-9 medium-6 columns">
-				      <input type="text" placeholder="Buscar Linhas">
-				    </div>
-				    <div class="large-4 small-3 medium-6 columns">
-				      <a href="#" class="success button expand">Pesquisar</a>
-				    </div>
-				  </div>
+                 <form action="/buscar_linha/" method="POST">
+                  {% csrf_token %}
+    				  <div class="row collapse">
+    				    <div class="large-8 small-9 medium-6 columns">
+    				      <input type="text" name="busline" placeholder="Buscar Linhas">
+    				    </div>
+    				    <div class="large-4 small-3 medium-6 columns">
+    				      <input type="submit" class="success button expand" value="Pesquisar">
+    				    </div>
+    				  </div>
+                    </form>
 			 	</li>
 		{% if user.is_authenticated %}
 			 	<li class="has-dropdown">

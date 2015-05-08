@@ -83,5 +83,9 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     def test_delete_account_page(self):
-        response = self.client.get('/exclusao_perfil/')
+        response = self.client.get('/desativacao_perfil/')
+        self.assertEquals(response.status_code, STATUS_REDIRECT)
+
+    def test_buscar_linha_page(self):
+        response = self.client.get('/buscar_linha/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
