@@ -12,4 +12,6 @@ urlpatterns = patterns('',
                            'controllers.user.register_user'),
                        url(r'^login/', 'controllers.app.login'),
                        url(r'^admin/', include(admin.site.urls)),
+                       url(r'^', 'controllers.main.main'),
+                       url(r'^admin/', include(admin.site.urls)),
                        )

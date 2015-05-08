@@ -2,7 +2,7 @@
 Django settings for BusinemeWeb project.
 """
 
-from configuration import apps, databases, security, statics, tests
+from configuration import apps, databases, security, statics, tests, api
 
 
 # Security configurations
@@ -40,3 +40,6 @@ TEMPLATE_DIRS = statics.TEMPLATE_DIRS
 # Tests configuration
 TEST_RUNNER = tests.TEST_RUNNER
 NOSE_ARGS = tests.NOSE_ARGS
+
+# API settings
+API_URL = api.API_URL

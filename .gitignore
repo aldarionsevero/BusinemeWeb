@@ -67,3 +67,5 @@ configuration/*
 # Others
 .sass-cache/
 .sonar/
+models/migrations/*
+!models/migrations/__init__.py
