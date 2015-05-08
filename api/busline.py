@@ -3,6 +3,7 @@ from api.models.busline import Busline
 from api.models.company import Company
 from api.models.terminal import Terminal
 from django.conf import settings
+from exception.api import ApiException
 import requests
 import json
 
@@ -30,9 +31,12 @@ class BuslineAPI():
         return self._get_filtered_list(url)
 
     def _get_filtered_list(self, url):
-        busline_json = requests.get(url).content
-        busline_json = json.loads(busline_json)
-        return self._busline_list(busline_json)
+        try:
+            busline_json = requests.get(url).content
+            busline_json = json.loads(busline_json)
+            return self._busline_list(busline_json)
+        except Exception, e:
+            raise ApiException
 
     def _company_json_to_object(self, company_json):
         company = Company()

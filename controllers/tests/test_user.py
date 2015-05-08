@@ -82,6 +82,6 @@ class UserControllerTest(SimpleTestCase):
         response = self.client.post('/alterar_dados/', data)
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
-    def test_delete_account_page(self):
-        response = self.client.get('/exclusao_perfil/')
+    def test_deactivate_account_page(self):
+        response = self.client.get('/desativacao_perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
