@@ -82,10 +82,11 @@ class UserControllerTest(SimpleTestCase):
         response = self.client.post('/alterar_dados/', data)
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
-    def test_delete_account_page(self):
+    def test_deactivate_account_page(self):
         response = self.client.get('/desativacao_perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     def test_buscar_linha_page(self):
-        response = self.client.get('/buscar_linha/')
-        self.assertEquals(response.status_code, STATUS_REDIRECT)
+        data = {'busline': '205'}
+        response = self.client.post('/buscar_linha/', data)
+        self.assertEquals(response.status_code, STATUS_OK)
