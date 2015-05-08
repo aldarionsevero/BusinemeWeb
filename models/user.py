@@ -25,6 +25,6 @@ class User(DjangoUser):
 
     def validate_email(self):
         if len(self.email) > 6:
-            if re.match(r'\b[\w.-]+@[\w.-]+.\w{2,4}\b', self.email) is not None:
+            if re.match(r'\w[\w\.-]*@\w[\w\.-]+\.\w+', self.email) is not None:
                 return True
         return False
