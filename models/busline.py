@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from api import BuslineAPI
 
 
 class Busline(models.Model):
@@ -23,7 +24,8 @@ class Busline(models.Model):
 
     @classmethod
     def filter_by_line_number(cls, line_number):
-        return cls.objects.filter(line_number__startswith=line_number)
+        # return cls.objects.filter(line_number__startswith=line_number)
+        return BuslineAPI.filter_by_line(line_number)
 
     @classmethod
     def filter_by_via(cls, via):
