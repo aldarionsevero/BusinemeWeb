@@ -11,9 +11,17 @@ class BuslineAPI():
 
     def all(self):
         url = settings.API_URL + 'busline/'
+        return self.get_json(url)
+
+    def filter_by_line(self, line_number):
+        url = settings.API_URL + 'busline/?line_number__contains=' + line_number + '&limit=0'
+        return self.get_json(url)
+
+    def get_json(self, url):
         busline_json = requests.get(url).content
         busline_json = json.loads(busline_json)
         return self._busline_list(busline_json)
+
 
     def _company_json_to_object(self, company_json):
         company = Company()
