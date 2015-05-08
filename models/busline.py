@@ -20,24 +20,45 @@ class Busline(models.Model):
 
     @classmethod
     def all(cls):
-        return cls.objects.all()
+        api = BuslineAPI()
+        try:
+            objects = api.all()
+        except:
+            objects = cls.objects.all()
+        return objects
 
     @classmethod
     def filter_by_line_number(cls, line_number):
+
+        api = BuslineAPI()
         try:
-            objects = filter_by_line(line_number)
+            objects = api.filter_by_line(line_number)
         except:
-            objetcts = cls.objects.filter(line_number__startswith=line_number)
+            objects = cls.objects.filter(line_number__startswith=line_number)
         return objects
 
     @classmethod
     def filter_by_via(cls, via):
         return cls.objects.filter(via__startswith=via)
 
-   # @classmethod
-    # def  filter_by_description(cls,description):
-     #   try:
-      #      objects=filter_by_line(description)
-       # except:
-        #    objetcts=cls.objects.filter(line_number__startswith=description)
-        # return objects
+    @classmethod
+    def filter_by_description(cls, description):
+        api = BuslineAPI()
+        try:
+            objects = api.filter_by_description(description)
+        except:
+            objects = cls.objects.filter(description__startswith=description)
+
+        return objects
+
+    @classmethod
+    def filter_by_multiple(cls, line_number, description):
+        api = BuslineAPI()
+        try:
+            objects = api.filter_by_multiple(line_number, description)
+        except:
+            objects = cls.objects.filter(
+                description__startswith=description,
+                line_number__startswith=line_number)
+
+        return objects
