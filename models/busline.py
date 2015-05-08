@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-<< << << < HEAD
-import api.Busline
-== == == =
 from api.busline import BuslineAPI
->>>>>> > fe0f6160f097a85ab38426d521d25c5e92f39948
 
 
 class Busline(models.Model):

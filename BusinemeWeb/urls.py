@@ -27,4 +27,6 @@ urlpatterns = patterns('',
                            'controllers.userController.delete_account_page'),
                        url(r'^excluir_perfil/',
                            'controllers.userController.delete_account'),
+                       url(r'^', 'controllers.main.main'),
+                       url(r'^admin/', include(admin.site.urls)),
                        )
