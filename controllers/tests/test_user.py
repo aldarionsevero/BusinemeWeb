@@ -90,3 +90,9 @@ class UserControllerTest(SimpleTestCase):
         data = {'busline': '205'}
         response = self.client.post('/buscar_linha/', data)
         self.assertEquals(response.status_code, STATUS_OK)
+
+    def test_register_user_page_feed(self):
+        self.create_user()
+        self.client.login(username='test_username', password='test_password')
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, STATUS_OK)

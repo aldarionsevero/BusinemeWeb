@@ -46,10 +46,11 @@ def register_user(request):
             htmlvars["error_lead"] = "E-mail invalido."
             htmlvars[
                 "error_message"
-            ] = "E-mail invalido ."
+            ] = "Verifique se a escrita. O email deve conter @ e . (ponto)."
             response = render_to_response("register.html", htmlvars,
                                           context_instance=RequestContext(request))
-        user.save()
+        else:
+            user.save()
     except IntegrityError:
         if not user.validate_user_name():
             htmlvars["alert_title"] = "Erro :("
