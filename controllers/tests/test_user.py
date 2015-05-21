@@ -91,8 +91,37 @@ class UserControllerTest(SimpleTestCase):
         response = self.client.post('/buscar_linha/', data)
         self.assertEquals(response.status_code, STATUS_OK)
 
+    # FIX-ME
     def test_register_user_page_feed(self):
         self.create_user()
         self.client.login(username='test_username', password='test_password')
         response = self.client.get('/')
         self.assertEquals(response.status_code, STATUS_OK)
+        self.client.logout()
+        self.user.delete()
+
+    # FIX-ME
+    def test_register_user_invalid_email(self):
+        data = {'name': 'test_user',
+                'email': 'testemail.com',
+                'username': 'test_user',
+                'password': '1234'}
+        response = self.client.post('/cadastrar/usuario/', data)
+        htmlvarsteste = {"Erro :(",
+                         "E-mail invalido.",
+                         "Verifique se a escrita. O email deve conter @ e . (ponto)."}
+        self.assertEquals(response.htmlvars, htmlvarsteste)
+
+    # FIX-ME
+    def test_register_user_invalid_username(self):
+        data2 = {'name': 'test_user2',
+                 'email': 'teste2@mail.com',
+                 'username': 'test_user',
+                 'password': '1234'}
+        data = self.register_post_data()
+        self.client.post('/cadastrar/usuario/', data),
+        response2 = self.client.post('/cadastrar/usuario/', data2),
+        htmlvarstest = {"Erro :(",
+                        "Usuário ja cadastrado.",
+                        "O nome de usuario escolhido ja esta em uso ."}
+        self.assertEquals(response2.htmlvars, htmlvarstest)

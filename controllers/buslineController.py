@@ -26,6 +26,20 @@ def register_busline(request):
 
 def search_line(request):
     buslines = Busline.filter_by_line_number(request.POST['busline'])
-    return render_to_response("search_result_page.html",
-                              {'buslines': buslines},
-                              context_instance=RequestContext(request))
+    if len(request.POST['busline']) == 1:
+        htmlvars = {}
+        htmlvars["alert_title"] = "Erro :("
+        htmlvars["error_lead"] = "Busca com menos de 2 digitos"
+        htmlvars[
+            "error_message"
+        ] = "A busca deve ser feita com no minimo 2 digitos."
+
+        response = render_to_response(
+            "search_result_page.html", htmlvars,
+            context_instance=RequestContext(request))
+    else:
+        response = render_to_response("search_result_page.html",
+                                      {'buslines': buslines},
+                                      context_instance=RequestContext(request))
+
+    return response
