@@ -16,7 +16,7 @@ Feature: Advanced search of a busline
     When I press "Search"
     Then I should see "Foram encontradas 'X' linhas que passam pelo 'Gama'"
     
-  Scenario I fill more than one filter field
+  Scenario: I fill more than one filter field
     Scenario: I fill the filter field "via"
     Given I am on Busine.me homepage
     And I go to "Advanced Search"
