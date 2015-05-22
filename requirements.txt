@@ -7,3 +7,4 @@ coveralls==0.5
 zope.testbrowser==4.0.4
 splinter==0.7.2
 cssselect==0.9.1
+lettuce==0.2.20
