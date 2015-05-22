@@ -6,3 +6,6 @@ python-coveralls==2.5.0
 coveralls==0.5
 django-jenkins
 clonedigger
+pep8
+pylint
+pyflakes
