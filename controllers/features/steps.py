@@ -4,6 +4,7 @@ from lxml import html
 #from django.test.client import Client
 from nose.tools import assert_equals
 from splinter.browser import Browser
+from splinter.driver.zopetestbrowser import ZopeTestBrowser
 
 @before.all
 def set_browser():
@@ -27,6 +28,7 @@ def when_i_press_search(step,button):
 @step('Then I should see "(.*)"')
 def then_i_should_see(step, value):
     world.browser.find_by_css('h1').first
+
 @step('And I should see "(.*)"')
 def and_i_should_see(step, value):
     world.browser.find_by_css('h3').first.value
