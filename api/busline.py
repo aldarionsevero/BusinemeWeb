@@ -14,6 +14,13 @@ class BuslineAPI():
         url = settings.API_URL + 'busline/'
         return self._get_filtered_list(url)
 
+    def filter(self, **kwargs):
+        url = settings.API_URL + 'busline/?'
+        for name, value in kwargs.items():
+            url += name + '__contains=' + value + '&'
+        url += 'limit=0'
+        return self._get_filtered_list(url)
+
     def filter_by_multiple(self, line_number, description):
         url = settings.API_URL + \
             'busline/?line_number__contains=' + line_number
@@ -36,7 +43,7 @@ class BuslineAPI():
             busline_json = json.loads(busline_json)
             return self._busline_list(busline_json)
         except Exception, e:
-            raise ApiException
+            raise ApiException(str(e))
 
     def _company_json_to_object(self, company_json):
         company = Company()
