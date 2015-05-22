@@ -24,4 +24,4 @@ after_succes:
  - coveralls
 
 notifications:
-  slack: busine-me:vHgBvWEGnKVRabVoYSTzd1tq
+  slack: busine-me:a8LjiirRLvRz4gsfIbvNXMWR#mds
