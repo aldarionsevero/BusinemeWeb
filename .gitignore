@@ -69,3 +69,4 @@ configuration/*
 .sonar/
 models/migrations/*
 !models/migrations/__init__.py
+reports/*
