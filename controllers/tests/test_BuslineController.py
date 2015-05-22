@@ -1,5 +1,5 @@
 from django.test import SimpleTestCase, Client
-from models.user import Busline
+from models.busline import Busline
 
 
 STATUS_OK = 200

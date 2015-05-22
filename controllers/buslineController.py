@@ -33,6 +33,7 @@ def search_line(request):
         htmlvars[
             "error_message"
         ] = "A busca deve ser feita com no minimo 2 digitos."
+        htmlvars["count_busline"] = 0
 
         response = render_to_response(
             "search_result_page.html", htmlvars,
