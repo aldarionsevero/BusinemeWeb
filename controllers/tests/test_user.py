@@ -88,7 +88,7 @@ class UserControllerTest(SimpleTestCase):
 
     def test_buscar_linha_page(self):
         data = {'busline': '205'}
-        response = self.client.post('/buscar_linha/', data)
+        response = self.client.get('/buscar_linha/', data)
         self.assertEquals(response.status_code, STATUS_OK)
 
     # FIX-ME
