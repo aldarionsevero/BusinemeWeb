@@ -28,7 +28,6 @@ def register_user(request):
     user.email = request.POST["email"]
     user.username = request.POST["username"]
     user.set_password(request.POST["password"])
-    html_vars = {}
     htmlvars = {}
     try:
         if not user.validate_unique_email():

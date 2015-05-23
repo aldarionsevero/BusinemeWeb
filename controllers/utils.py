@@ -1,6 +1,11 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+# ["name"]
+#     user.email = request.POST["email"]
+#     user.username = request.POST["username"]
+#     user.set_password(request.POST["password"])
+
 
 def error_message(alert_title, error_lead, error_message, html, request):
     htmlvars = {}
