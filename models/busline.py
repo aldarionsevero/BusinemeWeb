@@ -51,13 +51,19 @@ class Busline(models.Model):
         return objects
 
     @classmethod
-    def filter_by_multiple(cls, line_number, description):
+    def filter_by_multiple(cls, line_number, description, terminals):
         api = BuslineAPI()
         try:
-            objects = api.filter_by_multiple(line_number, description)
+            objects = api.filter(
+                line_number=line_number,
+                description=description,
+                # terminals=terminals
+            )
         except:
             objects = cls.objects.filter(
                 description__startswith=description,
-                line_number__startswith=line_number)
+                line_number__startswith=line_number,
+                # terminals__startswith=terminals #FIXME forekey
+            )
 
         return objects

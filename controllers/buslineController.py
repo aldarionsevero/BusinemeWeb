@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from models.busline import Busline
+# from api.busline import BuslineAPI
 # from api import BuslineAPI
 from django.template import RequestContext
 
@@ -43,3 +44,20 @@ def search_line(request):
                                       context_instance=RequestContext(request))
 
     return response
+
+
+def advanced_search_line(request):
+    buslines = Busline.filter_by_multiple(
+        line_number=request.GET['busline'],
+        description=request.GET['description'],
+        terminals=request.GET['terminals']
+    )
+
+    return render_to_response("search_result_page.html",
+                              {'buslines': buslines},
+                              context_instance=RequestContext(request))
+
+
+def advanced_search_page(request):
+    return render_to_response("advanced_search_busline.html",
+                              context_instance=RequestContext(request))

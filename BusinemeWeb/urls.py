@@ -29,4 +29,8 @@ urlpatterns = patterns('',
                            'controllers.userController.deactivate_account'),
                        url(r'^buscar_linha/',
                            'controllers.buslineController.search_line'),
+                       url(r'^busca_avancada/',
+                           'controllers.buslineController.advanced_search_line'),
+                       url(r'^busca_avancada_page/',
+                           'controllers.buslineController.advanced_search_page'),
                        )
