@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from controllers.utils import error_message, response_htmlvars
 
 
 def register_user_page(request):
@@ -31,34 +32,19 @@ def register_user(request):
     htmlvars = {}
     try:
         if not user.validate_unique_email():
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "Email ja cadastrado."
-            htmlvars[
-                "error_message"
-            ] = "O e-mail cadastrado já está em uso."
-            response = render_to_response("register.html", htmlvars,
-                                          context_instance=RequestContext(request))
+            response = error_message(
+                "Erro :(", "Email ja cadastrado", "o e-mail cadastrado ja está em uso", "register.html", request)
             return response
-        response = render_to_response("login.html", html_vars,
-                                      context_instance=RequestContext(request))
+        response = response_htmlvars(htmlvars, "login.html", request)
         if not user.validate_email():
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "E-mail invalido."
-            htmlvars[
-                "error_message"
-            ] = "E-mail invalido ."
-            response = render_to_response("register.html", htmlvars,
-                                          context_instance=RequestContext(request))
-        user.save()
+            response = error_message(
+                "Erro :(", "E-mail invalido.", "E-mail invalido .", "register.html", request)
+        if user.validate_email() and user.validate_unique_email():
+            user.save()
     except IntegrityError:
         if not user.validate_user_name():
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "Usuário ja cadastrado."
-            htmlvars[
-                "error_message"
-            ] = "O nome de usuario escolhido ja esta em uso ."
-            response = render_to_response("register.html", htmlvars,
-                                          context_instance=RequestContext(request))
+            response = error_message(
+                "Erro :(", "Usuário ja cadastrado.", "E-mail invalido .", "register.html", request)
 
     return response
 
