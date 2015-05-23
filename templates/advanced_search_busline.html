@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+    Busine.me | Busca Avançada
+{% endblock %}
+{% block content %}
+
+
+ <div class="row"> 
+    <div class="small-12 medium-6 large-6 small-centered columns"></div>
+        <form action="COLOCAR A URL AQUI" method='POST'>{% csrf_token %}
+            <input type = "text" name="busline" placeholder="Numero da Linha">
+            <input type = "text" name="description" placeholder="Descrição">
+            <!--    <input type = "text" name="" -->
+
+            <botton class="postfix"> Procurar </botton>
+
+
+        </form>
+
+
+
+
+ </div>
+
+
+
+
+
+
+
+
+{% endblock %}
