@@ -36,6 +36,13 @@ class UserControllerTest(SimpleTestCase):
         data = {'password': '4321'}
         return data
 
+    def register_user_duplicate_email(self):
+        data1 = register_post_data()
+        data2 = {'name': 'test_user2',
+                 'email': 'test@email.com',
+                 'username': 'test_user2',
+                 'password': '1234'}
+
     def test_register_user_page(self):
         response = self.client.get('/cadastro/')
         self.assertEquals(response.status_code, STATUS_OK)
