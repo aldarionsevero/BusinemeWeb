@@ -4,6 +4,7 @@ from models.busline import Busline
 # from api.busline import BuslineAPI
 # from api import BuslineAPI
 from django.template import RequestContext
+from django.shortcuts import redirect
 
 
 def register_busline(request):
@@ -53,11 +54,23 @@ def advanced_search_line(request):
         terminals=request.GET['terminals']
     )
 
-    return render_to_response("search_result_page.html",
-                              {'buslines': buslines},
-                              context_instance=RequestContext(request))
+    if(len(request.GET['busline']) == 0) and (len(request.GET['description']) == 0) and (len(request.GET['terminals']) == 0):
+        return redirect("search_result_page", mensage_erro("Erro :(", "Todos os campos em branco",
+                                                           "busca deve ser feita com pelo menos um campo preenchido"))
+    else:
+        return render_to_response("search_result_page.html",
+                                  {'buslines': buslines},
+                                  context_instance=RequestContext(request))
 
 
 def advanced_search_page(request):
     return render_to_response("advanced_search_busline.html",
                               context_instance=RequestContext(request))
+
+
+def mensagem_erro(mensagem_titulo, mensagem_sub_titulo, mensagem):
+    htmlvars = {}
+    htmlvars["mensagem1"] = mensagem_titulo
+    htmlvars["mensagem2"] = mensagem_sub_titulo
+    htmlvars["mensagem3"] = mensagem
+    return htmlvars

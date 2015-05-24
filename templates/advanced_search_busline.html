@@ -11,9 +11,20 @@
             <input type = "text" name="busline" placeholder="Numero da Linha">
             <input type = "text" name="description" placeholder="Via por onde passa">
             <input type = "text" name="terminals" placeholder="Terminal">
-
             <button class="postfix"> Procurar </button>
         </form>
     </div>
  </div>
 {% endblock %}
+
+{% block "scripts" %}
+{% if error_lead %}
+<script>
+    $('#modal_error').foundation('reveal', 'open');
+</script>
+{% endif %}
+{% endblock %}
+
+{% block "mensagem1" %} {{error_lead}}{% endblock %}
+{% block "mensagem2" %} {{error_message}} {% endblock %} 
+{% block "mensagem3" %} {{alert_title}} {% endblock %} 
