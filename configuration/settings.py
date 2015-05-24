@@ -43,6 +43,7 @@ TEMPLATE_DIRS = statics.TEMPLATE_DIRS
 # Tests configuration
 TEST_RUNNER = tests.TEST_RUNNER
 NOSE_ARGS = tests.NOSE_ARGS
+LETTUCE_APPS = ('BusinemeWeb',)
 
 # API settings
 API_URL = api.API_URL
