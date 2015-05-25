@@ -79,6 +79,10 @@ def log_user_post(request):
         if user.is_active:
             login(request, user)
             response = redirect('/', context_instance=RequestContext(request))
+        else:
+            response = render_to_response('login.html',
+                                          context_instance=RequestContext(
+                                              request))
     else:
 
         htmlvars["alert_title"] = "Erro :("
@@ -198,6 +202,7 @@ def deactivate_account(request):
             context_instance=RequestContext(request))
     else:
         user.is_active = False
+        user.save()
         htmlvars["alert_title"] = "Sucesso!"
         htmlvars["error_lead"] = "Usuário desativado com sucesso."
         htmlvars[
