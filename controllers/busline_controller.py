@@ -36,17 +36,19 @@ def search_line(request):
 
 
 def advanced_search_line(request):
-    buslines = Busline.filter_by_multiple(
-        line_number=request.GET['busline'],
-        description=request.GET['description'],
-        terminal__description=request.GET['terminal__description']
-    )
 
-    if(len(request.GET['busline']) == 0) and \
-            (len(request.GET['description']) == 0) and \
-            (len(request.GET['terminal__description']) == 0):
-        return redirect("search_result_page")
+    if ((len(request.GET['busline']) < 2) and
+            (len(request.GET['description']) < 2) and
+            (len(request.GET['terminal__description']) < 2)):
+        return redirect(
+            request.META['HTTP_REFERER'],
+            context_instance=RequestContext(request))
     else:
+        buslines = Busline.filter_by_multiple(
+            line_number=request.GET['busline'],
+            description=request.GET['description'],
+            terminal__description=request.GET['terminal__description']
+        )
         return render_to_response("search_result_page.html",
                                   {'buslines': buslines},
                                   context_instance=RequestContext(request))
