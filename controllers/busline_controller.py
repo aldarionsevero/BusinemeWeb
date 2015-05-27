@@ -3,26 +3,22 @@ from django.shortcuts import render_to_response
 from models.busline import Busline
 # from api import BuslineAPI
 from django.template import RequestContext
-from django.shortcuts import redirect
+# from django.shortcuts import redirect
+from controllers.utils import error_message
 
 
 def search_line(request):
     line_number = request.GET['busline']
     if len(line_number) == 1:
-        # htmlvars = {}
-        # htmlvars["alert_title"] = "Erro :("
-        # htmlvars["error_lead"] = "Busca com apenas um dígito"
-        # htmlvars[
-        #     "error_message"
-        # ] = "A busca deve ser realizada com no mínimo 2 dígitos ou apenas \
-        # vazia para vizualizar todas as linhas."
 
-        response = redirect(
-            request.META['HTTP_REFERER'],
-            context_instance=RequestContext(request))
-        # response = render_to_response(
-        #     "search_result_page.html", htmlvars,
+        # response = redirect(
+        #     request.META['HTTP_REFERER'],
         #     context_instance=RequestContext(request))
+        response = error_message(
+            "Erro :(", "Busca com apenas um dígito", "A busca deve ser \
+                realizada com no mínimo 2 dígitos ou apenas \
+        vazia para vizualizar todas as linhas.",
+            "search_result_page.html", request)
     else:
         buslines = Busline.filter_by_line_number(line_number)
         count_busline = len(buslines)
@@ -40,18 +36,21 @@ def advanced_search_line(request):
     if ((len(request.GET['busline']) < 2) and
             (len(request.GET['description']) < 2) and
             (len(request.GET['terminal__description']) < 2)):
-        return redirect(
-            request.META['HTTP_REFERER'],
-            context_instance=RequestContext(request))
+        response = error_message(
+            "Erro :(", "Busca com apenas um dígito", "A busca deve ser \
+                realizada com no mínimo 2 dígitos ou apenas \
+        vazia para vizualizar todas as linhas.",
+            "search_result_page.html", request)
     else:
         buslines = Busline.filter_by_multiple(
             line_number=request.GET['busline'],
             description=request.GET['description'],
             terminal__description=request.GET['terminal__description']
         )
-        return render_to_response("search_result_page.html",
-                                  {'buslines': buslines},
-                                  context_instance=RequestContext(request))
+        response = render_to_response("search_result_page.html",
+                                      {'buslines': buslines},
+                                      context_instance=RequestContext(request))
+    return response
 
 
 def advanced_search_page(request):
