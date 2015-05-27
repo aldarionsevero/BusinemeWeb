@@ -10,7 +10,7 @@ pep8:
     max-line-length: 79
 pylint:
   run: true
-maccabe:
+mccabe:
   run: true
 autodetect: yes
 requirements:
