@@ -1,0 +1,17 @@
+doc-warnings: yes
+test-warnings: no
+strictness: veryhigh
+max-line-length: 120
+uses:
+  - django
+pep8:
+  full: true
+  options:
+    max-line-length: 79
+pylint:
+  run: true
+maccabe:
+  run: true
+autodetect: yes
+requirements:
+  - requirements.txt
