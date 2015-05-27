@@ -28,25 +28,27 @@ def register_user(request):
     user.email = request.POST["email"]
     user.username = request.POST["username"]
     user.set_password(request.POST["password"])
-    htmlvars = {}
     try:
         if not user.validate_unique_email():
             response = error_message(
                 "Erro :(", "Email ja cadastrado", "o e-mail cadastrado ja \
                     está em uso", "register.html", request)
             return response
-        response = response_htmlvars(htmlvars, "login.html", request)
+        response = redirect("/login/",
+                            context_instance=RequestContext(request))
         if not user.validate_email():
 
             response = error_message(
-                "Erro :(", "E-mail invalido.", "E-mail invalido .",
+                "Erro :(", "E-mail invalido.",
+                "Verifique se a escrita. O email deve conter @ e . (ponto).",
                 "register.html", request)
         if user.validate_email() and user.validate_unique_email():
             user.save()
     except IntegrityError:
         if not user.validate_user_name():
             response = error_message(
-                "Erro :(", "Usuário ja cadastrado.", "E-mail invalido .",
+                "Erro :(", "Usuário ja cadastrado.", "Nome de usuário já \
+                está em uso.",
                 "register.html", request)
 
     return response
