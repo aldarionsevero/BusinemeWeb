@@ -37,12 +37,18 @@ def register_user(request):
         response = redirect("/login/",
                             context_instance=RequestContext(request))
         if not user.validate_email():
-
             response = error_message(
                 "Erro :(", "E-mail invalido.",
                 "Verifique se a escrita. O email deve conter @ e . (ponto).",
                 "register.html", request)
-        if user.validate_email() and user.validate_unique_email():
+        if not user.validade_user_password(request.POST["password"]):
+            response = error_message(
+                "Erro :(", "Senha Vazia.",
+                "Não é possível cadastrar uma senha vazia.",
+                "register.html", request)
+
+        if user.validate_email() and user.validate_unique_email() and \
+                user.validade_user_password(request.POST["password"]):
             user.save()
     except IntegrityError:
         if not user.validate_user_name():
