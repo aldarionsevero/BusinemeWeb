@@ -3,6 +3,8 @@
 from django.test import SimpleTestCase
 from models.busline import Busline
 from models.terminal import Terminal
+from exception.api import ApiException
+from api.busline import BuslineAPI
 
 
 class BuslineTest(SimpleTestCase):
@@ -25,6 +27,7 @@ class BuslineTest(SimpleTestCase):
 
     def setUp(self):
         self.flush_buslines()
+        self.api = BuslineAPI()
 
     def test_busline_instance(self):
         busline = Busline()
@@ -81,3 +84,24 @@ class BuslineTest(SimpleTestCase):
         self.create_busline()
         buslines = Busline.filter_by_multiple("000", "inavlid")
         self.assertEquals(0, len(buslines))
+
+    def test_all_exception(self):
+        Busline.all()
+        self.assertRaises(ApiException)
+
+    def test_filter_by_line_number_exception(self):
+        Busline.filter_by_line_number('001')
+        self.assertRaises(ApiException)
+
+    def test_filter_by_via_exception(self):
+        Busline.filter_by_via('via')
+        self.assertRaises(ApiException)
+
+    def test_filter_by_description_exception(self):
+        Busline.filter_by_description('description')
+        self.assertRaises(ApiException)
+
+    def test_filter_by_multiple_exception(self):
+        Busline.filter_by_multiple(
+            '001', 'description', 'terminal_description')
+        self.assertRaises(ApiException)

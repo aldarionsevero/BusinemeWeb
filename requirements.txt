@@ -8,4 +8,10 @@ zope.testbrowser==4.0.4
 splinter==0.7.2
 cssselect==0.9.1
 lettuce==0.2.20
-lxml
+lxml==3.3.3
+django-jenkins==0.17.0
+clonedigger==1.1.0
+pep8==1.6.2
+pylint==1.4.3
+pyflakes==0.8.1
+MagicMock==0.03
