@@ -1,23 +1,15 @@
 language: python
 
 env:
-  - DJANGO=1.7.7
+  - DJANGO=1.7
 
 python:
  - "2.7"
 
 install:
  - sudo apt-get install python2.7 python-pip python-dev
- - sudo pip install -r requirements.txt
  - sudo pip install python-Levenshtein
- - sudo apt-get install libxml2
- - sudo apt-get install libxslt1.1
- - sudo apt-get install libxml2-dev
- - sudo apt-get install libxslt1-dev
- - sudo apt-get install python-libxml2
- - sudo apt-get install python-libxslt1
- - sudo apt-get install python-lxml
- - sudo apt-get install python-setuptools
+ - pip install -r requirements.txt
 
 before_script:
  - cp configuration/databases.py.template configuration/databases.py
@@ -28,7 +20,7 @@ before_script:
 
 script:
  - coverage run manage.py test
- - python manage.py harvest
+# - python manage.py harvest
 
 after_succes:
  - coveralls
