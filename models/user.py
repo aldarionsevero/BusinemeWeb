@@ -39,3 +39,9 @@ class User(DjangoUser):
             return True
         else:
             return False
+
+    def validade_user_password(self, userpassword):
+        if len(userpassword) == 0:
+            return False
+        else:
+            return True
