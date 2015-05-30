@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from controllers.utils import error_message, response_htmlvars
 
 
 def register_user_page(request):
@@ -27,38 +28,35 @@ def register_user(request):
     user.email = request.POST["email"]
     user.username = request.POST["username"]
     user.set_password(request.POST["password"])
-    html_vars = {}
-    htmlvars = {}
     try:
         if not user.validate_unique_email():
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "Email ja cadastrado."
-            htmlvars[
-                "error_message"
-            ] = "O e-mail cadastrado já está em uso."
-            response = render_to_response("register.html", htmlvars,
-                                          context_instance=RequestContext(request))
+            response = error_message(
+                "Erro :(", "Email ja cadastrado", "o e-mail cadastrado ja \
+                    está em uso", "register.html", request)
             return response
-        response = render_to_response("login.html", html_vars,
-                                      context_instance=RequestContext(request))
+        response = redirect("/login/",
+                            context_instance=RequestContext(request))
         if not user.validate_email():
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "E-mail invalido."
-            htmlvars[
-                "error_message"
-            ] = "E-mail invalido ."
-            response = render_to_response("register.html", htmlvars,
-                                          context_instance=RequestContext(request))
-        user.save()
+            response = error_message(
+                "Erro :(", "E-mail invalido.",
+                "Verifique se a escrita. O email deve conter @ e . (ponto).",
+                "register.html", request)
+        if not user.validade_user_password(request.POST["password"]):
+            response = error_message(
+                "Erro :(", "Senha Vazia.",
+                "Não é possível cadastrar uma senha vazia.",
+                "register.html", request)
+
+        if user.validate_email() and user.validate_unique_email() and \
+                user.validade_user_password(request.POST["password"]):
+            user.save()
+
     except IntegrityError:
         if not user.validate_user_name():
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "Usuário ja cadastrado."
-            htmlvars[
-                "error_message"
-            ] = "O nome de usuario escolhido ja esta em uso ."
-            response = render_to_response("register.html", htmlvars,
-                                          context_instance=RequestContext(request))
+            response = error_message(
+                "Erro :(", "Usuário ja cadastrado.", "Nome de usuário já \
+                está em uso.",
+                "register.html", request)
 
     return response
 
@@ -90,13 +88,18 @@ def log_user_post(request):
         if user.is_active:
             login(request, user)
             response = redirect('/', context_instance=RequestContext(request))
+        else:
+            response = render_to_response('login.html',
+                                          context_instance=RequestContext(
+                                              request))
     else:
 
         htmlvars["alert_title"] = "Erro :("
         htmlvars["error_lead"] = "Usuário não encontrado."
         htmlvars[
             "error_message"
-        ] = "Verifique se o nome de usuário e a senha informados estão corretos."
+        ] = "Verifique se o nome de usuário e a senha informados estão \
+        corretos."
         response = render_to_response("login.html", htmlvars,
                                       context_instance=RequestContext(request))
     return response
@@ -182,7 +185,7 @@ def change_userdata(request):
 
 @login_required
 def deactivate_account_page(request):
-    if requesdeactivatet.user.is_authenticated():
+    if request.user.is_authenticated():
         user = request.user
     else:
         user = None
@@ -208,6 +211,7 @@ def deactivate_account(request):
             context_instance=RequestContext(request))
     else:
         user.is_active = False
+        user.save()
         htmlvars["alert_title"] = "Sucesso!"
         htmlvars["error_lead"] = "Usuário desativado com sucesso."
         htmlvars[

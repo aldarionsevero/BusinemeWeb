@@ -67,22 +67,26 @@ class BuslineTest(SimpleTestCase):
 
     def test_busline_filter_by_multiple(self):
         self.create_busline()
-        buslines = Busline.filter_by_multiple("001", "description")
+        buslines = Busline.filter_by_multiple(
+            "001", "description", "terminal_description")
         self.assertEquals(1, len(buslines))
 
     def test_busline_filter_by_multiple_invalid_description(self):
         self.create_busline()
-        buslines = Busline.filter_by_multiple("001", "invalid")
+        buslines = Busline.filter_by_multiple(
+            "001", "invalid", "terminal_description")
         self.assertEquals(0, len(buslines))
 
     def teste_busline_filter_by_multiple_invalid_line_number(self):
         self.create_busline()
-        buslines = Busline.filter_by_multiple("000", "description")
+        buslines = Busline.filter_by_multiple(
+            "000", "description", "terminal_description")
         self.assertEquals(0, len(buslines))
 
     def test_busline_filter_by_multiple_invalid_both(self):
         self.create_busline()
-        buslines = Busline.filter_by_multiple("000", "inavlid")
+        buslines = Busline.filter_by_multiple(
+            "000", "inavlid", "terminal_description")
         self.assertEquals(0, len(buslines))
 
     def test_all_exception(self):
@@ -91,10 +95,6 @@ class BuslineTest(SimpleTestCase):
 
     def test_filter_by_line_number_exception(self):
         Busline.filter_by_line_number('001')
-        self.assertRaises(ApiException)
-
-    def test_filter_by_via_exception(self):
-        Busline.filter_by_via('via')
         self.assertRaises(ApiException)
 
     def test_filter_by_description_exception(self):

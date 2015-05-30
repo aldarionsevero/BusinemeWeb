@@ -2,7 +2,8 @@
 Django settings for BusinemeWeb project.
 """
 
-from configuration import apps, databases, security, statics, tests, api
+from configuration import apps, databases, security, statics, tests, api, \
+    jenkins
 
 
 # Security configurations
@@ -46,3 +47,6 @@ LETTUCE_APPS = ('BusinemeWeb',)
 
 # API settings
 API_URL = api.API_URL
+
+# Jenkins tasks
+JENKINS_TASKS = jenkins.JENKINS_TASKS

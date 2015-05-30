@@ -26,6 +26,7 @@ DJANGO_APPS = (
 # Django plugins apps
 PLUGINS_APPS = (
     'django_nose',
+    'django_jenkins',
 )
 
 # Busine.me application apps

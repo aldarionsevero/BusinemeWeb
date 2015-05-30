@@ -36,6 +36,53 @@ class UserControllerTest(SimpleTestCase):
         data = {'password': '4321'}
         return data
 
+    def test_register_user_duplicate_email(self):
+        data1 = {'name': 'test_user1',
+                 'email': 'same@email.com',  # same email
+                 'username': 'test_user1',
+                 'password': '1234'}
+        data2 = {'name': 'test_user2',
+                 'email': 'same@email.com',  # same email
+                 'username': 'test_user2',
+                 'password': '1234'}
+        response1 = self.client.post('/cadastrar/usuario/', data1, follow=True)
+        response2 = self.client.post('/cadastrar/usuario/', data2, follow=True)
+
+        self.assertEquals(
+            response1.redirect_chain, [('http://testserver/login/', 302)])
+        self.assertEquals(
+            response2.redirect_chain, [])
+        self.assertEquals(response1.status_code, STATUS_OK)
+        self.assertEquals(response2.status_code, STATUS_OK)
+
+    def test_register_user_invalid_email(self):
+        data = {'name': 'test_user2',
+                'email': 'testemail.com',
+                'username': 'test_user2',
+                'password': '1234'}
+        response = self.client.post('/cadastrar/usuario/', data, follow=True)
+        self.assertEquals(response.redirect_chain, [])
+        self.assertEquals(response.status_code, STATUS_OK)
+
+    def test_register_user_invalid_username(self):
+        data1 = {'name': 'test_user1',  # same name
+                 'email': 'test1@email.com',
+                 'username': 'test_user_same',
+                 'password': '1234'}
+        data2 = {'name': 'test_user2',  # same name
+                 'email': 'test2@email.com',
+                 'username': 'test_user_same',
+                 'password': '1234'}
+        response1 = self.client.post('/cadastrar/usuario/', data1, follow=True)
+        response2 = self.client.post('/cadastrar/usuario/', data2, follow=True)
+
+        self.assertEquals(
+            response1.redirect_chain, [('http://testserver/login/', 302)])
+        self.assertEquals(
+            response2.redirect_chain, [])
+        self.assertEquals(response1.status_code, STATUS_OK)
+        self.assertEquals(response2.status_code, STATUS_OK)
+
     def test_register_user_page(self):
         response = self.client.get('/cadastro/')
         self.assertEquals(response.status_code, STATUS_OK)
@@ -86,7 +133,12 @@ class UserControllerTest(SimpleTestCase):
         response = self.client.get('/desativacao_perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
-    def test_buscar_linha_page(self):
-        data = {'busline': '205'}
-        response = self.client.post('/buscar_linha/', data)
+    # FIX-ME
+    def test_register_user_page_feed(self):
+        self.create_user()
+        self.client.login(
+            username='test_username', password='test_password')
+        response = self.client.get('/')
         self.assertEquals(response.status_code, STATUS_OK)
+        self.client.logout()
+        self.user.delete()

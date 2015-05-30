@@ -14,4 +14,3 @@ clonedigger==1.1.0
 pep8==1.6.2
 pylint==1.4.3
 pyflakes==0.8.1
-MagicMock==0.03
