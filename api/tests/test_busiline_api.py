@@ -18,53 +18,61 @@ class testBusilineAPI(SimpleTestCase):
 
     @patch('api.busline.requests.get')
     def test_all(self, mock_get):
-        mock_get = mock_get
         mock_response = Mock()
         mock_response.json.return_value = self.all_buslines_dict()
         mock_get.return_value = mock_response
         all_url = "http://localhost:8080/api/v1/busline/"
 
-        all_buslines = self.api.all()
+        self.api.all()
 
         mock_get.assert_called_once_with(all_url)
         mock_response.json.assert_called_once()
 
     @patch('api.busline.requests.get')
     def test_filter_by_line(self, mock_get):
-        mock_get = mock_get
         mock_response = Mock()
         mock_response.json.return_value = self.buslines_by_number()
         mock_get.return_value = mock_response
         all_url = "http://localhost:8080/api/v1/busline/?line_number__contains=17&limit=0"
 
-        all_buslines = self.api.filter_by_line('17')
+        self.api.filter_by_line('17')
 
         mock_get.assert_called_once_with(all_url)
         mock_response.json.assert_called_once()
 
     @patch('api.busline.requests.get')
     def test_filter_by_description(self, mock_get):
-        mock_get = mock_get
         mock_response = Mock()
         mock_response.json.return_value = self.buslines_by_description()
         mock_get.return_value = mock_response
         all_url = "http://localhost:8080/api/v1/busline/?description__contains=setor&limit=0"
 
-        all_buslines = self.api.filter_by_description('setor')
+        self.api.filter_by_description('setor')
 
         mock_get.assert_called_once_with(all_url)
         mock_response.json.assert_called_once()
 
     @patch('api.busline.requests.get')
     def test_filter_by_multiple(self, mock_get):
-        mock_get = mock_get
         mock_response = Mock()
         mock_response.json.return_value = self.buslines_by_description()
         mock_get.return_value = mock_response
         all_url = "http://localhost:8080/api/v1/busline/?line_number__contains=917&description__contains=setor&limit=0"
 
-        all_buslines = self.api.filter_by_multiple(
+        self.api.filter_by_multiple(
             line_number='917', description='setor')
+
+        mock_get.assert_called_once_with(all_url)
+        mock_response.json.assert_called_once()
+
+    @patch('api.busline.requests.get')
+    def test_filter(self, mock_get):
+        mock_response = Mock()
+        mock_response.json.return_value = self.buslines_by_description()
+        mock_get.return_value = mock_response
+        all_url = "http://localhost:8080/api/v1/busline/?line_number__contains=917&description__contains=setor&limit=0"
+
+        self.api.filter(line_number='917', description='setor')
 
         mock_get.assert_called_once_with(all_url)
         mock_response.json.assert_called_once()
