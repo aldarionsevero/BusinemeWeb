@@ -1,39 +1,83 @@
 # -*- coding: utf-8 -*-
 
-# from django.test import SimpleTestCase
-# from models.busline import Busline
-# from models.company import Company
-# from models.terminal import Terminal
+from django.test import SimpleTestCase
+from models.busline import Busline
+from models.terminal import Terminal
 
 
-# class TestBusline(SimpleTestCase):
+class BuslineTest(SimpleTestCase):
 
-# 	def test_instance(self):
-#         busline = Busline()
-#         busline.line_number = '111'
-#         busline.description = 'test'
-#         busline.via = 'test'
-#         busline.route_size = '111'
-#         busline.fee = '111'
-#         busline.company = ForeignKey('Company')
-#         busline.terminals = models.ForeignKey('Terminal')
-#         busline.save()
-#         self.assertIsNotNone(busline)
+    def create_busline(self):
+        busline = Busline()
+        busline.line_number = "001"
+        busline.description = "description"
+        busline.via = "via"
+        busline.route_size = 2.5
+        busline.fee = 2.0
+        terminal = Terminal(description="terminal")
+        terminal.save()
+        busline.save()
+        busline.terminals.add(terminal)
+        return busline
 
-# def save_on_db(self):
-# db_before = Busline.objects.all()
-# busline = Busline()
-# busline.line_number = '111'
-# busline.description = 'test'
-# busline.via = 'test'
-# busline.route_size = '111'
-# busline.fee = '111'
-# busline.company = Company()
-# busline.terminals = Terminal()
-# busline.save()
-# db_after = Busline.objects.all()
-# self.assertTrue(db_after != db_before)
+    def flush_buslines(self):
+        Busline.objects.all().delete()
 
-#     def test_filter_by_line_number(self):
-#         resp = Busline.filter_by_line_number('111')
-#         self.assertNotEquals(resp, [])
+    def setUp(self):
+        self.flush_buslines()
+
+    def test_busline_instance(self):
+        busline = Busline()
+        self.assertIsNotNone(busline)
+
+    def test_busline_unicode(self):
+        busline = self.create_busline()
+        self.assertEquals("001-description", busline.__unicode__())
+
+    def test_busline_all(self):
+        self.create_busline()
+        buslines = Busline.all()
+        self.assertEquals(1, len(buslines))
+
+    def test_busline_all_empty(self):
+        buslines = Busline.all()
+        self.assertEquals(0, len(buslines))
+
+    def test_busline_filter_line_number(self):
+        self.create_busline()
+        buslines = Busline.filter_by_line_number("001")
+        self.assertEquals(1, len(buslines))
+
+    def test_busline_filter_invalid_line_number(self):
+        buslines = Busline.filter_by_line_number("003")
+        self.assertEquals(0, len(buslines))
+
+    def test_busline_by_description(self):
+        self.create_busline()
+        buslines = Busline.filter_by_description("description")
+        self.assertEquals(1, len(buslines))
+
+    def test_busline_filter_by_description_invalid_description(self):
+        self.create_busline()
+        buslines = Busline.filter_by_description("aeiou")
+        self.assertEquals(0, len(buslines))
+
+    def test_busline_filter_by_multiple(self):
+        self.create_busline()
+        buslines = Busline.filter_by_multiple("001", "description")
+        self.assertEquals(1, len(buslines))
+
+    def test_busline_filter_by_multiple_invalid_description(self):
+        self.create_busline()
+        buslines = Busline.filter_by_multiple("001", "invalid")
+        self.assertEquals(0, len(buslines))
+
+    def teste_busline_filter_by_multiple_invalid_line_number(self):
+        self.create_busline()
+        buslines = Busline.filter_by_multiple("000", "description")
+        self.assertEquals(0, len(buslines))
+
+    def test_busline_filter_by_multiple_invalid_both(self):
+        self.create_busline()
+        buslines = Busline.filter_by_multiple("000", "inavlid")
+        self.assertEquals(0, len(buslines))
