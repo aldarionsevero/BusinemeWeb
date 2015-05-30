@@ -5,8 +5,9 @@ Feature: Advanced search of a busline
   
   Scenario: Do not fill any filter
     Given I am on Busine.me homepage
-    And I go to "Advanced Search"
-    When I press "Search"
+    And I press "Pesquisar"
+    And I press "Busca Avançada"
+    When I press "Procurar"
     Then I should see "Entre com pelo menos um filtro utilizar a busca avançada"
     
   Scenario: I fill the filter field "via"

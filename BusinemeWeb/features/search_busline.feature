@@ -9,3 +9,4 @@ Feature: Search busline
         When I press "Pesquisar"
         Then I should see "Resultado"
         And I should see a description saying "Foram encontrados '2' linhas que possuem '205' em seus números." 
+

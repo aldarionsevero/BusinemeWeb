@@ -1,4 +1,5 @@
 from lettuce import *
+from lettuce import steps
 from lettuce.django import django_url
 from lxml import html
 #from django.test.client import Client
@@ -12,7 +13,7 @@ def set_browser():
     world.browser = Browser('zope.testbrowser')
 
 
-@step('I am on Busine.me home page')
+@step(r'I am on Busine.me home page')
 def i_am_on_busineme_home_page(step):
     name = "/"
     full_url = django_url(name)
@@ -38,3 +39,4 @@ def i_should_see(step, value):
 def i_should_see(step, value):
     header = world.browser.find_by_tag('h4')[0]  # first result
     assert header.text == value
+
