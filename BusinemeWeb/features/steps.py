@@ -13,7 +13,7 @@ def set_browser():
     world.browser = Browser('zope.testbrowser')
 
 
-@step(r'I am on Busine.me home page')
+@step(r'I am on Busine.me homepage')
 def i_am_on_busineme_home_page(step):
     name = "/"
     full_url = django_url(name)
@@ -30,7 +30,7 @@ def i_press(step, button):
     world.browser.find_by_value(button).first.click()
 
 
-@step('I should see "(.*)"')
+@step('And I should see "(.*)"')
 def i_should_see(step, value):
     world.browser.find_by_value(value).first
 
@@ -39,4 +39,18 @@ def i_should_see(step, value):
 def i_should_see(step, value):
     header = world.browser.find_by_tag('h4')[0]  # first result
     assert header.text == value
+
+@step('I press "Busca Avancada"')
+def i_press_advanced_search(step):
+	world.browser.click_link_by_href("/busca_avancada/")
+
+
+@step('I should see a message saying "Erro"')
+def i_should_see(step):
+    world.browser.find_by_css("h2").first.value
+
+@step('Then I should see "(.*)"')
+def then_i_should_see(step, value):
+    world.browser.find_by_css('h3').first.value
+
 
