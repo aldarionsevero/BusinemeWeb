@@ -55,6 +55,20 @@ class testBusilineAPI(SimpleTestCase):
         mock_get.assert_called_once_with(all_url)
         mock_response.json.assert_called_once()
 
+    @patch('api.busline.requests.get')
+    def test_filter_by_multiple(self, mock_get):
+        mock_get = mock_get
+        mock_response = Mock()
+        mock_response.json.return_value = self.buslines_by_description()
+        mock_get.return_value = mock_response
+        all_url = "http://localhost:8080/api/v1/busline/?line_number__contains=917&description__contains=setor&limit=0"
+
+        all_buslines = self.api.filter_by_multiple(
+            line_number='917', description='setor')
+
+        mock_get.assert_called_once_with(all_url)
+        mock_response.json.assert_called_once()
+
     def all_buslines_dict(self):
         return {
             "meta": {"limit": 1000, "next": "null", "offset": 0, "previous": "null", "total_count": 6},
