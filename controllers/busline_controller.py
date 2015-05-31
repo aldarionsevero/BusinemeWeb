@@ -26,9 +26,8 @@ def advanced_search_line(request):
             (len(request.GET['description']) < 2) and
             (len(request.GET['terminal__description']) < 2)):
         response = error_message(
-            "Erro :(", "Busca com apenas um dígito", "A busca deve ser \
-                realizada com no mínimo 2 dígitos ou apenas \
-        vazia para vizualizar todas as linhas.",
+            "Erro :(", "Entrada inválida.", "Os campos preenchidos da busca avançada devem possuir \
+                no mínimo 2 dígitos.",
             "search_result_page.html", request)
     else:
         buslines = Busline.filter_by_multiple(
@@ -37,11 +36,11 @@ def advanced_search_line(request):
             terminal__description=request.GET['terminal__description']
         )
         count_busline = len(buslines)
-        line_number=request.GET['busline']
+        line_number = request.GET['busline']
         response = render_to_response("search_result_page.html",
                                       {'buslines': buslines,
                                        'count_busline': count_busline,
-                                       'searched_number':line_number},
+                                       'searched_number': line_number},
                                       context_instance=RequestContext(request))
     return response
 
