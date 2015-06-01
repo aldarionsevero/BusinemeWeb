@@ -8,6 +8,7 @@ pep8:
 pylint:
   run: true
 mccabe:
+  max-complexity: 5
   run: true
 autodetect: yes
 requirements:
