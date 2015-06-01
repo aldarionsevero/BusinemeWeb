@@ -8,6 +8,10 @@ from controllers.utils import error_message
 
 
 def search_line(request):
+    """
+    Performs a search for bus lines that contain the input value entered
+    by the user then returns the result page and the list of results.
+    """
     line_number = request.GET['busline']
     buslines = Busline.filter_by_line_number(line_number)
     count_busline = len(buslines)
@@ -17,11 +21,14 @@ def search_line(request):
                                    'searched_number': line_number},
                                   context_instance=RequestContext(request))
 
-    return response
+        return response
 
 
 def advanced_search_line(request):
-
+    """
+    Performs an advanced search for bus lines which contain the input values
+    entered by the user then returns the result page and the list of results.
+    """
     if ((len(request.GET['busline']) < 2) and
             (len(request.GET['description']) < 2) and
             (len(request.GET['terminal__description']) < 2)):
@@ -46,5 +53,8 @@ def advanced_search_line(request):
 
 
 def advanced_search_page(request):
+    """
+    Returns the advanced search page when requested.
+    """
     return render_to_response("advanced_search_busline.html",
                               context_instance=RequestContext(request))

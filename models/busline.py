@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+""" docstring for package Busline """
 from django.db import models
 from api.busline import BuslineAPI
 
@@ -49,6 +50,11 @@ class Busline(models.Model):
     @classmethod
     def filter_by_multiple(cls, line_number, description,
                            terminal__description):
+        """
+        Performs an advanced search filtering the results by the line number,
+        description and terminal description entered by the user then returns
+        the results list.
+        """
         api = BuslineAPI()
         try:
             objects = api.filter(
