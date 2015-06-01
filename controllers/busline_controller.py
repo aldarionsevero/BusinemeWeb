@@ -20,8 +20,7 @@ def search_line(request):
                                    'count_busline': count_busline,
                                    'searched_number': line_number},
                                   context_instance=RequestContext(request))
-
-        return response
+    return response
 
 
 def advanced_search_line(request):
