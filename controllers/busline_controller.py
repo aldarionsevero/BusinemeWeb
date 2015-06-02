@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" Busline controller docstring """
+"""Busline controller docstring"""
 from django.shortcuts import render_to_response
 from models.busline import Busline
 # from api import BuslineAPI
@@ -9,7 +9,7 @@ from controllers.utils import error_message
 
 
 def search_line(request):
-    """
+    r"""
     Perform a search for bus lines that contain the input value entered\
     by the user then returns the result page and the list of results.
     """
@@ -25,7 +25,7 @@ def search_line(request):
 
 
 def advanced_search_line(request):
-    """
+    r"""
     Perform an advanced search for bus lines which contain the input values\
     entered by the user then returns the result page and the list of results.
     """
@@ -55,6 +55,6 @@ def advanced_search_line(request):
 
 
 def advanced_search_page(request):
-    """ Return the advanced search page when requested. """
+    """Return the advanced search page when requested."""
     return render_to_response("advanced_search_busline.html",
                               context_instance=RequestContext(request))
