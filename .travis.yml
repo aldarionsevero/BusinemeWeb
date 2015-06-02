@@ -20,7 +20,7 @@ before_script:
 
 script:
  - coverage run manage.py test
- - python manage.py harvest
+# - python manage.py harvest
 
 after_succes:
  - coveralls

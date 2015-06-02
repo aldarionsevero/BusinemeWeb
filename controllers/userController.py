@@ -31,30 +31,39 @@ def register_user(request):
     try:
         if not user.validate_unique_email():
             response = error_message(
-                "Erro :(", "Email ja cadastrado", "o e-mail cadastrado ja \
-                    está em uso", "register.html", request)
+                "Erro :(",
+                "Email ja cadastrado.", "O e-mail inserido já \
+                está em uso. Utilize um e-mail diferente para realizar o \
+                cadastro.",
+                "register.html", request)
             return response
         response = redirect("/login/",
                             context_instance=RequestContext(request))
         if not user.validate_email():
             response = error_message(
-                "Erro :(", "E-mail invalido.",
-                "Verifique se a escrita. O email deve conter @ e . (ponto).",
+                "Erro :(",
+                "E-mail inválido.",
+                "Verifique o e-mail inserido. Ele deve conter os caracteres '@'\
+                 e '.' (ponto).",
                 "register.html", request)
         if not user.validade_user_password(request.POST["password"]):
             response = error_message(
-                "Erro :(", "Senha Vazia.",
-                "Não é possível cadastrar uma senha vazia.",
+                "Erro :(",
+                "Campo de senha vazio.",
+                "Não é possível realizar o cadastro com a senha vazia, insira\
+                 uma por favor.",
                 "register.html", request)
 
         if user.validate_email() and user.validate_unique_email() and \
                 user.validade_user_password(request.POST["password"]):
             user.save()
+
     except IntegrityError:
         if not user.validate_user_name():
             response = error_message(
-                "Erro :(", "Usuário ja cadastrado.", "Nome de usuário já \
-                está em uso.",
+                "Erro :(",
+                "Usuário já cadastrado.",
+                "O nome de usuário inserido já está em uso.",
                 "register.html", request)
 
     return response
@@ -82,25 +91,25 @@ def log_user_post(request):
     username = request.POST["username"]
     password = request.POST["password"]
     user = authenticate(username=username, password=password)
-    htmlvars = {}
     if user is not None:
         if user.is_active:
             login(request, user)
             response = redirect('/', context_instance=RequestContext(request))
         else:
-            response = render_to_response('login.html',
-                                          context_instance=RequestContext(
-                                              request))
+            response = error_message(
+                "Erro :(",
+                "Usuário desativado.",
+                "Esta usuário foi desativado.\
+            Entre em contato com o suporte Busine.me para solicitar a\
+             reativação.",
+                "login.html", request)
     else:
-
-        htmlvars["alert_title"] = "Erro :("
-        htmlvars["error_lead"] = "Usuário não encontrado."
-        htmlvars[
-            "error_message"
-        ] = "Verifique se o nome de usuário e a senha informados estão \
-        corretos."
-        response = render_to_response("login.html", htmlvars,
-                                      context_instance=RequestContext(request))
+        response = error_message(
+            "Erro :(",
+            "Usuário não encontrado.",
+            "Verifique se o nome de usuário e a senha informados estão\
+             corretos.",
+            "login.html", request)
     return response
 
 
@@ -140,26 +149,20 @@ def change_password(request):
     old_password = request.POST["old_password"]
     new_password1 = request.POST["new_password1"]
     new_password2 = request.POST["new_password2"]
-    htmlvars = {}
-    if not user.check_password(old_password):
-        htmlvars["alert_title"] = "Erro :("
-        htmlvars["error_lead"] = "Senha incorreta."
-        htmlvars[
-            "error_message"
-        ] = "A senha antiga esta incorreta."
-        response = render_to_response("change_password_page.html", htmlvars,
-                                      context_instance=RequestContext(request))
 
+    if not user.check_password(old_password):
+        response = error_message(
+            "Erro :(",
+            "Senha atual incorreta.",
+            "Verifique a escrita da senha informada.",
+            "login.html", request)
     else:
         if not (new_password1 == new_password2):
-            htmlvars["alert_title"] = "Erro :("
-            htmlvars["error_lead"] = "Senha incorreta."
-            htmlvars[
-                "error_message"
-            ] = "Os campos de nova senha nao conferem."
-            response = render_to_response(
-                "change_password_page.html", htmlvars,
-                context_instance=RequestContext(request))
+            response = error_message(
+                "Erro :(",
+                "Os campos de nova senha não conferem.",
+                "Verifique a escrita das senhas informadas.",
+                "login.html", request)
         else:
             user.set_password(new_password1)
             user.save()
@@ -177,7 +180,6 @@ def change_userdata(request):
         user.first_name = request.POST["name"]
         user.email = request.POST["email"]
         user.save()
-
     return redirect("/",
                     context_instance=RequestContext(request))
 
@@ -194,30 +196,23 @@ def deactivate_account_page(request):
 
 @login_required
 def deactivate_account(request):
-    htmlvars = {}
     user = request.user
 
     password = request.POST["password"]
 
     if not user.check_password(password):
-        htmlvars["alert_title"] = "Erro :("
-        htmlvars["error_lead"] = "Senha incorreta."
-        htmlvars[
-            "error_message"
-        ] = "A senha está incorreta."
-        response = render_to_response(
-            "deactivate_account_page.html", htmlvars,
-            context_instance=RequestContext(request))
+        response = error_message(
+            "Erro :(",
+            "Senha incorreta.",
+            "Verifique a escrita da senha informada.",
+            "deactivate_account_page.html", request)
     else:
         user.is_active = False
         user.save()
-        htmlvars["alert_title"] = "Sucesso!"
-        htmlvars["error_lead"] = "Usuário desativado com sucesso."
-        htmlvars[
-            "error_message"
-        ] = "Esperamos o seu retorno, até logo! :)"
         logout(request)
-        response = render_to_response(
-            "login.html", htmlvars,
-            context_instance=RequestContext(request))
+        response = error_message(
+            "Sucesso!",
+            "Usuário desativado com sucesso.",
+            "Esperamos o seu retorno, até logo! :)",
+            "login.html", request)
     return response

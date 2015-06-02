@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+""" docstring for package Busline """
 from django.db import models
 from api.busline import BuslineAPI
 
 
 class Busline(models.Model):
 
-    """docstring for Busline"""
+    """ docstring for Busline """
 
     line_number = models.CharField(max_length=5, unique=True)
     description = models.CharField(max_length=255)
@@ -37,10 +38,6 @@ class Busline(models.Model):
         return objects
 
     @classmethod
-    def filter_by_via(cls, via):
-        return cls.objects.filter(via__startswith=via)
-
-    @classmethod
     def filter_by_description(cls, description):
         api = BuslineAPI()
         try:
@@ -51,13 +48,26 @@ class Busline(models.Model):
         return objects
 
     @classmethod
-    def filter_by_multiple(cls, line_number, description):
+    def filter_by_multiple(cls, line_number, description,
+                           terminal__description):
+        """
+        Perform an advanced search filtering the results by the line number,\
+        description and terminal description entered by the user then returns\
+        the results list.
+        """
+
         api = BuslineAPI()
         try:
-            objects = api.filter_by_multiple(line_number, description)
+            objects = api.filter(
+                line_number=line_number,
+                description=description,
+                terminal__description=terminal__description
+            )
         except:
             objects = cls.objects.filter(
                 description__startswith=description,
-                line_number__startswith=line_number)
+                line_number__startswith=line_number,
+                # terminals__startswith=terminals #FIXME forekey
+            )
 
         return objects

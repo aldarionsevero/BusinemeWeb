@@ -4,23 +4,40 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-        <h1 class="text-center">Resultado</h1>
+        <h1 class="text-center" value="Resultado"> Resultado</h1>
+    </div>
+    <div class = "row">
+        {% if count_busline and searched_number%}
+            <h4 class="text-center" id="PASTEL">Foram encontrados '{{ count_busline }}' linhas que possuem '{{ searched_number }}' em seus números.</h4>
+        {% endif %}
+        <a href="/busca_avancada/" name="busca_avancada" class="right ">Busca Avançada</a>
     </div>
     <div class="row">
         <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
             {% for busline in buslines %}
                <div class="panel"> 
-              
+    
                <h3>{{ busline.line_number }}</h3> 
                 <p>Rota: {{ busline.description }}</p> 
                 <p>{{ busline.via }}</p> 
                 <p>Percurso: {{ busline.route_size }} KM</p> 
                 <p>Tarifa: R${{ busline.fee }}</p> 
-            
                </div>
             {% endfor %}
+         
             </div>
         </div>
     </div>
 {% endblock %}
+{% block "scripts" %}
+{% if error_lead %}
+    <script>
+        $('#modal_error').foundation('reveal', 'open');
+    </script>
+{% endif %}
+{% endblock %}
+
+{% block "modal_error_lead" %} {{error_lead}}{% endblock %}
+{% block "modal_error_message" %} {{error_message}} {% endblock %} 
+{% block "modal_alert_title" %} {{alert_title}} {% endblock %} 
