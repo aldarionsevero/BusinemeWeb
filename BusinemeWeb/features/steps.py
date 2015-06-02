@@ -14,7 +14,7 @@ def set_browser():
 
 @step(r'I am on Busine.me homepage')
 def i_am_on_busineme_home_page(step):
-    """ Verify if the actual page is the homepage of the application. """
+    """Verify if the actual page is the homepage of the application."""
 
     name = "/"
     full_url = django_url(name)
@@ -23,21 +23,21 @@ def i_am_on_busineme_home_page(step):
 
 @step('I type "(.*)" in the field "(.*)"')
 def i_type_value_in_the_field_field_name(step, value, field_name):
-    """ Enter the predefined values on predefined field. """
+    """Enter the predefined values on predefined field."""
 
     world.browser.fill(field_name, value)
 
 
 @step('I press "(.*)"')
 def i_press(step, button):
-    """ Activate the predefined button. """
+    """Activate the predefined button."""
 
     world.browser.find_by_value(button).first.click()
 
 
 @step('And I should see "(.*)"')
 def i_should_see(step, value):
-    """
+    r"""
     Verify if the header text of the actual page\
     matches the predefined string for this field.
     """
@@ -47,7 +47,7 @@ def i_should_see(step, value):
 
 @step('I should see a description saying "(.*)"')
 def i_should_see_a_description(step, value):
-    """
+    r"""
     Verify if the displayed description string matches\
     with the expected description string for this field.
     """
@@ -58,7 +58,7 @@ def i_should_see_a_description(step, value):
 
 @step('I press "Busca Avancada"')
 def i_press_advanced_search(step):
-    """
+    r"""
     Verify if when the advanced search button is activated\
     the "/busca_avancada/" url is called.
     """
@@ -68,7 +68,7 @@ def i_press_advanced_search(step):
 
 @step('I should see a message saying "Erro"')
 def i_should_see_an_error_message(step):
-    """
+    r"""
     Verify if the message that was displayed starts\
     with the predefined string for this field.
     """
@@ -78,7 +78,7 @@ def i_should_see_an_error_message(step):
 
 @step('Then I should see "(.*)"')
 def then_i_should_see(step, value):
-    """
+    r"""
     Verify if the displayed description string matches\
     with the expected description string for this field.
     """
