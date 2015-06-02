@@ -6,7 +6,7 @@ from api.busline import BuslineAPI
 
 class Busline(models.Model):
 
-    """docstring for Busline"""
+    """ docstring for Busline """
 
     line_number = models.CharField(max_length=5, unique=True)
     description = models.CharField(max_length=255)
@@ -51,10 +51,11 @@ class Busline(models.Model):
     def filter_by_multiple(cls, line_number, description,
                            terminal__description):
         """
-        Performs an advanced search filtering the results by the line number,
-        description and terminal description entered by the user then returns
+        Perform an advanced search filtering the results by the line number,\
+        description and terminal description entered by the user then returns\
         the results list.
         """
+
         api = BuslineAPI()
         try:
             objects = api.filter(
