@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ ! -d "metrics" ]; then
+   mkdir metrics
+else
+   rm -rf metrics
+   mkdir metrics
+fi
+
+for D in *
+do
+    if [ -d "$D" ]; then
+	echo "Running pylint on $D"
+	pylint $D > metrics/metrics_$D.txt 2> /dev/null
+	for app in `ls $D`
+	do
+	    if [[ ${app: -3} == ".py" ]]; then
+	        python -m mccabe $D/$app >> metrics/metrics_$D.txt 2> /dev/null
+	    fi
+	done
+    fi
+done
