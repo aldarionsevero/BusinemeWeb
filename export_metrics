@@ -9,36 +9,101 @@ else
    mkdir metrics
 fi
 
-echo "\documentclass{article}
+echo "\documentclass{report}
 
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage[brazil]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{listings,showexpl}
-\usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{longtable}
+\usepackage{hyperref}
+
+
+\hypersetup{
+pdftitle={Busine.me},
+pdfsubject={Metrics},
+pdfkeywords={},
+backref=true,
+draft=false,
+%pdfstartview=fitR,
+bookmarks=true,
+bookmarksopen=true,
+colorlinks=true,
+linkcolor=black,
+urlcolor=black,
+citecolor=black,%blue
+pdftex,
+bookmarks=true,
+linktocpage=true,
+hyperindex=true,
+unicode=false
+}
+
+\begin{titlepage}
+\centering
+% \doublespacing
+\scshape
+\normalfont
+\vspace{0.1\textheight}
+\vbox{\normalfont{UNB - UNIVERSIDADE DE BRASILIA\\CAMPUS GAMA}}
+\vspace{0.1\textheight}
+
+
+\vbox{\Huge
+%Nome do Trabalho
+
+Busine.me
+
+\vspace{0.03\textheight}
+\hrule }
+
+\vbox{
+%Nome da Matéria
+
+Metrics
+
+}
+\vspace{0.3\textheight}
+
+%teste
+
+\vspace{0.5\textheight}
+%Nomes
+\vbox{\scshape
+{\today}}
+\end{titlepage}
+
 
 \begin{document}
-	\input metrics/saida
-\end{document}" > metrics/main.tex
+
+\tableofcontents
+" > metrics/main.tex
+
 
 for D in *
 do
     if [ -d "$D" ]; then
 	echo "Running pylint on $D"
 	pylint --comment=n -d all $D > metrics/metrics_$D.md 2> /dev/null
+	echo "\part{$D}
+
+	    	" >> metrics/main.tex
 	for app in `ls $D`
 	do
 	    if [[ ${app: -3} == ".py" ]]; then
-	        python -m mccabe $D/$app >> metrics/metrics_$D.md 2> /dev/null
-	        pandoc -f markdown -t latex metrics/metrics_$D.md > metrics/saida.tex
-	        pdflatex -interaction=batchmode metrics/main.tex
-	        mv main.pdf metrics/metrics_$D.pdf
-	        rm -rf *.aux *.log *.toc *.bbl *.bak *.blg *.out *.lof *.lot *.lol *.glg *.glo *.ist *.xdy *.gls *.acn *.acr *.idx *.alg
+	    	if [[ $app != "__init__.py" ]]; then
+		    	echo "\chapter{\text{$app}}
+
+		    	" >> metrics/main.tex
+		        python -m mccabe $D/$app >> metrics/metrics_$D.md 2> /dev/null
+		        pandoc -f markdown -t latex metrics/metrics_$D.md >> metrics/main.tex
+	        fi
 	    fi
 	done
     fi
 done
+
+echo "\end{document}" >> metrics/main.tex
+pdflatex -interaction=batchmode metrics/main.tex
+mv main.pdf metrics/metrics_`date +%d_de_%B_de_%Y`.pdf
+echo "Cleaning"
+rm -rf *.aux *.log *.toc *.bbl *.bak *.blg *.out *.lof *.lot *.lol *.glg *.glo *.ist *.xdy *.gls *.acn *.acr *.idx *.alg metrics/*.md metrics/*.tex
