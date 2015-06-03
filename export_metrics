@@ -3,19 +3,41 @@
 if [ ! -d "metrics" ]; then
    mkdir metrics
 else
+   echo "Cleaning"
    rm -rf metrics
+   sleep 0.1
    mkdir metrics
 fi
+
+echo "\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[brazil]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings,showexpl}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{longtable}
+
+\begin{document}
+	\input metrics/saida
+\end{document}" > metrics/main.tex
 
 for D in *
 do
     if [ -d "$D" ]; then
 	echo "Running pylint on $D"
-	pylint $D > metrics/metrics_$D.txt 2> /dev/null
+	pylint --comment=n -d all $D > metrics/metrics_$D.md 2> /dev/null
 	for app in `ls $D`
 	do
 	    if [[ ${app: -3} == ".py" ]]; then
-	        python -m mccabe $D/$app >> metrics/metrics_$D.txt 2> /dev/null
+	        python -m mccabe $D/$app >> metrics/metrics_$D.md 2> /dev/null
+	        pandoc -f markdown -t latex metrics/metrics_$D.md > metrics/saida.tex
+	        pdflatex -interaction=batchmode metrics/main.tex
+	        mv main.pdf metrics/metrics_$D.pdf
+	        rm -rf *.aux *.log *.toc *.bbl *.bak *.blg *.out *.lof *.lot *.lol *.glg *.glo *.ist *.xdy *.gls *.acn *.acr *.idx *.alg
 	    fi
 	done
     fi
