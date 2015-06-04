@@ -6,4 +6,4 @@ class ApiException(Exception):
     """docstring for ExistingUser"""
 
     def __str__(self):
-        return "Erro na API"
+        return "API Connection Error"

@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from controllers.utils import error_message, response_htmlvars
+from controllers.utils import error_message
 
 
 def register_user_page(request):
@@ -43,8 +43,8 @@ def register_user(request):
             response = error_message(
                 "Erro :(",
                 "E-mail inválido.",
-                "Verifique o e-mail inserido. Ele deve conter os caracteres '@'\
-                 e '.' (ponto).",
+                "Verifique o e-mail inserido. Ele deve conter os caracteres \
+                '@' e '.' (ponto).",
                 "register.html", request)
         if not user.validade_user_password(request.POST["password"]):
             response = error_message(
