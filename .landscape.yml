@@ -7,13 +7,13 @@ pep8:
   full: true
 pylint:
   run: true
-ignore-paths:
-  - models/models.py
-ignore-patterns:
-  - (^|/).*_test\.py(/|$)
 mccabe:
   max-complexity: 5
   run: true
 autodetect: yes
 requirements:
   - requirements.txt
+ignore-paths:
+  - models/models.py
+ignore-patterns:
+  - (^|/).*_test\.py(/|$)
