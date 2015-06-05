@@ -3,6 +3,9 @@ from django.template import RequestContext
 
 
 def error_message(alert_title, error_lead, error_message_in, html, request):
+    r"""
+    Populates a htmlvars with the error message and generates the response.
+    """
     htmlvars = {}
     htmlvars["alert_title"] = alert_title
     htmlvars["error_lead"] = error_lead
@@ -12,6 +15,9 @@ def error_message(alert_title, error_lead, error_message_in, html, request):
 
 
 def response_htmlvars(htmlvars, html, request):
+    r"""
+    Generates a response with a already populated htmlvars
+    """
     response = render_to_response(html, htmlvars,
                                   context_instance=RequestContext(request))
     return response

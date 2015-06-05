@@ -3,7 +3,7 @@
 
 class ApiException(Exception):
 
-    """docstring for ExistingUser"""
+    """Exception for API errors"""
 
     def __str__(self):
         return "API Connection Error"
