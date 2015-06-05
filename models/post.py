@@ -8,7 +8,7 @@ class Post(models.Model):
     longitude = models.CharField(max_length=100)
     traffic = models.IntegerField()
     capacity = models.IntegerField()
-    terminals = models.ManyToManyField('Terminal')
+    busline = models.ManyToManyField('Busline')
     date = models.DateField(auto_now=True)
     time = models.TimeField(auto_now=True)
 

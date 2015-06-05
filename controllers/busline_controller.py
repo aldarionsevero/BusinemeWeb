@@ -30,8 +30,9 @@ def advanced_search_line(request):
     entered by the user then returns the result page and the list of results.
     """
     if ((len(request.GET['busline']) < 2) and
-            (len(request.GET['description']) < 2) and
-            (len(request.GET['terminal__description']) < 2)):
+            (len(request.GET['description']) < 2)):
+            # and
+            # (len(request.GET['terminal__description']) < 2)):
         response = error_message(
             "Erro :(",
             "Entrada inválida.",
@@ -42,7 +43,8 @@ def advanced_search_line(request):
         buslines = Busline.filter_by_multiple(
             line_number=request.GET['busline'],
             description=request.GET['description'],
-            terminal__description=request.GET['terminal__description']
+            terminal__description=''
+            # request.GET['terminal__description']
         )
         count_busline = len(buslines)
         line_number = request.GET['busline']

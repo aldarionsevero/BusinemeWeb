@@ -15,17 +15,19 @@
     <div class="row">
         <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
-            {% for busline in buslines %}
-               <div class="panel"> 
-    
-               <h3>{{ busline.line_number }}</h3> 
-                <p>Rota: {{ busline.description }}</p> 
-                <p>{{ busline.via }}</p> 
-                <p>Percurso: {{ busline.route_size }} KM</p> 
-                <p>Tarifa: R${{ busline.fee }}</p> 
-               </div>
-            {% endfor %}
-         
+                 <form action="/realizar_post/" method="GET">
+                    {% for busline in buslines %}
+                       <div class="panel"> 
+                           <h3>{{ busline.line_number }}</h3> 
+                            <p>Rota: {{ busline.description }}</p> 
+                            <p>{{ busline.via }}</p> 
+                            <p>Percurso: {{ busline.route_size }} KM</p> 
+                            <p>Tarifa: R${{ busline.fee }}</p> 
+                            <input type="submit" class="button round" name='Businar' value="Businar!">
+                            <input type="hidden" name="line_number" value="{{busline.line_number}}">
+                       </div>
+                    {% endfor %}
+                </form>
             </div>
         </div>
     </div>
