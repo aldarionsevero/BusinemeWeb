@@ -3,6 +3,7 @@
 from django.shortcuts import render_to_response
 from models.post import Post
 from django.template import RequestContext
+from api.busline import BuslineAPI
 
 
 def register_post(request):
@@ -30,13 +31,20 @@ def register_post(request):
 
 def make_post_page(request):
     """Return the post page when requested. """
+    line_number = request.GET['line_number']
     return render_to_response("make_post_page.html",
+                              {'line_number': line_number},
                               context_instance=RequestContext(request))
 
 
 def make_post(request):
     post = Post()
 
+    api = BuslineAPI()
+
+    busline = api.filter_by_line_equals(request.get['line_number'])
+
+    post.busline = busline
     post.capacity = request.GET['capacity']
     post.traffic = request.GET['traffic']
     post.comment = request.GET['description']

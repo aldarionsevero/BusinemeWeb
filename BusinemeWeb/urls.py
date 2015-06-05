@@ -37,6 +37,6 @@ urlpatterns = patterns(
         'controllers.busline_controller.advanced_search_page'),
     url(r'^realizar_post/',
         post_controller.make_post_page),
-    url(r'^teste/',
+    url(r'^save_post/',
         post_controller.make_post),
 )

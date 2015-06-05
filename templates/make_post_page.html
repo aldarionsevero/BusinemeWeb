@@ -12,8 +12,8 @@
     
 
         <div class="panel small-10 medium-4 large-4 small-centered columns">
-            <form action="/teste/" method="GET">
-                <h2>{{line_number}} Linha de bus aqui</h2>
+            <form action="/save_post/" method="GET">
+                <a href="" title="Clique aqui para ver todos os posts sobre a linha"><h2>{{line_number}}</h2></a>
                 <br>
                 
                 <h2>Transito</h2>
@@ -42,6 +42,7 @@
                 <label>
                     <textarea name="description" placeholder="Conte-nos sobre sua viagem" cols="10" rows="10"></textarea>
                 </label>
+                <input type="hidden" name="line_number" value="{{line_number}}">
                 <input type="submit" class="default button expand" name='Businar' value='Businar!'>
             </form>
         </div>
