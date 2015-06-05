@@ -8,7 +8,7 @@ import requests
 import json
 
 
-class BuslineAPI():
+class BuslineAPI(object):
 
     def all(self):
         url = settings.API_URL + 'busline/'

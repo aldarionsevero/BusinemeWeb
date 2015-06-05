@@ -9,6 +9,9 @@ class User(DjangoUser):
     """docstring for User"""
     pontuation = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return str(self.id)
+
     @classmethod
     def all(cls):
         return cls.objects.all()

@@ -7,11 +7,11 @@ from django.template import RequestContext
 #     user.set_password(request.POST["password"])
 
 
-def error_message(alert_title, error_lead, error_message, html, request):
+def error_message(alert_title, error_lead, error_message_in, html, request):
     htmlvars = {}
     htmlvars["alert_title"] = alert_title
     htmlvars["error_lead"] = error_lead
-    htmlvars["error_message"] = error_message
+    htmlvars["error_message"] = error_message_in
     response = response_htmlvars(htmlvars, html, request)
     return response
 
