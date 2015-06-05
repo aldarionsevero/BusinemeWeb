@@ -3,9 +3,12 @@
 
 class Busline(object):
 
-    """docstring for Busline"""
+    """API model for busline"""
 
     def __init__(self):
+        r"""
+        Initializes the atributes for the model
+        """
         self.line_number = ""
         self.description = ""
         self.via = ""

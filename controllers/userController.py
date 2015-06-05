@@ -10,6 +10,10 @@ from controllers.utils import error_message
 
 
 def register_user_page(request):
+    r"""
+    Loads the register user page. If a user is authenticated, it will be \
+    redirected to the main page instead
+    """
     if request.user.is_authenticated():
         response = redirect("/",
                             context_instance=RequestContext(request))
@@ -20,6 +24,11 @@ def register_user_page(request):
 
 
 def register_user(request):
+    r"""
+    Registers the user if all the data inserted in the forms are valid. The \
+    email has to be unique, and with "@" and a "." (dot). The username has to \
+    be unique. Finally, no fields can be blank.
+    """
     # c = {}
     # c.update(csrf(request))
     user = User()
@@ -69,6 +78,9 @@ def register_user(request):
 
 
 def log_user(request):
+    r"""
+    Calls method to log the user depending on the input method (GET or POST).
+    """
     if request.method == 'GET':
         response = log_user_get(request)
     elif request.method == 'POST':
@@ -77,6 +89,9 @@ def log_user(request):
 
 
 def log_user_get(request):
+    r"""
+    Logs the user with GET method.
+    """
     if request.user.is_authenticated():
         response = redirect("/",
                             context_instance=RequestContext(request))
@@ -87,6 +102,10 @@ def log_user_get(request):
 
 
 def log_user_post(request):
+    r"""
+    Logs the user with POST method. Checks if user is deactivated and if \
+    username or password are incorrect.
+    """
     username = request.POST["username"]
     password = request.POST["password"]
     user = authenticate(username=username, password=password)
@@ -114,12 +133,18 @@ def log_user_post(request):
 
 @login_required
 def logout_user(request):
+    r"""
+    Logs user out
+    """
     logout(request)
     return redirect('/login/', context_instance=RequestContext(request))
 
 
 @login_required
 def user_account(request):
+    r"""
+    Loads the account managment page, that lets the user change his data.
+    """
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -130,6 +155,9 @@ def user_account(request):
 
 @login_required
 def change_password_page(request):
+    r"""
+    Loads the password managment page, that lets the user change his password.
+    """
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -140,6 +168,9 @@ def change_password_page(request):
 
 @login_required
 def change_password(request):
+    r"""
+    Changes user password checking for his current password.
+    """
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -173,6 +204,9 @@ def change_password(request):
 
 @login_required
 def change_userdata(request):
+    r"""
+    Changes user data.
+    """
     # Try to change the data of the usere
     if request.user.is_authenticated():
         user = request.user
@@ -185,6 +219,9 @@ def change_userdata(request):
 
 @login_required
 def deactivate_account_page(request):
+    r"""
+    Loads user account deactivation page.
+    """
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -195,6 +232,9 @@ def deactivate_account_page(request):
 
 @login_required
 def deactivate_account(request):
+    r"""
+    Deactivates user account checking for his current password.
+    """
     user = request.user
 
     password = request.POST["password"]

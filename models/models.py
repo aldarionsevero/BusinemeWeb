@@ -1,3 +1,5 @@
+"""Imports of all models to make django create correct migrations"""
+
 from busline import Busline
 from company import Company
 from post import Post

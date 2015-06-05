@@ -6,11 +6,11 @@ import re
 
 class User(DjangoUser):
 
-    """docstring for User"""
+    """User Model"""
     pontuation = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return str(self.id)
+        return str(self.username)
 
     @classmethod
     def all(cls):
