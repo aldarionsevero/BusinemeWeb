@@ -26,5 +26,11 @@ Feature: Make a post.
 
 
 
-
+	Scenario: I press the button "Businar!" on "realizar_post.html"
+		Given I am on Busine.me homepage
+		And I type "205" in the field "busline"
+		And I press "Pesquisar"
+        And I press "Businar!"
+        When i press "Businar!"
+        Then I should see "O que é o Busine.me?"
 

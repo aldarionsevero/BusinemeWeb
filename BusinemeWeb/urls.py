@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from controllers import post_controller
 
 urlpatterns = patterns(
     '',
@@ -35,5 +36,7 @@ urlpatterns = patterns(
     url(r'^busca_avancada/',
         'controllers.busline_controller.advanced_search_page'),
     url(r'^realizar_post/',
-        'controllers.post_controller.make_post_page'),
+        post_controller.make_post_page),
+    url(r'^teste/',
+        post_controller.make_post),
 )
