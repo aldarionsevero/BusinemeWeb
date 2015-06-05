@@ -60,3 +60,9 @@ def advanced_search_page(request):
     """Return the advanced search page when requested."""
     return render_to_response("advanced_search_busline.html",
                               context_instance=RequestContext(request))
+
+
+def busline_profile(request):
+    """Return the profle page from a line number when requested."""
+    return render_to_response("busline_profile.html",
+                              context_instance=RequestContext(request))

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+    Busine.me | Informações
+{% endblock %}
+{% block content %}
+
+<div>
+    <h1 class= "text-center" value="titulo_h1">Informações</h1>
+</div>
+<div class="row">
+        <div class="small-12 large-12 columns">
+            <div class="row collapse prefix-round">
+                 <form action="/perfil_de_linha/" method="GET">
+                    {% for busline in buslines %}
+                       <div class="panel">
+                           <h3> <a href="/perfil_de_linha/" name="busca_avancada" 
+                            class="left">{{ busline.line_number }}</a></h3><br>
+                            <p>Rota: {{ busline.description }}</p> 
+                            <p>{{ busline.via }}</p> 
+                            <p>Percurso: {{ busline.route_size }} KM</p> 
+                            <p>Tarifa: R${{ busline.fee }}</p> 
+                            <input type="submit" class="button round" name='Businar' value="Businar!">
+                            <input type="hidden" name="line_number" value="{{busline.line_number}}">
+                </form>
+                            {% endfor %}
+                       </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+</div>

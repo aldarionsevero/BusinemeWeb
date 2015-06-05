@@ -39,4 +39,6 @@ urlpatterns = patterns(
         post_controller.make_post_page),
     url(r'^save_post/',
         post_controller.make_post),
+    url(r'^perfil_de_linha/',
+        'controllers.busline_controller.busline_profile'),
 )
