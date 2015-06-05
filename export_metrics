@@ -13,29 +13,28 @@ echo "\documentclass{report}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{multicol}
-\usepackage{longtable}
-\usepackage{hyperref}
-
-
+\usepackage[final]{pdfpages}
+\usepackage{makeidx}
+\usepackage[all]{hypcap}
+\usepackage{longtable,hyperref}
 \hypersetup{
-pdftitle={Busine.me},
-pdfsubject={Metrics},
-pdfkeywords={},
-backref=true,
-draft=false,
-%pdfstartview=fitR,
-bookmarks=true,
-bookmarksopen=true,
-colorlinks=true,
-linkcolor=black,
-urlcolor=black,
-citecolor=black,%blue
-pdftex,
-bookmarks=true,
-linktocpage=true,
-hyperindex=true,
-unicode=false
+	pdftitle={Busine.me},
+	pdfsubject={Metrics},
+	pdfkeywords={},
+	backref=true,
+	draft=false,
+	%pdfstartview=fitR,
+	bookmarks=true,
+	bookmarksopen=true,
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black,%blue
+	pdftex,
+	bookmarks=true,
+	linktocpage=true,
+	hyperindex=true,
+	unicode=false
 }
 
 \begin{titlepage}
@@ -76,26 +75,35 @@ Metrics
 \begin{document}
 
 \tableofcontents
+\newpage
 " > metrics/main.tex
 
+shopt -s globstar
+shopt -s nullglob
 
 for D in *
 do
     if [ -d "$D" ]; then
+	if [[ "$D" == "templates" ]]; then 
+		continue
+	fi
 	echo "Running pylint on $D"
 	pylint --comment=n -d all $D > metrics/metrics_$D.md 2> /dev/null
-	echo "\part{$D}
+	file_size="wc -c <metrics/metrics_$D.md"
+	if  test -f "metrics/metrics_$D.md" && [[ -s "metrics/metrics_$D.md" ]]; then
+		echo "\part{$D}
 
-	    	" >> metrics/main.tex
+		    	" >> metrics/main.tex
+	fi
 	for app in `ls $D`
 	do
 	    if [[ ${app: -3} == ".py" ]]; then
 	    	if [[ $app != "__init__.py" ]]; then
-		    	echo "\chapter{\text{$app}}
+		    	echo "\chapter{${app/\_/\\\_}}
 
 		    	" >> metrics/main.tex
 		        python -m mccabe $D/$app >> metrics/metrics_$D.md 2> /dev/null
-		        pandoc -f markdown -t latex metrics/metrics_$D.md >> metrics/main.tex
+	        	pandoc -f markdown -t latex metrics/metrics_$D.md >> metrics/main.tex
 	        fi
 	    fi
 	done
@@ -104,6 +112,7 @@ done
 
 echo "\end{document}" >> metrics/main.tex
 pdflatex -interaction=batchmode metrics/main.tex
+pdflatex -interaction=batchmode metrics/main.tex
 mv main.pdf metrics/metrics_`date +%d_de_%B_de_%Y`.pdf
 echo "Cleaning"
-rm -rf *.aux *.log *.toc *.bbl *.bak *.blg *.out *.lof *.lot *.lol *.glg *.glo *.ist *.xdy *.gls *.acn *.acr *.idx *.alg metrics/*.md metrics/*.tex
+rm -rf *.aux *.log *.toc *.bbl *.bak *.blg *.out *.lof *.lot *.lol *.glg *.glo *.ist *.xdy *.gls *.acn *.acr *.idx *.alg metrics/*.tex
