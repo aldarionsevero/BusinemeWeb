@@ -19,6 +19,5 @@ class TestUtils(SimpleTestCase):
     def test_error_message_status_code(self):
         error = "errortest"
         response = error_message(
-            error, error, error, "register.html", self.request)
+            error, error, error, "register_user_page.html", self.request)
         self.assertEquals(response.status_code, self.STATUS_OK)
-# response.context[-1]

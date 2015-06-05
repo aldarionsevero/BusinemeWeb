@@ -3,9 +3,6 @@ from django.contrib import admin
 
 urlpatterns = patterns(
     '',
-    # Examples:
-    # url(r'^$', 'BusinemeWeb.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
     url(r'^cadastro/',
         'controllers.userController.register_user_page'),
     url(r'^$',
@@ -15,7 +12,7 @@ urlpatterns = patterns(
     url(r'^login/', 'controllers.userController.log_user'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^perfil/',
-        'controllers.userController.user_account'),
+        'controllers.userController.user_account_page'),
     url(r'^alterarcao_senha/',
         'controllers.userController.change_password_page'),
     url(r'^alterar_senha/',
@@ -31,7 +28,7 @@ urlpatterns = patterns(
     url(r'^buscar_linha/',
         'controllers.buslineController.search_line'),
     url(r'^resultado/busca_avancada/',
-        'controllers.buslineController.advanced_search_line'),
+        'controllers.buslineController.advanced_search_busline'),
     url(r'^busca_avancada/',
-        'controllers.buslineController.advanced_search_page'),
+        'controllers.buslineController.advanced_search_busline_page'),
 )

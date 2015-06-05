@@ -21,15 +21,6 @@ class BuslineAPI():
         url += 'limit=0'
         return self._get_filtered_list(url)
 
-    # def filter(self, line_number='', description='', via='', terminals=''):
-    #     url = settings.API_URL + \
-    #         'busline/?line_number__contains=' + line_number
-    #     url += '&description__contains=' + description
-    #     url += '&via__contains=' + via
-    #     url += '&terminals__description__contains=' + terminals
-    #     url += '&limit=0'
-    #     return self._get_filtered_list(url)
-
     def filter_by_multiple(self, line_number, description):
         url = settings.API_URL + \
             'busline/?line_number__contains=' + line_number

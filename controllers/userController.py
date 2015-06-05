@@ -15,14 +15,12 @@ def register_user_page(request):
         response = redirect("/",
                             context_instance=RequestContext(request))
     else:
-        response = render_to_response('register.html',
+        response = render_to_response('register_user_page.html',
                                       context_instance=RequestContext(request))
     return response
 
 
 def register_user(request):
-    # c = {}
-    # c.update(csrf(request))
     user = User()
     user.first_name = request.POST["name"]
     user.email = request.POST["email"]
@@ -35,7 +33,7 @@ def register_user(request):
                 "Email ja cadastrado.", "O e-mail inserido já \
                 está em uso. Utilize um e-mail diferente para realizar o \
                 cadastro.",
-                "register.html", request)
+                "register_user_page.html", request)
             return response
         response = redirect("/login/",
                             context_instance=RequestContext(request))
@@ -45,14 +43,14 @@ def register_user(request):
                 "E-mail inválido.",
                 "Verifique o e-mail inserido. Ele deve conter os caracteres \
                 '@' e '.' (ponto).",
-                "register.html", request)
+                "register_user_page.html", request)
         if not user.validade_user_password(request.POST["password"]):
             response = error_message(
                 "Erro :(",
                 "Campo de senha vazio.",
                 "Não é possível realizar o cadastro com a senha vazia, insira\
                  uma por favor.",
-                "register.html", request)
+                "register_user_page.html", request)
 
         if user.validate_email() and user.validate_unique_email() and \
                 user.validade_user_password(request.POST["password"]):
@@ -64,7 +62,7 @@ def register_user(request):
                 "Erro :(",
                 "Usuário já cadastrado.",
                 "O nome de usuário inserido já está em uso.",
-                "register.html", request)
+                "register_user_page.html", request)
 
     return response
 
@@ -82,7 +80,7 @@ def log_user_get(request):
         response = redirect("/",
                             context_instance=RequestContext(request))
     else:
-        response = render_to_response('login.html',
+        response = render_to_response('login_page.html',
                                       context_instance=RequestContext(request))
     return response
 
@@ -102,14 +100,14 @@ def log_user_post(request):
                 "Esta usuário foi desativado.\
             Entre em contato com o suporte Busine.me para solicitar a\
              reativação.",
-                "login.html", request)
+                "login_page.html", request)
     else:
         response = error_message(
             "Erro :(",
             "Usuário não encontrado.",
             "Verifique se o nome de usuário e a senha informados estão\
              corretos.",
-            "login.html", request)
+            "login_page.html", request)
     return response
 
 
@@ -120,12 +118,12 @@ def logout_user(request):
 
 
 @login_required
-def user_account(request):
+def user_account_page(request):
     if request.user.is_authenticated():
         user = request.user
     else:
         user = None
-    return render_to_response('account.html', {'user': user},
+    return render_to_response('account_page.html', {'user': user},
                               context_instance=RequestContext(request))
 
 
@@ -155,14 +153,14 @@ def change_password(request):
             "Erro :(",
             "Senha atual incorreta.",
             "Verifique a escrita da senha informada.",
-            "login.html", request)
+            "login_page.html", request)
     else:
         if not (new_password1 == new_password2):
             response = error_message(
                 "Erro :(",
                 "Os campos de nova senha não conferem.",
                 "Verifique a escrita das senhas informadas.",
-                "login.html", request)
+                "login_page.html", request)
         else:
             user.set_password(new_password1)
             user.save()
@@ -174,7 +172,6 @@ def change_password(request):
 
 @login_required
 def change_userdata(request):
-    # Try to change the data of the usere
     if request.user.is_authenticated():
         user = request.user
         user.first_name = request.POST["name"]
@@ -214,5 +211,5 @@ def deactivate_account(request):
             "Sucesso!",
             "Usuário desativado com sucesso.",
             "Esperamos o seu retorno, até logo! :)",
-            "login.html", request)
+            "login_page.html", request)
     return response
