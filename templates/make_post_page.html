@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}
+    Busine.me | Resultados
+{% endblock %}
+{% block content %}
+
+<div>
+    <h1 class= "text-center" value="titulo_h1">Realize uma Businada!</h1>
+</div>
+
+<div class="row">
+
+    <div class="small-10 medium-4 large-4 small-centered columns">
+        <form action="">
+            
+       <!-- <fieldset cols="5"> -->
+           <h2>Transito</h2>
+           <div class="range-slider round" data-slider data-options="start: 1; 
+                                    end: 5; display_selector: #numero_transito; ">
+            <span class="range-slider-handle" role="slider" tabindex="0"></span> 
+            <span class="range-slider-active-segment"></span>  
+            <label class="row right">
+             <span id="numero_transito"></span>
+            </label>
+        </div>
+       <!-- </fieldset> -->
+        
+
+      <!--   <fieldset cols="5"> -->
+        <h2>Lotação</h2>
+            <div class="range-slider round" data-slider data-options="start: 1;
+                                         end: 5; display_selector: #numero_lotacao; ">
+                <span class="range-slider-handle" role="slider" tabindex="0"></span> 
+                <span class="range-slider-active-segment"></span>  
+                <label class="row right">
+                     <span id="numero_lotacao"></span>
+                </label>
+            </div>
+        <!-- </fieldset> -->
+
+       
+        
+        
+    
+        <label>
+            <textarea name="description" placeholder="Conte-nos sobre sua viagem" cols="10" rows="10"></textarea>
+        </label>
+
+        </form>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+{% block "scripts" %}
+{% if error_lead %}
+    <script>
+        $('#modal_error').foundation('reveal', 'open');
+    </script>
+{% endif %}
+{% endblock %}
+
+{% block "modal_error_lead" %} {{error_lead}}{% endblock %}
+{% block "modal_error_message" %} {{error_message}} {% endblock %} 
+{% block "modal_alert_title" %} {{alert_title}} {% endblock %} 

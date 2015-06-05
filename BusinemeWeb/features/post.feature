@@ -17,7 +17,14 @@ Feature: Make a post.
 	    When I press "Businar!"
 	    Then I should see "0.205 \n  Comentário: Este ônibus é bonito"
 
-	
+	Scenario: I press the button "Businar!"
+		Given I am on Busine.me homepage
+		And I type "205" in the field "busline"
+		And I press "Pesquisar"
+        When I press "Businar!"
+        Then I should see "Realize uma Businada!"
+
+
 
 
 
