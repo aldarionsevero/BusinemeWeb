@@ -29,7 +29,7 @@ def advanced_search_line(request):
     Perform an advanced search for bus lines which contain the input values\
     entered by the user then returns the result page and the list of results.
     """
-    if ((len(request.GET['busline']) < 2) and
+    if ((len(request.GET['busline_advanced']) < 2) and
             (len(request.GET['description']) < 2)):
             # and
             # (len(request.GET['terminal__description']) < 2)):
@@ -41,13 +41,13 @@ def advanced_search_line(request):
             "search_result_page.html", request)
     else:
         buslines = Busline.filter_by_multiple(
-            line_number=request.GET['busline'],
+            line_number=request.GET['busline_advanced'],
             description=request.GET['description'],
             terminal__description=''
             # request.GET['terminal__description']
         )
         count_busline = len(buslines)
-        line_number = request.GET['busline']
+        line_number = request.GET['busline_advanced']
         response = render_to_response(
             "search_result_page.html",
             {'buslines': buslines,
