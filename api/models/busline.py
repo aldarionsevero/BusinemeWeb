@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
-class Busline():
+class Busline(object):
 
     """docstring for Busline"""
+
     def __init__(self):
         self.line_number = ""
         self.description = ""

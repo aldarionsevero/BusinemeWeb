@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-class Terminal():
+class Terminal(object):
 
     def __init__(self):
         self.description = ""

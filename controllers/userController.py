@@ -2,7 +2,6 @@
 from django.shortcuts import render_to_response
 from models.user import User
 from django.contrib.auth import authenticate, login, logout
-# from django.template.context_processors import csrf
 from django.template import RequestContext
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
