@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from busline import Busline
 
 
 class Post(models.Model):
@@ -8,14 +9,12 @@ class Post(models.Model):
     longitude = models.CharField(max_length=100)
     traffic = models.IntegerField()
     capacity = models.IntegerField()
-    busline = models.ManyToManyField('Busline')
+    busline = models.ForeignKey(Busline)
     date = models.DateField(auto_now=True)
     time = models.TimeField(auto_now=True)
 
     def __unicode__(self):
-        return self.comment
-        # Don't know how exactly use this def.
-        # if i'm wrong, please set right
+        return 'comment = ' + self.comment
 
     @classmethod
     def all(cls):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Post controller docstring"""
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from models.post import Post
 from django.template import RequestContext
 from api.busline import BuslineAPI
@@ -39,16 +39,15 @@ def make_post_page(request):
 
 def make_post(request):
     post = Post()
+    post.capacity = request.POST['capacity']
+    post.traffic = request.POST['traffic']
+    post.comment = request.POST['description']
 
     api = BuslineAPI()
+    busline = api.filter_by_line_equals(request.POST['line_number'])
+    post.busline_id = busline.id
+    post.save()
 
-    busline = api.filter_by_line_equals(request.get['line_number'])
-
-    post.busline = busline
-    post.capacity = request.GET['capacity']
-    post.traffic = request.GET['traffic']
-    post.comment = request.GET['description']
-
-    # post.save()
-    return render_to_response("feed_page.html",
-                              context_instance=RequestContext(request))
+    return redirect(
+        "/",
+        context_instance=RequestContext(request))
