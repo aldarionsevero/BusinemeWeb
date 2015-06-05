@@ -48,11 +48,14 @@ def advanced_search_line(request):
         )
         count_busline = len(buslines)
         line_number = request.GET['busline']
-        response = render_to_response("search_result_page.html",
-                                      {'buslines': buslines,
-                                       'count_busline': count_busline,
-                                       'searched_number': line_number},
-                                      context_instance=RequestContext(request))
+        response = render_to_response(
+            "search_result_page.html",
+            {'buslines': buslines,
+             'count_busline': count_busline,
+             'searched_number': line_number,
+             'description': request.GET['description']},
+            context_instance=RequestContext(request))
+
     return response
 
 

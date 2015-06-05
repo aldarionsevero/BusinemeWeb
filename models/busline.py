@@ -12,7 +12,7 @@ class Busline(models.Model):
     description = models.CharField(max_length=255)
     via = models.CharField(max_length=255)
     route_size = models.FloatField()  # unit: kilometers
-    fee = models.FloatField()  # unit: BRL (R$)
+    fee = models.DecimalField(decimal_places=2, max_digits=4)  # unit: BRL (R$)
     company = models.ForeignKey('Company', null=True)
     terminals = models.ManyToManyField('Terminal')
 
