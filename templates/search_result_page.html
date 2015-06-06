@@ -18,7 +18,7 @@
                  <form action="/realizar_post/" method="GET">
                     {% for busline in buslines %}
                        <div class="panel"> 
-                           <h3> <a href="/perfil_de_linha/" name="busca_avancada" 
+                           <h3> <a href="/perfil_de_linha/{{busline.id}}/"  name="busca_avancada" 
                             class="left">{{ busline.line_number }}</a></h3><br>
                             <p>Rota: {{ busline.description }}</p> 
                             <p>{{ busline.via }}</p> 
