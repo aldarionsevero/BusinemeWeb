@@ -14,7 +14,12 @@ class Post(models.Model):
     time = models.TimeField(auto_now=True)
 
     def __unicode__(self):
-        return 'comment = ' + self.comment
+        return ' traffic = ' + str(self.traffic) \
+            + ' capacity = ' + str(self.capacity)\
+            + 'comment = ' + self.comment\
+            + ' date = ' + str(self.date)\
+            + ' time = ' + str(self.time)\
+
 
     @classmethod
     def all(cls):
