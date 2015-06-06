@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Busline controller docstring"""
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
 from models.busline import Busline
 # from api import BuslineAPI
 from django.template import RequestContext
@@ -62,9 +62,9 @@ def advanced_search_page(request):
                               context_instance=RequestContext(request))
 
 
-def busline_profile(request, id):
+def busline_profile(request, line_number):
     """Return the profle page from a line number when requested."""
-    busline = get_object_or_404(Busline, pk=id)
+    busline = Busline.filter_by_line_equals(line_number)
     return render_to_response("busline_profile.html",
                               {'busline': busline},
                               context_instance=RequestContext(request))
