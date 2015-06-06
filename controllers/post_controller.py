@@ -42,6 +42,8 @@ def make_post(request):
     post.capacity = request.POST['capacity']
     post.traffic = request.POST['traffic']
     post.comment = request.POST['description']
+    post.latitude = str(request.POST.get('codigo_latitude'))
+    post.longitude = str(request.POST.get('codigo_longitude'))
 
     api = BuslineAPI()
     busline = api.filter_by_line_equals(request.POST['line_number'])

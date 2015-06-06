@@ -19,7 +19,8 @@ class Post(models.Model):
             + 'comment = ' + self.comment\
             + ' date = ' + str(self.date)\
             + ' time = ' + str(self.time)\
-
+            + ' latitude = ' + str(self.latitude) \
+            + ' longitude = ' + str(self.longitude)
 
     @classmethod
     def all(cls):
