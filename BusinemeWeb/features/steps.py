@@ -1,4 +1,4 @@
-from lettuce import *
+from lettuce import before, step, world
 from lettuce.django import django_url
 from splinter.browser import Browser
 

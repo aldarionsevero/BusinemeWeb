@@ -2,6 +2,7 @@
 """ docstring for package Busline """
 from django.db import models
 from api.busline import BuslineAPI
+from exception.api import ApiException
 
 
 class Busline(models.Model):
@@ -24,7 +25,7 @@ class Busline(models.Model):
         api = BuslineAPI()
         try:
             objects = api.all()
-        except:
+        except ApiException:
             objects = cls.objects.all()
         return objects
 
@@ -33,7 +34,7 @@ class Busline(models.Model):
         api = BuslineAPI()
         try:
             objects = api.filter_by_line(line_number)
-        except:
+        except ApiException:
             objects = cls.objects.filter(line_number__startswith=line_number)
         return objects
 
@@ -42,7 +43,7 @@ class Busline(models.Model):
         api = BuslineAPI()
         try:
             objects = api.filter_by_description(description)
-        except:
+        except ApiException:
             objects = cls.objects.filter(description__startswith=description)
 
         return objects
@@ -63,7 +64,7 @@ class Busline(models.Model):
                 description=description,
                 terminal__description=terminal__description
             )
-        except:
+        except ApiException:
             objects = cls.objects.filter(
                 description__startswith=description,
                 line_number__startswith=line_number,
