@@ -56,14 +56,12 @@ def i_should_see_a_description(step, value):
     assert header.text == value
 
 
-@step('I press "Busca Avancada"')
-def i_press_advanced_search(step):
+@step('I follow "(.*)"')
+def i_follow(step, link):
     r"""
-    Verify if when the advanced search button is activated\
-    the "/busca_avancada/" url is called.
-    """
+    go to specifyed link"""
 
-    world.browser.click_link_by_href("/busca_avancada/")
+    world.browser.click_link_by_href(link)
 
 
 @step('I should see a message saying "Erro"')

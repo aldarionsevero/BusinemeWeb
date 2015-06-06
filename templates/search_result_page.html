@@ -28,7 +28,7 @@
                     {% for busline in buslines %}
                        <div class="panel"> 
                            <h3> <a href="/perfil_de_linha/{{busline.line_number}}/"  name="busca_avancada" 
-                            class="left">{{ busline.line_number }}</a></h3><br>
+                            class="left" value="{{busline.line_numeber}}" >{{ busline.line_number }}  </a></h3><br>
                             <p>Rota: {{ busline.description }}</p> 
                             <p>{{ busline.via }}</p> 
                             <p>Percurso: {{ busline.route_size }} KM</p> 
