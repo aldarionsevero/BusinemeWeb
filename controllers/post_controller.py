@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response, redirect
 from models.post import Post
 from django.template import RequestContext
 from api.busline import BuslineAPI
+from controllers.utils import error_message
 
 
 def register_post(request):
@@ -50,10 +51,11 @@ def make_post(request):
         busline = api.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
         post.save()
-    except Exception, e:
-        # FIXME: raise modal error
-        pass
+        response = error_message('Sucesso', 'Post realizado', 'Post realizado \
+            com sucesso!', 'login.html', request)
+    except:
+        response = error_message('Erro :(', 'Servidor não disponível', 'O \
+            acesso ao servidor está indisponível no momento, verifique sua \
+            conexão', 'login.html', request)
 
-    return redirect(
-        "/",
-        context_instance=RequestContext(request))
+    return response

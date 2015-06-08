@@ -2,7 +2,6 @@ from django.test import SimpleTestCase, Client
 from models.post import Post
 from controllers import post_controller
 from exception.api import ApiException
-from models.busline import Busline
 
 
 STATUS_OK = 200
@@ -13,13 +12,6 @@ class PostControllerTest (SimpleTestCase):
 
     def setUp(self):
         self.client = Client()
-        Busline().filter_by_line_number = self.dumb_busline
-        Busline().id = 0
-
-    def dumb_busline(self, id):
-        busline = Busline()
-
-        return busline
 
     def post_data(self):
         data = {'capacity': '5',

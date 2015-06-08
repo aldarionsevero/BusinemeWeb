@@ -52,7 +52,7 @@
     <script type="text/javascript">
       if (Modernizr.geolocation) {
        navigator.geolocation.getCurrentPosition(function(posicao){
-        alert("olar");
+        alert("Localização atualizada");
                $('#post_form').append("<input type='text' name='codigo_longitude' id='codigo_longitude' value='"+ posicao.coords.longitude +"'>");
                $('#post_form').append("<input type='text' name='codigo_latitude' id='codigo_latitude' value='"+ posicao.coords.latitude +"'>");
                $("#id_longitude").val(posicao.coords.longitude);
