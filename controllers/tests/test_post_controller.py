@@ -1,0 +1,41 @@
+from django.test import SimpleTestCase, Client
+from models.post import Post
+from controllers import post_controller
+from exception.api import ApiException
+from models.busline import Busline
+
+
+STATUS_OK = 200
+STATUS_REDIRECT = 302
+
+
+class PostControllerTest (SimpleTestCase):
+
+    def setUp(self):
+        self.client = Client()
+        Busline().filter_by_line_number = self.dumb_busline
+        Busline().id = 0
+
+    def dumb_busline(self, id):
+        busline = Busline()
+
+        return busline
+
+    def post_data(self):
+        data = {'capacity': '5',
+                'traffic': '5',
+                'description': 'comment',
+                'codigo_latitude': '0',
+                'codigo_longitude': '0',
+                'line_number': '001'}
+        return data
+
+    def test_make_post_page(self):
+        response = self.client.get(
+            "/realizar_post/?line_number=001")
+        self.assertEquals(response.status_code, STATUS_OK)
+
+    def test_make_post_save(self):
+        self.client.post(
+            "/save_post/", self.post_data())
+        self.assertRaises(ApiException)

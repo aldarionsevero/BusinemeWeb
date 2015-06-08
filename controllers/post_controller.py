@@ -42,13 +42,17 @@ def make_post(request):
     post.capacity = request.POST['capacity']
     post.traffic = request.POST['traffic']
     post.comment = request.POST['description']
-    post.latitude = str(request.POST.get('codigo_latitude'))
-    post.longitude = str(request.POST.get('codigo_longitude'))
+    post.latitude = request.POST['codigo_latitude']
+    post.longitude = request.POST['codigo_longitude']
 
     api = BuslineAPI()
-    busline = api.filter_by_line_equals(request.POST['line_number'])
-    post.busline_id = busline.id
-    post.save()
+    try:
+        busline = api.filter_by_line_equals(request.POST['line_number'])
+        post.busline_id = busline.id
+        post.save()
+    except Exception, e:
+        # FIXME: raise modal error
+        pass
 
     return redirect(
         "/",

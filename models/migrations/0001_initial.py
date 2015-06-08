@@ -47,6 +47,7 @@ class Migration(migrations.Migration):
                 ('capacity', models.IntegerField()),
                 ('date', models.DateField(auto_now=True)),
                 ('time', models.TimeField(auto_now=True)),
+                ('busline', models.ForeignKey(to='models.Busline')),
             ],
             options={
             },
@@ -79,7 +80,7 @@ class Migration(migrations.Migration):
             name='User',
             fields=[
                 ('user_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('pontuation', models.IntegerField()),
+                ('pontuation', models.IntegerField(default=0)),
             ],
             options={
                 'abstract': False,
@@ -87,12 +88,6 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'users',
             },
             bases=('auth.user',),
-        ),
-        migrations.AddField(
-            model_name='post',
-            name='terminals',
-            field=models.ManyToManyField(to='models.Terminal'),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='busline',
