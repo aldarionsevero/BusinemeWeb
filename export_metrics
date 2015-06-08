@@ -1,13 +1,8 @@
 #!/bin/bash
 
-if [ ! -d "metrics" ]; then
-   mkdir metrics
-else
-   echo "Cleaning"
-   rm -rf metrics
-   sleep 0.1
-   mkdir metrics
-fi
+function build_pdf
+{
+	git checkout $1
 
 echo "\documentclass{report}
 
@@ -58,7 +53,7 @@ Busine.me
 \vbox{
 %Nome da Matéria
 
-Metrics
+Metrics $1
 
 }
 \vspace{0.3\textheight}
@@ -88,9 +83,9 @@ do
 		continue
 	fi
 	echo "Running pylint on $D"
-	pylint --comment=n -d all $D > metrics/metrics_$D.md 2> /dev/null
-	file_size="wc -c <metrics/metrics_$D.md"
-	if  test -f "metrics/metrics_$D.md" && [[ -s "metrics/metrics_$D.md" ]]; then
+	pylint --comment=n $D -f html > metrics/metrics_$D.html 2> /dev/null
+	file_size="wc -c <metrics/metrics_$D.html"
+	if  test -f "metrics/metrics_$D.html" && [[ -s "metrics/metrics_$D.html" ]]; then
 		echo "\part{$D}
 
 		    	" >> metrics/main.tex
@@ -102,8 +97,8 @@ do
 		    	echo "\chapter{${app/\_/\\\_}}
 
 		    	" >> metrics/main.tex
-		        python -m mccabe $D/$app >> metrics/metrics_$D.md 2> /dev/null
-	        	pandoc -f markdown -t latex metrics/metrics_$D.md >> metrics/main.tex
+		        python -m mccabe $D/$app >> metrics/metrics_$D.html 2> /dev/null
+	        	pandoc -f html -t latex metrics/metrics_$D.html >> metrics/main.tex
 	        fi
 	    fi
 	done
@@ -113,6 +108,24 @@ done
 echo "\end{document}" >> metrics/main.tex
 pdflatex -interaction=batchmode metrics/main.tex
 pdflatex -interaction=batchmode metrics/main.tex
-mv main.pdf metrics/metrics_`date +%d_de_%B_de_%Y`.pdf
+mv main.pdf metrics/metrics_$1.pdf
 echo "Cleaning"
 rm -rf *.aux *.log *.toc *.bbl *.bak *.blg *.out *.lof *.lot *.lol *.glg *.glo *.ist *.xdy *.gls *.acn *.acr *.idx *.alg metrics/*.tex
+}
+
+
+if [ ! -d "metrics" ]; then
+   mkdir metrics
+else
+   echo "Cleaning"
+   rm -rf metrics
+   sleep 0.1
+   mkdir metrics
+fi
+
+
+for tag in `git tag`; do
+	build_pdf $tag
+done
+
+build_pdf master
