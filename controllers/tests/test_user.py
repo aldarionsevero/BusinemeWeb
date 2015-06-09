@@ -20,11 +20,11 @@ class UserControllerTest(SimpleTestCase):
         self.user.email = 'test@email.tes'
         self.user.save()
 
-    def register_post_data(self):
-        data = {'name': 'test_user',
-                'email': 'test@email.com',
-                'username': 'test_user',
-                'password': '1234'}
+    def register_post_data(self, name, email, username, password):
+        data = {'name': name,
+                'email': email,
+                'username': username,
+                'password': password}
         return data
 
     def login_post_data(self):
@@ -37,14 +37,10 @@ class UserControllerTest(SimpleTestCase):
         return data
 
     def test_register_user_duplicate_email(self):
-        data1 = {'name': 'test_user1',
-                 'email': 'same@email.com',  # same email
-                 'username': 'test_user1',
-                 'password': '1234'}
-        data2 = {'name': 'test_user2',
-                 'email': 'same@email.com',  # same email
-                 'username': 'test_user2',
-                 'password': '1234'}
+        data1 = self.register_post_data(
+            'test_user1', 'same@email.com', 'test_user1', '1234')
+        data2 = self.register_post_data(
+            'test_user2', 'same@email.com', 'test_user2', '1234')
         response1 = self.client.post('/cadastrar/usuario/', data1, follow=True)
         response2 = self.client.post('/cadastrar/usuario/', data2, follow=True)
 
@@ -56,23 +52,17 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response2.status_code, STATUS_OK)
 
     def test_register_user_invalid_email(self):
-        data = {'name': 'test_user2',
-                'email': 'testemail.com',
-                'username': 'test_user2',
-                'password': '1234'}
+        data = self.register_post_data(
+            'test_user2', 'testemail.com', 'test_user2', '1234')
         response = self.client.post('/cadastrar/usuario/', data, follow=True)
         self.assertEquals(response.redirect_chain, [])
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_register_user_invalid_username(self):
-        data1 = {'name': 'test_user1',  # same name
-                 'email': 'test1@email.com',
-                 'username': 'test_user_same',
-                 'password': '1234'}
-        data2 = {'name': 'test_user2',  # same name
-                 'email': 'test2@email.com',
-                 'username': 'test_user_same',
-                 'password': '1234'}
+        data1 = self.register_post_data(
+            'test_user1', 'test1@email.com', 'test_user_same', '1234')
+        data2 = self.register_post_data(
+            'test_user2', 'test2@email.com', 'test_user_same', '1234')
         response1 = self.client.post('/cadastrar/usuario/', data1, follow=True)
         response2 = self.client.post('/cadastrar/usuario/', data2, follow=True)
 
@@ -88,12 +78,14 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_register_user_success_status_code(self):
-        data = self.register_post_data()
+        data = self.register_post_data(
+            'test_user', 'test@email.com', 'test_user', '1234')
         response = self.client.post('/cadastrar/usuario/', data)
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_register_user_success_db(self):
-        data = self.register_post_data()
+        data = self.register_post_data(
+            'test_user', 'test@email.com', 'test_user', '1234')
         db_before = User.objects.all().count()
         self.client.post('/cadastrar/usuario/', data)
         db_after = User.objects.all().count()
@@ -125,7 +117,8 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     def test_change_userdate(self):
-        data = self.register_post_data()
+        data = self.register_post_data(
+            'test_user', 'test@email.com', 'test_user', '1234')
         response = self.client.post('/alterar_dados/', data)
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
