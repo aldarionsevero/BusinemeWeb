@@ -7,7 +7,7 @@ from exception.api import ApiException
 
 class Busline(models.Model):
 
-    """ Busline model """
+    """Busline model."""
 
     line_number = models.CharField(max_length=5, unique=True)
     description = models.CharField(max_length=255)
@@ -18,15 +18,14 @@ class Busline(models.Model):
     terminals = models.ManyToManyField('Terminal')
 
     def __unicode__(self):
-        r"""
-        Returns line number and via.
-        """
+        """Return line number and via."""
+
         return self.line_number + "-" + self.description
 
     @classmethod
     def all(cls):
         r"""
-        If API is up, sends requisition and returns all buslines. If API is \
+        If API is up, send requisition and returns all buslines. If API is \
         down, searches local database to return all buslines.
         """
         api = BuslineAPI()
@@ -39,7 +38,7 @@ class Busline(models.Model):
     @classmethod
     def filter_by_line_number(cls, line_number):
         r"""
-        If API is up, sends requisition and returns buslines with the \
+        If API is up, send requisition and returns buslines with the \
         specified line number. If API is down, searches local database to\
         return buslines with the specified line number.
         """
@@ -53,7 +52,7 @@ class Busline(models.Model):
     @classmethod
     def filter_by_description(cls, description):
         r"""
-        If API is up, sends requisition and returns buslines with the \
+        If API is up, send requisition and returns buslines with the \
         specified description. If API is down, searches local database to\
         return buslines with the specified description (via).
         """

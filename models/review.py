@@ -9,8 +9,11 @@ class Review(models.Model):
     # Belive thats a text, but if it's a "likeButton", please rectify
 
     def __unicode__(self):
+        """Return comment of the review."""
         return self.comment
 
     @classmethod
     def filter_all(cls):
+        """Return all reviews."""
+
         return cls.object.all()
