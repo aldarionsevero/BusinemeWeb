@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from controllers.utils import error_message
+from controllers.utils import modal_message
 
 
 def register_user_page(request):
@@ -36,7 +36,7 @@ def register_user(request):
     user.set_password(request.POST["password"])
     try:
         if not user.validate_unique_email():
-            response = error_message(
+            response = modal_message(
                 "Erro :(",
                 "Email ja cadastrado.", "O e-mail inserido já \
                 está em uso. Utilize um e-mail diferente para realizar o \
@@ -46,14 +46,14 @@ def register_user(request):
         response = redirect("/login/",
                             context_instance=RequestContext(request))
         if not user.validate_email():
-            response = error_message(
+            response = modal_message(
                 "Erro :(",
                 "E-mail inválido.",
                 "Verifique o e-mail inserido. Ele deve conter os caracteres \
                 '@' e '.' (ponto).",
                 "register_user_page.html", request)
         if not user.validade_user_password(request.POST["password"]):
-            response = error_message(
+            response = modal_message(
                 "Erro :(",
                 "Campo de senha vazio.",
                 "Não é possível realizar o cadastro com a senha vazia, insira\
@@ -66,7 +66,7 @@ def register_user(request):
 
     except IntegrityError:
         if not user.validate_user_name():
-            response = error_message(
+            response = modal_message(
                 "Erro :(",
                 "Usuário já cadastrado.",
                 "O nome de usuário inserido já está em uso.",
@@ -88,7 +88,7 @@ def log_user(request):
 
 
 def log_user_get(request):
-    """Logs the user with GET method, (load page)."""
+    """Log the user with GET method, (load page)."""
     if request.user.is_authenticated():
         response = redirect("/",
                             context_instance=RequestContext(request))
@@ -111,7 +111,7 @@ def log_user_post(request):
             login(request, user)
             response = redirect('/', context_instance=RequestContext(request))
         else:
-            response = error_message(
+            response = modal_message(
                 "Erro :(",
                 "Usuário desativado.",
                 "Esta usuário foi desativado.\
@@ -119,7 +119,7 @@ def log_user_post(request):
              reativação.",
                 "login_page.html", request)
     else:
-        response = error_message(
+        response = modal_message(
             "Erro :(",
             "Usuário não encontrado.",
             "Verifique se o nome de usuário e a senha informados estão\
@@ -130,7 +130,7 @@ def log_user_post(request):
 
 @login_required
 def logout_user(request):
-    r"""Log user out."""
+    """Log user out."""
     logout(request)
     return redirect('/login/', context_instance=RequestContext(request))
 
@@ -138,7 +138,6 @@ def logout_user(request):
 @login_required
 def user_account_page(request):
     """Load the account managment page, that lets the user change his data."""
-
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -162,9 +161,8 @@ def change_password_page(request):
 
 
 @login_required
-def change_password(request):
+def change_password_action(request):
     """Change user password checking for his current password."""
-
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -175,18 +173,18 @@ def change_password(request):
     new_password2 = request.POST["new_password2"]
 
     if not user.check_password(old_password):
-        response = error_message(
+        response = modal_message(
             "Erro :(",
             "Senha atual incorreta.",
             "Verifique a escrita da senha informada.",
-            "login_page.html", request)
+            "change_password_page.html", request)
     else:
         if not (new_password1 == new_password2):
-            response = error_message(
+            response = modal_message(
                 "Erro :(",
                 "Os campos de nova senha não conferem.",
                 "Verifique a escrita das senhas informadas.",
-                "login_page.html", request)
+                "change_password_page.html", request)
         else:
             user.set_password(new_password1)
             user.save()
@@ -199,7 +197,6 @@ def change_password(request):
 @login_required
 def change_userdata(request):
     """Change user data."""
-
     if request.user.is_authenticated():
         user = request.user
         user.first_name = request.POST["name"]
@@ -212,7 +209,6 @@ def change_userdata(request):
 @login_required
 def deactivate_account_page(request):
     """Load user account deactivation page."""
-
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -222,15 +218,14 @@ def deactivate_account_page(request):
 
 
 @login_required
-def deactivate_account(request):
+def deactivate_account_action(request):
     """Deactivate user account checking for his current password."""
-
     user = request.user
 
     password = request.POST["password"]
 
     if not user.check_password(password):
-        response = error_message(
+        response = modal_message(
             "Erro :(",
             "Senha incorreta.",
             "Verifique a escrita da senha informada.",
@@ -239,9 +234,29 @@ def deactivate_account(request):
         user.is_active = False
         user.save()
         logout(request)
-        response = error_message(
+        response = modal_message(
             "Sucesso!",
             "Usuário desativado com sucesso.",
             "Esperamos o seu retorno, até logo! :)",
             "login_page.html", request)
+    return response
+
+
+@login_required
+def deactivate_account(request):
+    """Call method to deactivate the user depending on the request method."""
+    if request.method == 'GET':
+        response = deactivate_account_page(request)
+    elif request.method == 'POST':
+        response = deactivate_account_action(request)
+    return response
+
+
+@login_required
+def change_password(request):
+    """Call method to user password depending on the request method."""
+    if request.method == 'GET':
+        response = change_password_page(request)
+    elif request.method == 'POST':
+        response = change_password_action(request)
     return response

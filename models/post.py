@@ -4,6 +4,9 @@ from busline import Busline
 
 
 class Post(models.Model):
+
+    """Busline model."""
+
     comment = models.CharField(max_length=255)
     latitude = models.CharField(max_length=100)
     longitude = models.CharField(max_length=100)
@@ -14,22 +17,20 @@ class Post(models.Model):
     time = models.TimeField(auto_now=True)
 
     def __unicode__(self):
-        return ' traffic = ' + str(self.traffic) \
-            + ' capacity = ' + str(self.capacity)\
-            + 'comment = ' + self.comment\
-            + ' date = ' + str(self.date)\
-            + ' time = ' + str(self.time)\
-            + ' latitude = ' + str(self.latitude) \
-            + ' longitude = ' + str(self.longitude)
-
+        """Return comment of the post."""
+        return  'id: %s date: %s %s = ' % (self.id, str(self.date), str(self.time))
+            
     @classmethod
     def all(cls):
+        """Return all posts."""
         return cls.objects.all()
 
     @classmethod
     def filter_by_date(cls, date):
+        """Return all posts containing the specified date."""
         return cls.objects.all(date__contains=date)
 
     @classmethod
     def filter_by_time(cls, time):
+        """Return all posts containing the specified time."""
         return cls.objects.all(time__contains=time)

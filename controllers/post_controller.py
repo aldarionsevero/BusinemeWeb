@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from models.post import Post
 from django.template import RequestContext
 from api.busline import BuslineAPI
-from controllers.utils import error_message
+from controllers.utils import modal_message
 
 
 def make_post_page(request):
@@ -29,12 +29,12 @@ def make_post_action(request):
         busline = api.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
         post.save()
-        response = error_message('Sucesso', 'Post realizado', 'Post realizado \
-            com sucesso!', 'login.html', request)
+        response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
+            com sucesso!', 'login_page.html', request)
     except:
-        response = error_message('Erro :(', 'Servidor não disponível', 'O \
+        response = modal_message('Erro :(', 'Servidor não disponível', 'O \
             acesso ao servidor está indisponível no momento, verifique sua \
-            conexão', 'login.html', request)
+            conexão', 'login_page.html', request)
 
     return response
 

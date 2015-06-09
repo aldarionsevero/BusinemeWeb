@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 
-class Busline():
+class Busline(object):
 
-    """docstring for Busline"""
+    """API model for busline."""
+
     def __init__(self):
+        """Initialize the atributes for the model."""
         self.line_number = ""
         self.description = ""
         self.via = ""

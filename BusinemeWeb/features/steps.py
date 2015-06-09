@@ -1,10 +1,6 @@
-from lettuce import *
+from lettuce import before, step, world
 from lettuce.django import django_url
-from lxml import html
-#from django.test.client import Client
-from nose.tools import assert_equals
 from splinter.browser import Browser
-from splinter.driver.zopetestbrowser import ZopeTestBrowser
 
 
 @before.all
