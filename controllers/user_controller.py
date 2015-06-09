@@ -244,10 +244,7 @@ def deactivate_account_action(request):
 
 @login_required
 def deactivate_account(request):
-    r"""
-    Call method to deactivate the user depending on the request \
-    method (GET or POST).
-    """
+    """Call method to deactivate the user depending on the request method."""
     if request.method == 'GET':
         response = deactivate_account_page(request)
     elif request.method == 'POST':
@@ -257,10 +254,7 @@ def deactivate_account(request):
 
 @login_required
 def change_password(request):
-    r"""
-    Call method to change the password of the user depending on the request \
-    method (GET or POST).
-    """
+    """Call method to user password depending on the request method."""
     if request.method == 'GET':
         response = change_password_page(request)
     elif request.method == 'POST':
