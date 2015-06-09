@@ -17,14 +17,11 @@ Feature: Make a post.
 	    When I press "Businar!"
 	    Then I should see "0.205 \n  Comentário: Este ônibus é bonito"
 
-	Scenario: I press the button "Businar!"
-		Given I am on Busine.me homepage
-		And I type "205" in the field "busline"
-		And I press "Pesquisar"
-        When I press "Businar!"
-        Then I should see "Realize uma Businada!"
-
-
+	Scenario: I fill the field "busline"
+	    Given I am on Busine.me homepage
+        And I type "205" in the field "busline"
+        When I press "Pesquisar"
+	    Then I should see "Businar!"
 
 	Scenario: I press the button "Businar!" on "realizar_post.html"
 		Given I am on Busine.me homepage
@@ -32,7 +29,7 @@ Feature: Make a post.
 		And I press "Pesquisar"
         And I press "Businar!"
         When i press "Businar!"
-        Then I should see "O que é o Busine.me?"
+        Then I should see "Post realizado"
 
 
 

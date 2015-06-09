@@ -36,7 +36,5 @@ urlpatterns = patterns(
     url(r'^busca_avancada/',
         'controllers.busline_controller.advanced_search_page'),
     url(r'^realizar_post/',
-        post_controller.make_post_page),
-    url(r'^save_post/',
         post_controller.make_post),
 )

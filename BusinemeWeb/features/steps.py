@@ -84,3 +84,13 @@ def then_i_should_see(step, value):
     """
 
     world.browser.find_by_css('h3').first.value
+
+
+# @step('I press "Businar!"')
+# def i_press_post(step):
+#     r"""
+#     Verify if when the post button is activated\
+#     the "/realizar_post/" url is called.
+#     """
+
+#     world.browser.click_link_by_text("Businar!")

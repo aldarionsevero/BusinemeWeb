@@ -29,5 +29,5 @@ class PostControllerTest (SimpleTestCase):
 
     def test_make_post_save(self):
         self.client.post(
-            "/save_post/", self.post_data())
+            "/realizar_post/", self.post_data())
         self.assertRaises(ApiException)
