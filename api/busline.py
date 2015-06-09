@@ -17,7 +17,6 @@ class BuslineAPI(object):
 
     def all(self):
         """Send requisition to get all buslines."""
-
         url = settings.API_URL + 'busline/'
         return self._get_filtered_list(url)
 

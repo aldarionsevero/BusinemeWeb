@@ -7,5 +7,4 @@ class Company(object):
 
     def __init__(self):
         """Initialize the atributes for the model."""
-
         self.name = ""

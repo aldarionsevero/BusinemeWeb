@@ -19,7 +19,6 @@ class Busline(models.Model):
 
     def __unicode__(self):
         """Return line number and via."""
-
         return self.line_number + "-" + self.description
 
     @classmethod
@@ -72,7 +71,6 @@ class Busline(models.Model):
         description and terminal description entered by the user then returns\
         the results list.
         """
-
         api = BuslineAPI()
         try:
             objects = api.filter(

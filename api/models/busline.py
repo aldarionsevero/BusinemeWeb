@@ -7,7 +7,6 @@ class Busline(object):
 
     def __init__(self):
         """Initialize the atributes for the model."""
-
         self.line_number = ""
         self.description = ""
         self.via = ""

@@ -138,7 +138,6 @@ def logout_user(request):
 @login_required
 def user_account_page(request):
     """Load the account managment page, that lets the user change his data."""
-
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -164,7 +163,6 @@ def change_password_page(request):
 @login_required
 def change_password(request):
     """Change user password checking for his current password."""
-
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -199,7 +197,6 @@ def change_password(request):
 @login_required
 def change_userdata(request):
     """Change user data."""
-
     if request.user.is_authenticated():
         user = request.user
         user.first_name = request.POST["name"]
@@ -212,7 +209,6 @@ def change_userdata(request):
 @login_required
 def deactivate_account_page(request):
     """Load user account deactivation page."""
-
     if request.user.is_authenticated():
         user = request.user
     else:
@@ -224,7 +220,6 @@ def deactivate_account_page(request):
 @login_required
 def deactivate_account(request):
     """Deactivate user account checking for his current password."""
-
     user = request.user
 
     password = request.POST["password"]

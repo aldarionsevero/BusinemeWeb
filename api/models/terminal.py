@@ -7,6 +7,5 @@ class Terminal(object):
 
     def __init__(self):
         """Initialize the atributes for the model."""
-
         self.description = ""
         self.address = ""

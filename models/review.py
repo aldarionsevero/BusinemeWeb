@@ -15,5 +15,4 @@ class Review(models.Model):
     @classmethod
     def filter_all(cls):
         """Return all reviews."""
-
         return cls.object.all()

@@ -54,6 +54,5 @@ def advanced_search_busline(request):
 
 def advanced_search_busline_page(request):
     """Return the advanced search page when requested."""
-
     return render_to_response("advanced_search_busline_page.html",
                               context_instance=RequestContext(request))
