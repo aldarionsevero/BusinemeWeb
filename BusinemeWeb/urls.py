@@ -13,8 +13,6 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^perfil/',
         'controllers.user_controller.user_account_page'),
-    url(r'^alterarcao_senha/',
-        'controllers.user_controller.change_password_page'),
     url(r'^alterar_senha/',
         'controllers.user_controller.change_password'),
     url(r'^sair/',

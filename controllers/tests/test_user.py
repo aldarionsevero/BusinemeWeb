@@ -108,7 +108,7 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     def test_change_password_page(self):
-        response = self.client.get('/alterarcao_senha/ ')
+        response = self.client.get('/alterar_senha/ ')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     def test_change_password(self):
@@ -126,7 +126,6 @@ class UserControllerTest(SimpleTestCase):
         response = self.client.get('/desativar_perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
-    # FIX-ME
     def test_register_user_page_feed(self):
         self.create_user()
         self.client.login(

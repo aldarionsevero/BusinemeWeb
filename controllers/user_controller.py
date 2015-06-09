@@ -161,7 +161,7 @@ def change_password_page(request):
 
 
 @login_required
-def change_password(request):
+def change_password_action(request):
     """Change user password checking for his current password."""
     if request.user.is_authenticated():
         user = request.user
@@ -177,14 +177,14 @@ def change_password(request):
             "Erro :(",
             "Senha atual incorreta.",
             "Verifique a escrita da senha informada.",
-            "login_page.html", request)
+            "change_password_page.html", request)
     else:
         if not (new_password1 == new_password2):
             response = modal_message(
                 "Erro :(",
                 "Os campos de nova senha não conferem.",
                 "Verifique a escrita das senhas informadas.",
-                "login_page.html", request)
+                "change_password_page.html", request)
         else:
             user.set_password(new_password1)
             user.save()
@@ -252,4 +252,17 @@ def deactivate_account(request):
         response = deactivate_account_page(request)
     elif request.method == 'POST':
         response = deactivate_account_action(request)
+    return response
+
+
+@login_required
+def change_password(request):
+    r"""
+    Call method to change the password of the user depending on the request \
+    method (GET or POST).
+    """
+    if request.method == 'GET':
+        response = change_password_page(request)
+    elif request.method == 'POST':
+        response = change_password_action(request)
     return response
