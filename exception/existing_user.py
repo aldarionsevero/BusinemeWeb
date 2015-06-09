@@ -3,7 +3,7 @@
 
 class ExistingUser(Exception):
 
-    """Exception for coflictiong usernames errors"""
+    """Exception for coflictiong usernames errors."""
 
     def __str__(self):
         return "Existing User Error"

@@ -3,7 +3,7 @@
 from django.shortcuts import render_to_response
 from models.busline import Busline
 from django.template import RequestContext
-from controllers.utils import error_message
+from controllers.utils import modal_message
 
 
 def search_line(request):
@@ -30,7 +30,7 @@ def advanced_search_busline(request):
     if ((len(request.GET['busline']) < 2) and
             (len(request.GET['description']) < 2) and
             (len(request.GET['terminal__description']) < 2)):
-        response = error_message(
+        response = modal_message(
             "Erro :(",
             "Entrada inválida.",
             "Os campos preenchidos da busca avançada devem possuir \
