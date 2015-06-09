@@ -88,7 +88,7 @@ def log_user(request):
 
 
 def log_user_get(request):
-    """Logs the user with GET method, (load page)."""
+    """Log the user with GET method, (load page)."""
     if request.user.is_authenticated():
         response = redirect("/",
                             context_instance=RequestContext(request))
@@ -130,7 +130,7 @@ def log_user_post(request):
 
 @login_required
 def logout_user(request):
-    r"""Log user out."""
+    """Log user out."""
     logout(request)
     return redirect('/login/', context_instance=RequestContext(request))
 

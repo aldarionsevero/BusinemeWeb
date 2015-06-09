@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 
-def error_message(alert_title, error_lead, error_message_in, html, request):
+def modal_message(alert_title, error_lead, error_message_in, html, request):
     r"""
     Populate a htmlvars with the error message and generates the\
     response.
