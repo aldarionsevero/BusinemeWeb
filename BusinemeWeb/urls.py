@@ -21,8 +21,6 @@ urlpatterns = patterns(
         'controllers.user_controller.logout_user'),
     url(r'^alterar_dados/',
         'controllers.user_controller.change_userdata'),
-    url(r'^desativacao_perfil/',
-        'controllers.user_controller.deactivate_account_page'),
     url(r'^desativar_perfil/',
         'controllers.user_controller.deactivate_account'),
     url(r'^buscar_linha/',

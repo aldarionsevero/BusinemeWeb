@@ -123,7 +123,7 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     def test_deactivate_account_page(self):
-        response = self.client.get('/desativacao_perfil/')
+        response = self.client.get('/desativar_perfil/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     # FIX-ME

@@ -218,7 +218,7 @@ def deactivate_account_page(request):
 
 
 @login_required
-def deactivate_account(request):
+def deactivate_account_action(request):
     """Deactivate user account checking for his current password."""
     user = request.user
 
@@ -239,4 +239,17 @@ def deactivate_account(request):
             "Usuário desativado com sucesso.",
             "Esperamos o seu retorno, até logo! :)",
             "login_page.html", request)
+    return response
+
+
+@login_required
+def deactivate_account(request):
+    r"""
+    Call method to deactivate the user depending on the request \
+    method (GET or POST).
+    """
+    if request.method == 'GET':
+        response = deactivate_account_page(request)
+    elif request.method == 'POST':
+        response = deactivate_account_action(request)
     return response
