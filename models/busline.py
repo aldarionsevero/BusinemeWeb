@@ -13,7 +13,7 @@ class Busline(models.Model):
     description = models.CharField(max_length=255)
     via = models.CharField(max_length=255)
     route_size = models.FloatField()  # unit: kilometers
-    fee = models.FloatField()  # unit: BRL (R$)
+    fee = models.DecimalField(decimal_places=2, max_digits=4)  # unit: BRL (R$)
     company = models.ForeignKey('Company', null=True)
     terminals = models.ManyToManyField('Terminal')
 
@@ -86,3 +86,12 @@ class Busline(models.Model):
             )
 
         return objects
+
+    @classmethod
+    def filter_by_line_equals(cls, line_number):
+        api = BuslineAPI()
+        # try:
+        busline = api.filter_by_line_equals(line_number)
+        # except:
+        #     busline = cls.objects.filter(line_number__exact=line_number)
+        return busline

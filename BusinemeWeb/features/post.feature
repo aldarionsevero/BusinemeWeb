@@ -34,3 +34,10 @@ Feature: Make a post.
 
 
 
+	Scenario: I press the button "Businar! " on "busline_profile.html"
+		Given I am on Busine.me homepage
+		And I type "205" in the field "busline"
+		And I press "Pesquisar"
+		And I follow "/perfil_de_linha/0.205/"  
+		When i press "Businar!"
+		Then I should see "Realize uma Businada!"      
