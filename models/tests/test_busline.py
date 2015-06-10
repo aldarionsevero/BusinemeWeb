@@ -86,7 +86,7 @@ class BuslineTest(SimpleTestCase):
     def test_busline_filter_by_multiple_invalid_both(self):
         self.create_busline()
         buslines = Busline.filter_by_multiple(
-            "000", "inavlid", "terminal_description")
+            "000", "invalid", "terminal_description")
         self.assertEquals(0, len(buslines))
 
     def test_all_exception(self):
