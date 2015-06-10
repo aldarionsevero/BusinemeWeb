@@ -7,25 +7,37 @@
         <h1 class="text-center" value="Resultado"> Resultado</h1>
     </div>
     <div class = "row">
-        {% if count_busline and searched_number%}
-            <h4 class="text-center" id="PASTEL">Foram encontrados '{{ count_busline }}' linhas que possuem '{{ searched_number }}' em seus números.</h4>
-        {% endif %}
+        <h4 class="text-center" >Foram encontradas '{{ count_busline }}' linhas</h4> 
+        <h4 class="text-center" >
+            {% if searched_number%}
+                que possuem '{{ searched_number }}' em seus números
+            {%endif %}
+            {% if description and searched_number%}
+                e
+            {%endif %}
+            {% if description%}
+                que passam por '{{ description }}' 
+            {%endif %}
+        </h4>
         <a href="/busca_avancada/" name="busca_avancada" class="right ">Busca Avançada</a>
     </div>
     <div class="row">
         <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
-            {% for busline in buslines %}
-               <div class="panel"> 
-    
-               <h3>{{ busline.line_number }}</h3> 
-                <p>Rota: {{ busline.description }}</p> 
-                <p>{{ busline.via }}</p> 
-                <p>Percurso: {{ busline.route_size }} KM</p> 
-                <p>Tarifa: R${{ busline.fee }}</p> 
-               </div>
-            {% endfor %}
-         
+                 <form action="/realizar_post/" method="GET">
+                    {% for busline in buslines %}
+                       <div class="panel"> 
+                           <h3> <a href="/perfil_de_linha/{{busline.line_number}}/"  name="busca_avancada" 
+                            class="left" value="{{busline.line_numeber}}" >{{ busline.line_number }}  </a></h3><br>
+                            <p>Rota: {{ busline.description }}</p> 
+                            <p>{{ busline.via }}</p> 
+                            <p>Percurso: {{ busline.route_size }} KM</p> 
+                            <p>Tarifa: R${{ busline.fee }}</p> 
+                            <input type="submit" class="button" name='Businar' value="Businar!">
+                            <input type="hidden" name="line_number" value="{{busline.line_number}}">
+                       </div>
+                    </form>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -39,5 +51,5 @@
 {% endblock %}
 
 {% block "modal_error_lead" %} {{error_lead}}{% endblock %}
-{% block "modal_error_message" %} {{error_message}} {% endblock %} 
+{% block "modal_error_message" %} {{modal_message}} {% endblock %} 
 {% block "modal_alert_title" %} {{alert_title}} {% endblock %} 

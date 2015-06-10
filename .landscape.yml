@@ -13,3 +13,7 @@ mccabe:
 autodetect: yes
 requirements:
   - requirements.txt
+ignore-paths:
+  - models/models.py
+ignore-patterns:
+  - (^|/).*_test\.py(/|$)

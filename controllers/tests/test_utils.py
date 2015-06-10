@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from django.test import SimpleTestCase, Client, RequestFactory
-from models.user import User
+from django.test import SimpleTestCase, RequestFactory
 from django.http import HttpRequest
-from controllers.utils import error_message, response_htmlvars
+from controllers.utils import modal_message
 
 
 class TestUtils(SimpleTestCase):
@@ -18,7 +17,6 @@ class TestUtils(SimpleTestCase):
 
     def test_error_message_status_code(self):
         error = "errortest"
-        response = error_message(
-            error, error, error, "register.html", self.request)
+        response = modal_message(
+            error, error, error, "register_user_page.html", self.request)
         self.assertEquals(response.status_code, self.STATUS_OK)
-# response.context[-1]

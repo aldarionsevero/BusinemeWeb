@@ -1,10 +1,6 @@
-from lettuce import *
+from lettuce import before, step, world
 from lettuce.django import django_url
-from lxml import html
-#from django.test.client import Client
-from nose.tools import assert_equals
 from splinter.browser import Browser
-from splinter.driver.zopetestbrowser import ZopeTestBrowser
 
 
 @before.all
@@ -56,14 +52,12 @@ def i_should_see_a_description(step, value):
     assert header.text == value
 
 
-@step('I press "Busca Avancada"')
-def i_press_advanced_search(step):
+@step('I follow "(.*)"')
+def i_follow(step, link):
     r"""
-    Verify if when the advanced search button is activated\
-    the "/busca_avancada/" url is called.
-    """
+    go to specifyed link"""
 
-    world.browser.click_link_by_href("/busca_avancada/")
+    world.browser.click_link_by_href(link)
 
 
 @step('I should see a message saying "Erro"')
@@ -84,3 +78,13 @@ def then_i_should_see(step, value):
     """
 
     world.browser.find_by_css('h3').first.value
+
+
+# @step('I press "Businar!"')
+# def i_press_post(step):
+#     r"""
+#     Verify if when the post button is activated\
+#     the "/realizar_post/" url is called.
+#     """
+
+#     world.browser.click_link_by_text("Businar!")
