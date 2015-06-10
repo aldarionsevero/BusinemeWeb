@@ -50,6 +50,7 @@
         </script>
     {% endif %}
     <script type="text/javascript">
+
       if (Modernizr.geolocation) {
        navigator.geolocation.getCurrentPosition(function(posicao){
         // alert("Localização atualizada");
@@ -59,6 +60,9 @@
                $("#id_latitude").val(posicao.coords.latitude);
            });
         }      
+    </script>
+     <script>
+            $('#modal_review').foundation('reveal', 'open');
     </script>
 {% endblock %}
 
