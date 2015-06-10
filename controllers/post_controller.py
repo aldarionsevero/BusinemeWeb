@@ -5,18 +5,29 @@ from models.post import Post
 from django.template import RequestContext
 from api.busline import BuslineAPI
 from controllers.utils import modal_message
+from django.contrib.auth.decorators import login_required
 
 
 def make_post_page(request):
     """Return the post page when requested. """
     line_number = request.GET['line_number']
-    return render_to_response("make_post_page.html",
-                              {'line_number': line_number},
-                              context_instance=RequestContext(request))
+    if request.user.is_authenticated():
+        return render_to_response("make_post_page.html",
+                                  {'line_number': line_number},
+                                  context_instance=RequestContext(request))
+    else:
+        return modal_message(
+            "Erro :(",
+            "Usuário não logado.",
+            "Para realizar esta ação.\
+             você deve estar logado.",
+            "login_page.html", request)
 
 
+@login_required
 def make_post_action(request):
     """Perform the action of saving the post. """
+
     post = Post()
     post.capacity = request.POST['capacity']
     post.traffic = request.POST['traffic']
@@ -28,13 +39,14 @@ def make_post_action(request):
     try:
         busline = api.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
+        post.busline = busline
         post.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'login_page.html', request)
     except:
         response = modal_message('Erro :(', 'Servidor não disponível', 'O \
-            acesso ao servidor está indisponível no momento, verifique sua \
-            conexão', 'login_page.html', request)
+        acesso ao servidor está indisponível no momento, verifique sua \
+        conexão', 'login_page.html', request)
 
     return response
 
