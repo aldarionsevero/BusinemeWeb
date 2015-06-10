@@ -36,7 +36,7 @@
                 <textarea name="description" placeholder="Conte-nos sobre sua viagem" cols="10" rows="10"></textarea>
             </label>
             <input type="hidden" name="line_number" value="{{line_number}}">
-            <input type="submit" class="default button expand" name='Businar' value='Businar!'>
+            <input type="submit" class="default button expand" data-reveal-id="modal_review" name='Businar' value='Businar!'>
         </form>
     </div>
 </div>
@@ -60,9 +60,6 @@
                $("#id_latitude").val(posicao.coords.latitude);
            });
         }      
-    </script>
-     <script>
-            $('#modal_review').foundation('reveal', 'open');
     </script>
 {% endblock %}
 
