@@ -24,7 +24,7 @@ Feature: Make a post.
 		Then I should see "Erro :("
 
 
-	Scenario: I press the button "Businar!" without sign in
+	Scenario: I press the button "Businar!" with sign in
 		Given I am on Busine.me loginpage
 		And I type "rapifire" in the field "username"
 		And I type "123" in the field "password"
