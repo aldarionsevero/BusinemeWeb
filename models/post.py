@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from busline import Busline
+from exception.line_without_post import LineWithoutPostError
 
 
 class Post(models.Model):
@@ -18,9 +19,20 @@ class Post(models.Model):
 
     def __unicode__(self):
         """Return comment of the post."""
-        return  'id: %s date: %s %s = ' % (self.id, str(self.date), str(self.time))
-            
+        return 'id: %s date: %s %s busline: %s' % (self.id, str(self.date),
+                                                   str(self.time),
+                                                   self.busline_id)
+
     @classmethod
     def all(cls):
         """Return all posts."""
         return cls.objects.all()
+
+    @classmethod
+    def last(cls, busline_id):
+        """Return the last post from busline."""
+        try:
+            return cls.objects.filter(busline_id=busline_id).order_by("-date",
+                                                                      "-time")[0]
+        except:
+            raise LineWithoutPostError()

@@ -6,14 +6,21 @@ from django.template import RequestContext
 from api.busline import BuslineAPI
 from controllers.utils import modal_message
 from django.contrib.auth.decorators import login_required
+from exception.line_without_post import LineWithoutPostError
 
 
 def make_post_page(request):
     """Return the post page when requested. """
     line_number = request.GET['line_number']
+    busline_id = request.GET['busline_id']
+    try:
+        last_post = Post.last(busline_id)
+    except LineWithoutPostError:
+        last_post = None
     if request.user.is_authenticated():
         return render_to_response("make_post_page.html",
-                                  {'line_number': line_number},
+                                  {'line_number': line_number,
+                                   'last_post': last_post},
                                   context_instance=RequestContext(request))
     else:
         return modal_message(
@@ -39,10 +46,9 @@ def make_post_action(request):
     try:
         busline = api.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
-        post.busline = busline
         post.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
-            com sucesso!', 'login_page.html', request)
+            com sucesso!', 'feed_page.html', request)
     except:
         response = modal_message('Erro :(', 'Servidor não disponível', 'O \
         acesso ao servidor está indisponível no momento, verifique sua \

@@ -36,10 +36,39 @@
                 <textarea name="description" placeholder="Conte-nos sobre sua viagem" cols="10" rows="10"></textarea>
             </label>
             <input type="hidden" name="line_number" value="{{line_number}}">
+            <input type="hidden" name="codigo_longitude" id="id_longitude" value="">
+            <input type="hidden" name="codigo_latitude" id="id_latitude" value="">
+            <input type="hidden" name="review" id="id_review" value="">
+            {% if last_post %}
             <input type="submit" class="default button expand" data-reveal-id="modal_review" name='Businar' value='Businar!'>
+            {% else %}
+            <input type="submit" class="default button expand" name='Businar' value='Businar!'>
+            {% endif %}
         </form>
     </div>
 </div>
+
+<div id="modal_review" class="small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <h2>Como vc julga esse post?</h2>
+
+    <div class="panel callout">
+        <h2>{{last_post.comment}}</h2>
+        <p class="lead">{{last_post.date}} {{last_post.time}}</p>
+        <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p> 
+     </div>
+
+     <ul class="button-group even-3">
+        <li><a class="button success" id="good_review">Bom</a></li>
+        <li><a class="button secondary" id="whatever_review">Indiferente</a></li>
+        <li><a class="button alert" id="bad_review">Ruim</a></li>
+      </ul>
+      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+
+</div>
+
+
+
+
 
 
 {% endblock %}
@@ -53,16 +82,55 @@
 
       if (Modernizr.geolocation) {
        navigator.geolocation.getCurrentPosition(function(posicao){
-        // alert("Localização atualizada");
-               $('#post_form').append("<input type='text' name='codigo_longitude' id='codigo_longitude' value='"+ posicao.coords.longitude +"'>");
-               $('#post_form').append("<input type='text' name='codigo_latitude' id='codigo_latitude' value='"+ posicao.coords.latitude +"'>");
                $("#id_longitude").val(posicao.coords.longitude);
                $("#id_latitude").val(posicao.coords.latitude);
            });
-        }      
+        }
+
+        function make_review(value){
+            $('#modal_review').foundation('reveal', 'close');
+            $('#id_review').val(value);
+            $('#post_form').submit();
+        }
+        $('#good_review').click(function(){
+            make_review(1)
+            });
+        $('#whatever_review').click(function(){
+            make_review(0)
+            });
+        $('#bad_review').click(function(){
+            make_review(-1)
+            });    
     </script>
 {% endblock %}
 
 {% block "modal_error_lead" %} {{error_lead}}{% endblock %}
 {% block "modal_error_message" %} {{modal_message}} {% endblock %} 
 {% block "modal_alert_title" %} {{alert_title}} {% endblock %} 
+
+<script>
+    function initialize() {
+      var myLatlng = new google.maps.LatLng(id_latitude,id_longitude);
+      var mapOptions = {
+        zoom: 4,
+        center: myLatlng
+      };
+
+      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+      var infowindow = new google.maps.InfoWindow({
+          content: contentString
+      });
+
+      var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'Esteve aqui'
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
