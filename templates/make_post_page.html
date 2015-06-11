@@ -4,6 +4,13 @@
 {% endblock %}
 {% block content %}
 
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map-canvas { height: 100% }
+</style>
+
+
 <div>
     <h1 class= "text-center" value="titulo_h1">Realize uma Businada!</h1>
 </div>
@@ -50,19 +57,19 @@
 
 <div id="modal_review" class="small reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
     <h2>Como vc julga esse post?</h2>
-
     <div class="panel callout">
         <h2>{{last_post.comment}}</h2>
         <p class="lead">{{last_post.date}} {{last_post.time}}</p>
         <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p> 
-     </div>
+    </div>
 
      <ul class="button-group even-3">
         <li><a class="button success" id="good_review">Bom</a></li>
         <li><a class="button secondary" id="whatever_review">Indiferente</a></li>
         <li><a class="button alert" id="bad_review">Ruim</a></li>
       </ul>
-      <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+      <!-- TENTANDO COLOCAR O MAPA -->
+      <div id="map-canvas"></div>
 
 </div>
 
@@ -102,35 +109,26 @@
             make_review(-1)
             });    
     </script>
+   
+   <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwmUpp3KwXz_wY2EDYzjzgTFtHNOOVOzM">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: { lat: -34.397, lng: 150.644},
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      }
+    </script>
+
+    
+
 {% endblock %}
 
 {% block "modal_error_lead" %} {{error_lead}}{% endblock %}
 {% block "modal_error_message" %} {{modal_message}} {% endblock %} 
 {% block "modal_alert_title" %} {{alert_title}} {% endblock %} 
-
-<script>
-    function initialize() {
-      var myLatlng = new google.maps.LatLng(id_latitude,id_longitude);
-      var mapOptions = {
-        zoom: 4,
-        center: myLatlng
-      };
-
-      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-      var infowindow = new google.maps.InfoWindow({
-          content: contentString
-      });
-
-      var marker = new google.maps.Marker({
-          position: myLatlng,
-          map: map,
-          title: 'Esteve aqui'
-      });
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,marker);
-      });
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+ 

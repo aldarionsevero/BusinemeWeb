@@ -15,21 +15,3 @@ Feature: Make a post.
 		And I press "Pesquisar"
 		And I follow "/perfil_de_linha/0.205/"  
 		Then I should see "Informações"      
-
-	Scenario: I press the button "Businar!" without sign in
-		Given I am on Busine.me homepage
-		And I type "205" in the field "busline"
-		And I press "Pesquisar"
-		And I press "Businar!" 
-		Then I should see "Erro :("
-
-
-	Scenario: I press the button "Businar!" with sign in
-		Given I am on Busine.me loginpage
-		And I type "rapifire" in the field "username"
-		And I type "123" in the field "password"
-		And I press "Entrar"
-		And I type "205" in the field "busline"
-		And I press "Pesquisar"
-		And I press "Businar!" 
-		Then I should see "Realize uma Businada!"
