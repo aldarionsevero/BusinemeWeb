@@ -61,6 +61,7 @@
         <h2>{{last_post.comment}}</h2>
         <p class="lead">{{last_post.date}} {{last_post.time}}</p>
         <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p> 
+        {{last_post.latitude}}
         <center> <div class="flex-video">
           <div id="map_canvas" style="width:290px;height:200px;"></div>
         </div></center>
@@ -92,7 +93,7 @@
       if (Modernizr.geolocation) {
        navigator.geolocation.getCurrentPosition(function(posicao){
                $("#id_longitude").val(posicao.coords.longitude);
-               $("#id_latitude").val(posicao.coords.latitude);
+               $("#id_latitude").val(posicao.coords.latitude);  
            });
         }
 
@@ -117,13 +118,26 @@
     
     <script type="text/javascript">
       $(document).ready(function initialize() {
+          var myLatlng = new google.maps.LatLng(20,-30);
         var mapOptions = {
-          center: new google.maps.LatLng(-34.397, 150.644),
-          zoom: 4,
+          center: myLatlng,
+          zoom: 10,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
         google.maps.event.addDomListener(window, 'load', initialize);
+         var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Hello World!'
+
+  });
+         google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, "resize", function() {
+ var center = map.getCenter();
+ google.maps.event.trigger(map, "resize");
+ map.setCenter(center); 
+});
       })
 
 
