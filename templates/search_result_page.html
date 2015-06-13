@@ -27,13 +27,13 @@
                  <form action="/realizar_post/" method="GET">
                     {% for busline in buslines %}
                        <div class="panel"> 
-                           <h3> <a href="/perfil_de_linha/{{busline.line_number}}/"  name="busca_avancada" 
+                            <h3> <a href="/perfil_de_linha/{{busline.line_number}}/"  name="busca_avancada" 
                             class="left" value="{{busline.line_numeber}}" >{{ busline.line_number }}  </a></h3><br>
-                            <p>Rota: {{ busline.description }}</p> 
-                            <p>{{ busline.via }}</p> 
-                            <p>Percurso: {{ busline.route_size }} KM</p> 
-                            <p>Tarifa: R${{ busline.fee }}</p> 
-                            <input type="submit" class="button" name='Businar' value="Businar!">
+                            <p>Rota: {{ busline.description }}
+                            <br>
+                            <input type="submit" class="button right round tiny" name='Businar' value="Businar!">
+                            </p> 
+                            
                             <input type="hidden" name="line_number" value="{{busline.line_number}}">
                        </div>
                     </form>
