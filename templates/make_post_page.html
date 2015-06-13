@@ -46,6 +46,9 @@
             <input type="hidden" name="codigo_longitude" id="id_longitude" value="">
             <input type="hidden" name="codigo_latitude" id="id_latitude" value="">
             <input type="hidden" name="review" id="id_review" value="">
+              
+            <div id="loading" class="small-12 columns"></div>
+
             {% if last_post %}
             <input type="submit" class="default button expand" data-reveal-id="modal_review" name='Businar' value='Businar!'>
             {% else %}
@@ -60,8 +63,7 @@
     <div class="panel callout">
         <h2>{{last_post.comment}}</h2>
         <p class="lead">{{last_post.date}} {{last_post.time}}</p>
-        <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p> 
-        {{last_post.latitude}}
+        <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p>
         <center> <div class="flex-video">
           <div id="map_canvas" style="width:290px;height:200px;"></div>
         </div></center>
@@ -71,9 +73,7 @@
         <li><a class="button success" id="good_review">Bom</a></li>
         <li><a class="button secondary" id="whatever_review">Indiferente</a></li>
         <li><a class="button alert" id="bad_review">Ruim</a></li>
-      </ul>
-      <!-- TENTANDO COLOCAR O MAPA --> 
- 
+      </ul> 
 </div>
 
 
@@ -92,9 +92,13 @@
 
       if (Modernizr.geolocation) {
        navigator.geolocation.getCurrentPosition(function(posicao){
+              $('#loading').html('Posição encontrada!');
+              $("[name='Businar']").attr('disabled', false);
                $("#id_longitude").val(posicao.coords.longitude);
                $("#id_latitude").val(posicao.coords.latitude);  
            });
+        } else {
+          alert("ROOODOOOOOU");
         }
 
         function make_review(value){
@@ -118,26 +122,29 @@
     
     <script type="text/javascript">
       $(document).ready(function initialize() {
-          var myLatlng = new google.maps.LatLng(20,-30);
+        $('#loading').html('<img src="/static/images/ajax-loader.gif" </img> Obtendo posição');
+        $("[name='Businar']").attr('disabled', true);
+        var myLatlng = new google.maps.LatLng({{last_post.latitude}},{{last_post.longitude}});
         var mapOptions = {
           center: myLatlng,
-          zoom: 10,
+          zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        google.maps.event.addDomListener(window, 'load', initialize);
-         var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Hello World!'
-
+        google.maps.event.addDomListener(window, 'load', initialize);        
+        var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title: 'Ultima postagem'
   });
+         marker.setMap(map);
+
          google.maps.event.addDomListener(window, 'load', initialize);
-google.maps.event.addDomListener(window, "resize", function() {
- var center = map.getCenter();
- google.maps.event.trigger(map, "resize");
- map.setCenter(center); 
-});
+         google.maps.event.addDomListener(window, "resize", function() {
+         var center = myLatlng;
+         google.maps.event.trigger(map, "resize");
+         map.setCenter(center); 
+        });
       })
 
 
