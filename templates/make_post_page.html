@@ -3,13 +3,13 @@
     Busine.me | Resultados
 {% endblock %}
 {% block content %}
-
-<style type="text/css">
-  html { height: 100% }
-  body { height: 100%; margin: 0; padding: 0 }
-  #map-canvas { height: 100% }
-</style>
-
+<style>
+      html, body, #map_canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
 
 <div>
     <h1 class= "text-center" value="titulo_h1">Realize uma Businada!</h1>
@@ -61,16 +61,18 @@
         <h2>{{last_post.comment}}</h2>
         <p class="lead">{{last_post.date}} {{last_post.time}}</p>
         <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p> 
+        <center> <div class="flex-video">
+          <div id="map_canvas" style="width:290px;height:200px;"></div>
+        </div></center>
     </div>
 
-     <ul class="button-group even-3">
+      <ul class="button-group even-3">
         <li><a class="button success" id="good_review">Bom</a></li>
         <li><a class="button secondary" id="whatever_review">Indiferente</a></li>
         <li><a class="button alert" id="bad_review">Ruim</a></li>
       </ul>
-      <!-- TENTANDO COLOCAR O MAPA -->
-      <div id="map-canvas"></div>
-
+      <!-- TENTANDO COLOCAR O MAPA --> 
+ 
 </div>
 
 
@@ -109,19 +111,23 @@
             make_review(-1)
             });    
     </script>
-   
-   <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwmUpp3KwXz_wY2EDYzjzgTFtHNOOVOzM">
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwmUpp3KwXz_wY2EDYzjzgTFtHNOOVOzM" >
     </script>
+    
     <script type="text/javascript">
-      function initialize() {
+      $(document).ready(function initialize() {
         var mapOptions = {
-          center: { lat: -34.397, lng: 150.644},
-          zoom: 8
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 4,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-      }
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        google.maps.event.addDomListener(window, 'load', initialize);
+      })
+
+
+
     </script>
 
     
