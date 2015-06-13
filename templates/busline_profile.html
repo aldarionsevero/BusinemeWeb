@@ -22,21 +22,40 @@
                     </div>
                 </form>
                 <div class="panel">
-                <h3 class="left" value="Feed"> Businadas</h3><br><br>    
-                {% if posts %}
-                    {% for post in posts %}
-                        <div class="panel">
-                            <h4>@{{ post.user.username }}</h4>
-                            <p>
-                                Trânsito: {{ post.traffic }} | Lotação: {{ post.capacity }}
-                                <small class="right">{{ post.time }}</small>
-                            </p>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <p>Não existem Businadas para essa linha. :(<p>
-                {% endif %}
+                    <h3 class="left" value="Feed"> Businadas</h3><br><br>
+                    {% if posts %}
+                        {% for post in posts %}
+                            <div class="panel">
+                                <h3> <a href="#" data-reveal-id="modal-post-details" name="post-details"
+                                class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}  </a></h3><br>
+                                <p>
+                                    Trânsito: {{ post.traffic }} | Lotação: {{ post.capacity }}
+                                    <small class="right">{{ post.time }}</small>
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Não existem Businadas para essa linha. :(<p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
+        {% endblock %}
+        <!--
+        <input type="submit" class="default button expand" data-reveal-id="modal-post-details" name='Businar' value='Businar!'> -->
+        <div id="modal-post-details" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+            <h2 id="modalTitle">Awesome. I have it.</h2>
+            <p class="lead">Your couch.  It is mine.</p>
+            <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+            <a class="modal-post-details" aria-label="Close">&#215;</a>
         </div>
-    </div>
-{% endblock %}
+
+        {% block "scripts" %}
+            <script>
+                $('#modal-post-details').foundation('reveal', 'open');
+            </script>
+        {% endblock %}
+
+        {% block "modal_error_lead" %} {{error_lead}}{% endblock %}
+        {% block "modal_error_message" %} {{modal_message}} {% endblock %}
+        {% block "modal_alert_title" %} {{alert_title}} {% endblock %}
