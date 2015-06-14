@@ -1,6 +1,4 @@
 from django.test import SimpleTestCase, Client
-from models.post import Post
-from controllers import post_controller
 from exception.api import ApiException
 
 
@@ -24,7 +22,7 @@ class PostControllerTest (SimpleTestCase):
 
     def test_make_post_page(self):
         response = self.client.get(
-            "/realizar_post/?line_number=001")
+            "/realizar_post/?line_number=001&busline_id=01")
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_make_post_save(self):

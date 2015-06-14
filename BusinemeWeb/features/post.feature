@@ -15,3 +15,5 @@ Feature: Make a post.
 		And I press "Pesquisar"
 		And I follow "/perfil_de_linha/0.205/"  
 		Then I should see "Informações"      
+
+		

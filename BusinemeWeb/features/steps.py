@@ -17,6 +17,15 @@ def i_am_on_busineme_home_page(step):
     world.browser.response = world.browser.visit(full_url)
 
 
+@step(r'I am on Busine.me loginpage')
+def i_am_on_busineme_login_page(step):
+    """Verify if the actual page is the loginpage of the application."""
+
+    name = "/login/"
+    full_url = django_url(name)
+    world.browser.response = world.browser.visit(full_url)
+
+
 @step('I type "(.*)" in the field "(.*)"')
 def i_type_value_in_the_field_field_name(step, value, field_name):
     """Enter the predefined values on predefined field."""
