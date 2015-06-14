@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from models.busline import Busline
-from models.user import User
+from busline import Busline
+from user import User
 from exception.line_without_post import LineWithoutPostError
 
 
