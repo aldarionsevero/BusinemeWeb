@@ -3,28 +3,62 @@
     Busine.me | Informações
 {% endblock %}
 {% block content %}
-<div class="row">
+    <div class="row">
         <h1 class="text-center" value="Resultado"> Informações</h1>
-</div>
-
-<div class="row">
+    </div>
+    <div class="row">
         <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
-                 <form action="/realizar_post/" method="GET">
+                <form action="/realizar_post/" method="GET">
                     
-                       <div class="panel"> 
-                            <h3 class="left" value="Resultado"> {{ busline.line_number }}</h3><br><br>
-                            <p>Rota: {{ busline.description }}</p> 
-                            <p>{{ busline.via }}</p> 
-                            <p>Percurso: {{ busline.route_size }} KM</p> 
-                            <p>Tarifa: R${{ busline.fee }}</p> 
-                            <input type="submit" class="button round" name='Businar' value="Businar!">
-                            <input type="hidden" name="line_number" value="{{busline.line_number}}">
-                       </div>
+                    <div class="panel">
+                        <h3 class="left" value="Resultado"> {{ busline.line_number }}</h3><br><br>
+                        <p>Rota: {{ busline.description }}</p>
+                        <p>{{ busline.via }}</p>
+                        <p>Percurso: {{ busline.route_size }} KM</p>
+                        <p>Tarifa: R${{ busline.fee }}</p>
+                        <input type="submit" class="button round" name='Businar' value="Businar!">
+                        <input type="hidden" name="line_number" value="{{busline.line_number}}">
+                    </div>
                 </form>
-                    
+                <div class="panel">
+                    <h3 class="left" value="Feed"> Businadas</h3><br><br>
+                    {% if posts %}
+                        {% for post in posts %}
+                            <div class="panel">
+                                <h3> <a href="#" data-reveal-id="modal-post-details" name="post-details"
+                                class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}  </a></h3><br>
+                                <p> 
+                                Trânsito:
+                                <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
+                                Lotação:
+                                <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+                                    <small class="right">{{ post.time }}</small>
+                                </p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Não existem Businadas para essa linha. :(<p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
+        {% endblock %}
+        <!--
+        <input type="submit" class="default button expand" data-reveal-id="modal-post-details" name='Businar' value='Businar!'> -->
+        <div id="modal-post-details" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+            <h2 id="modalTitle">Awesome. I have it.</h2>
+            <p class="lead">Your couch.  It is mine.</p>
+            <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+            <a class="modal-post-details" aria-label="Close">&#215;</a>
         </div>
-    </div>
-{% endblock %}
 
+        {% block "scripts" %}
+            <script>
+                $('#modal-post-details').foundation('reveal', 'open');
+            </script>
+        {% endblock %}
+
+        {% block "modal_error_lead" %} {{error_lead}}{% endblock %}
+        {% block "modal_error_message" %} {{modal_message}} {% endblock %}
+        {% block "modal_alert_title" %} {{alert_title}} {% endblock %}

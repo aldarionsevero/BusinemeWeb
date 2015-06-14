@@ -10,11 +10,9 @@ install:
  - sudo apt-get install python2.7 python-pip python-dev
  - sudo pip install python-Levenshtein
  - pip install -r requirements.txt
+ - for i in configuration/*.py.template; do cp $i "${i/.py.template/.py}"; done
 
 before_script:
- - cp configuration/databases.py.template configuration/databases.py
- - cp configuration/security.py.template configuration/security.py
- - cp configuration/api.py.template configuration/api.py
  - python manage.py makemigrations
  - python manage.py migrate
 

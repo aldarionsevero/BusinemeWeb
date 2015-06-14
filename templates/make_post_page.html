@@ -15,17 +15,22 @@
             <a href="/busline_feed_page/" title="Clique aqui para ver todos os posts sobre a linha"><h2>{{line_number}}</h2></a>
             <br>
 
-            <h2>Trânsito:  <span id="numero_transito"></span></h2>
-     
-            <div class="range-slider round" data-slider data-options="start: 1; 
+            <h2>Trânsito</h2>
+            <p class="left">Livre</p>
+            <p class="right">Parado</p>
+            <br>
+            <div class="range-slider round" data-slider data-options="start: 0; 
                                         end: 5; display_selector: #numero_transito; ">
                 <span class="range-slider-handle" role="slider" tabindex="0"></span> 
                 <span class="range-slider-active-segment"></span> 
                 <input type="hidden" value='numero_transito' name='traffic'>
             </div>
 
-            <h2>Lotação: <span id="numero_lotacao"></span></h2>
-            <div class="range-slider round" data-slider data-options="start: 1;
+            <h2>Lotação</h2>
+            <p class="left">Vazio</p>
+            <p class="right">Lotado</p>
+            <br>
+            <div class="range-slider round" data-slider data-options="start: 0;
                                          end: 5; display_selector: #numero_lotacao; ">
                 <span class="range-slider-handle" role="slider" tabindex="0"></span> 
                 <span class="range-slider-active-segment"></span>  

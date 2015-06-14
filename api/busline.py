@@ -70,10 +70,10 @@ class BuslineAPI(object):
         Load the json returned by the requisition and then ruturns the objects.
         """
         try:
-            busline_json = requests.get(url).content
-            busline_json = json.loads(busline_json)
-            return self._busline_list(busline_json)
+            buslines = requests.get(url)
+            return self._busline_list(buslines.json())
         except Exception, e:
+            print e
             raise ApiException(str(e))
 
     def _company_json_to_object(self, company_json):
@@ -126,7 +126,7 @@ class BuslineAPI(object):
         its a list.
         """
         busline_list = []
-        for busline in busline_json['objects']:
+        for busline in busline_json["objects"]:
             busline_list.append(self._json_to_object(busline))
 
         return busline_list

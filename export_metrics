@@ -1,0 +1,131 @@
+#!/bin/bash
+
+function build_pdf
+{
+	git checkout $1
+
+echo "\documentclass{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[final]{pdfpages}
+\usepackage{makeidx}
+\usepackage[all]{hypcap}
+\usepackage{longtable,hyperref}
+\hypersetup{
+	pdftitle={Busine.me},
+	pdfsubject={Metrics},
+	pdfkeywords={},
+	backref=true,
+	draft=false,
+	%pdfstartview=fitR,
+	bookmarks=true,
+	bookmarksopen=true,
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black,%blue
+	pdftex,
+	bookmarks=true,
+	linktocpage=true,
+	hyperindex=true,
+	unicode=false
+}
+
+\begin{titlepage}
+\centering
+% \doublespacing
+\scshape
+\normalfont
+\vspace{0.1\textheight}
+\vbox{\normalfont{UNB - UNIVERSIDADE DE BRASILIA\\CAMPUS GAMA}}
+\vspace{0.1\textheight}
+
+
+\vbox{\Huge
+%Nome do Trabalho
+
+Busine.me
+
+\vspace{0.03\textheight}
+\hrule }
+
+\vbox{
+%Nome da Matéria
+
+Metrics $1
+
+}
+\vspace{0.3\textheight}
+
+%teste
+
+\vspace{0.5\textheight}
+%Nomes
+\vbox{\scshape
+{\today}}
+\end{titlepage}
+
+
+\begin{document}
+
+\tableofcontents
+\newpage
+" > metrics/main.tex
+
+shopt -s globstar
+shopt -s nullglob
+
+for D in *
+do
+    if [ -d "$D" ]; then
+	if [[ "$D" == "templates" ]]; then 
+		continue
+	fi
+	echo "Running pylint on $D"
+	pylint --comment=n $D -f html > metrics/metrics_$D.html 2> /dev/null
+	file_size="wc -c <metrics/metrics_$D.html"
+	if  test -f "metrics/metrics_$D.html" && [[ -s "metrics/metrics_$D.html" ]]; then
+		echo "\part{$D}
+
+		    	" >> metrics/main.tex
+	fi
+	for app in `ls $D`
+	do
+	    if [[ ${app: -3} == ".py" ]]; then
+	    	if [[ $app != "__init__.py" ]]; then
+		    	echo "\chapter{${app/\_/\\\_}}
+
+		    	" >> metrics/main.tex
+		        python -m mccabe $D/$app >> metrics/metrics_$D.html 2> /dev/null
+	        	pandoc -f html -t latex metrics/metrics_$D.html >> metrics/main.tex
+	        fi
+	    fi
+	done
+    fi
+done
+
+echo "\end{document}" >> metrics/main.tex
+pdflatex -interaction=batchmode metrics/main.tex
+pdflatex -interaction=batchmode metrics/main.tex
+mv main.pdf metrics/metrics_$1.pdf
+echo "Cleaning"
+rm -rf *.aux *.log *.toc *.bbl *.bak *.blg *.out *.lof *.lot *.lol *.glg *.glo *.ist *.xdy *.gls *.acn *.acr *.idx *.alg metrics/*.tex
+}
+
+
+if [ ! -d "metrics" ]; then
+   mkdir metrics
+else
+   echo "Cleaning"
+   rm -rf metrics
+   sleep 0.1
+   mkdir metrics
+fi
+
+
+for tag in `git tag`; do
+	build_pdf $tag
+done
+
+build_pdf master

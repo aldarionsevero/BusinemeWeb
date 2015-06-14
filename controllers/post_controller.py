@@ -5,6 +5,7 @@ from models.post import Post
 from django.template import RequestContext
 from api.busline import BuslineAPI
 from controllers.utils import modal_message
+from exception.api import ApiException
 
 
 def make_post_page(request):
@@ -23,7 +24,7 @@ def make_post_action(request):
     post.comment = request.POST['description']
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
-
+    post.user_id = request.user.id
     api = BuslineAPI()
     try:
         busline = api.filter_by_line_equals(request.POST['line_number'])
@@ -31,7 +32,7 @@ def make_post_action(request):
         post.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'login_page.html', request)
-    except:
+    except ApiException, e:
         response = modal_message('Erro :(', 'Servidor não disponível', 'O \
             acesso ao servidor está indisponível no momento, verifique sua \
             conexão', 'login_page.html', request)
