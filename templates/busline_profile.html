@@ -28,8 +28,11 @@
                             <div class="panel">
                                 <h3> <a href="#" data-reveal-id="modal-post-details" name="post-details"
                                 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}  </a></h3><br>
-                                <p>
-                                    Trânsito: {{ post.traffic }} | Lotação: {{ post.capacity }}
+                                <p> 
+                                Trânsito:
+                                <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
+                                Lotação:
+                                <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
                                     <small class="right">{{ post.time }}</small>
                                 </p>
                             </div>
