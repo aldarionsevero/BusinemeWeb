@@ -12,7 +12,7 @@
     <div class="panel small-10 medium-4 large-4 small-centered columns">
         <form action="/realizar_post/" method="POST" id="post_form">
         {% csrf_token %}
-            <a href="/busline_feed_page/" title="Clique aqui para ver todos os posts sobre a linha"><h2>{{line_number}}</h2></a>
+            <a href="/perfil_de_linha/{{line_number}}/" title="Clique aqui para ver todos os posts sobre a linha"><h2>{{line_number}}</h2></a>
             <br>
 
             <h2>Trânsito</h2>
