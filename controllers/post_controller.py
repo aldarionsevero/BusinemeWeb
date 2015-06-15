@@ -46,6 +46,9 @@ def make_post_action(request):
     try:
         busline = api.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
+        last_post = Post.last(post.busline_id)
+        last_post.user.pontuation = request.POST['review']
+
         post.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
@@ -54,10 +57,10 @@ def make_post_action(request):
         acesso ao servidor está indisponível no momento, verifique sua \
         conexão', 'login_page.html', request)
 
-    if post.latitude == "" or post.longitude == "":
-        response = modal_message('Erro :(', 'Serviço não disponível',
-                                 'Não conseguimos obter sua geolocalização',
-                                 'feed_page.html', request)
+    # if post.latitude == "" or post.longitude == "":
+    #     response = modal_message('Erro :(', 'Serviço não disponível',
+    #                              'Não conseguimos obter sua geolocalização',
+    #                              'feed_page.html', request)
     return response
 
 
