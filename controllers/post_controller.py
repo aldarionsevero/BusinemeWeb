@@ -2,6 +2,7 @@
 """Post controller docstring"""
 from django.shortcuts import render_to_response
 from models.post import Post
+from models.busline import Busline
 from django.template import RequestContext
 from api.busline import BuslineAPI
 from controllers.utils import modal_message
@@ -41,21 +42,22 @@ def make_post_action(request):
     post.comment = request.POST['description']
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
+    post.user_id = request.user.id
 
-    api = BuslineAPI()
-    try:
-        busline = api.filter_by_line_equals(request.POST['line_number'])
-        post.busline_id = busline.id
-        last_post = Post.last(post.busline_id)
-        last_post.user.pontuation = request.POST['review']
+    # try:
+    busline = Busline.filter_by_line_equals(request.POST['line_number'])
+    post.busline_id = busline.id
+    last_post = Post.last(post.busline_id)
+    last_post.user.pontuation = request.POST['review']
 
-        post.save()
-        response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
-            com sucesso!', 'feed_page.html', request)
-    except:
-        response = modal_message('Erro :(', 'Servidor não disponível', 'O \
-        acesso ao servidor está indisponível no momento, verifique sua \
-        conexão', 'login_page.html', request)
+    post.save()
+    last_post.user.save()
+    response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
+        com sucesso!', 'feed_page.html', request)
+    # except:
+    #     response = modal_message('Erro :(', 'Servidor não disponível', 'O \
+    #     acesso ao servidor está indisponível no momento, verifique sua \
+    #     conexão', 'login_page.html', request)
 
     # if post.latitude == "" or post.longitude == "":
     #     response = modal_message('Erro :(', 'Serviço não disponível',

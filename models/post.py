@@ -2,6 +2,7 @@
 from django.db import models
 from busline import Busline
 from exception.line_without_post import LineWithoutPostError
+from user import User
 
 
 class Post(models.Model):
@@ -16,6 +17,7 @@ class Post(models.Model):
     busline = models.ForeignKey(Busline)
     date = models.DateField(auto_now=True)
     time = models.TimeField(auto_now=True)
+    user = models.ForeignKey(User)
 
     def __unicode__(self):
         """Return comment of the post."""
