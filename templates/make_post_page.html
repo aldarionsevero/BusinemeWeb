@@ -62,13 +62,13 @@
     <h2>Como vc julga esse post?</h2>
     <div class="panel callout">
         <h2>{{last_post.comment}}</h2>
+        <h2>{{last_post.user.pontuation}}</h2>
         <p class="lead">{{last_post.date}} {{last_post.time}}</p>
         <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p>
         <center> <div class="flex-video">
           <div id="map_canvas" style="width:290px;height:200px;"></div>
         </div></center>
     </div>
-
       <ul class="button-group even-3">
         <li><a class="button success" id="good_review">Bom</a></li>
         <li><a class="button secondary" id="whatever_review">Indiferente</a></li>
