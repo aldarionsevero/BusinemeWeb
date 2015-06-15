@@ -28,23 +28,41 @@
                             <div href="#" data-reveal-id="modalPostDetails" class="panel">
                                 <h3> <a href"#" name="post-details"
                                 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}  </a></h3><br>
-                                <p> 
-                                Trânsito:
-                                <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
-                                Lotação:
-                                <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
-                                <small class="right">{{ post.time }}</small>
+                                <p>
+                                    <h4>Trânsito:</h4>
+                                    <p class="left">Livre</p>
+                                    <p class="right">Parado</p>
+                                    <br>
+                                    <div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
+                                    <h4>Lotação:</h4>
+                                    <p class="left">Vazio</p>
+                                    <p class="right">Lotado</p>
+                                    <br>
+                                    <div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+                                    <small class="right">{{ post.time }}</small>
                                 </p>
 
                                 <div id="modalPostDetails" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-                                    <h2 id="modalTitle">@{{ post.user.username }}</h2>
-                                    <small class="right">{{ post.time }}</small>
-                                    <h5>Trânsito:</h5>
-                                    <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
-                                    <h5>Lotação:</h5>
-                                    <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
-                                    <a class="modal-post-details" aria-label="Close">&#215;</a>
-                                </div>  
+                                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                                    <h1 id="modalTitle">@{{ post.user.username }}</h1>
+                                    <h3>Trânsito:</h3>
+                                    <p class="left">Livre</p>
+                                    <p class="right">Parado</p>
+                                    <br>
+                                    <div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
+                                    <h3>Lotação:</h3>
+                                    <p class="left">Vazio</p>
+                                    <p class="right">Lotado</p>
+                                    <br>
+                                    <div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+                                    <h3>Comentário</h3>
+                                    {% if post.comment %}
+                                        <p class="left">{{ post.comment }}</p>
+                                    {% else %}
+                                        <p class="left">Sem comentário. :(</p><br>  
+                                    {% endif %}
+                                    <p class="right">{{ post.time }}</p>
+                                </div>
                             </div>
                         {% endfor %}
                     {% else %}
@@ -56,10 +74,9 @@
         {% endblock %}
         {% block "scripts" %}
             <script>
-                $('#modal-post-details').foundation('reveal', 'open');
+            $('#modal-post-details').foundation('reveal', 'open');
             </script>
         {% endblock %}
-
         {% block "modal_error_lead" %} {{error_lead}}{% endblock %}
         {% block "modal_error_message" %} {{modal_message}} {% endblock %}
         {% block "modal_alert_title" %} {{alert_title}} {% endblock %}
