@@ -25,8 +25,8 @@
                     <h3 class="left" value="Feed"> Businadas</h3><br><br>
                     {% if posts %}
                         {% for post in posts %}
-                            <div class="panel">
-                                <h3> <a href="#" data-reveal-id="modalPostDetails" name="post-details"
+                            <div href="#" data-reveal-id="modalPostDetails" class="panel">
+                                <h3> <a href"#" name="post-details"
                                 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}  </a></h3><br>
                                 <p> 
                                 Trânsito:
@@ -45,9 +45,6 @@
                                     <div class="progress large-9 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
                                     <a class="modal-post-details" aria-label="Close">&#215;</a>
                                 </div>  
-
-
-
                             </div>
                         {% endfor %}
                     {% else %}
