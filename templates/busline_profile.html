@@ -25,7 +25,7 @@
                     <h3 class="left" value="Feed"> Businadas</h3><br><br>
                     {% if posts %}
                         {% for post in posts %}
-                            <div href="#" data-reveal-id="modalPostDetails" class="panel">
+                            <div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel">
                                 <h3> <a href"#" name="post-details"
                                 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}  </a></h3><br>
                                 <p>
@@ -41,8 +41,8 @@
                                     <div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
                                     <small class="right">{{ post.time }}</small>
                                 </p>
-
-                                <div id="modalPostDetails" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+                            </div>
+                            <div id="modalPostDetails{{ post.id }}" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
                                     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
                                     <h1 id="modalTitle">@{{ post.user.username }}</h1>
                                     <h3>Trânsito:</h3>
@@ -59,11 +59,10 @@
                                     {% if post.comment %}
                                         <p class="left">{{ post.comment }}</p>
                                     {% else %}
-                                        <p class="left">Sem comentário. :(</p><br>  
+                                        <p class="left">Sem comentário. :(</p><br>
                                     {% endif %}
                                     <p class="right">{{ post.time }}</p>
                                 </div>
-                            </div>
                         {% endfor %}
                     {% else %}
                         <p>Não existem Businadas para essa linha. :(<p>
