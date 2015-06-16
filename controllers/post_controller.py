@@ -42,16 +42,24 @@ def make_post_action(request):
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
     post.user_id = request.user.id
+    pontuation = 0
+    if request.POST['review'] == '':
+        pontuation = 0
+    else:
+        pontuation = int(request.POST['review'])
 
     try:
         busline = Busline.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
-        last_post = Post.last(post.busline_id)
-        last_post.user.pontuation = last_post.user.pontuation + \
-            int(request.POST['review'])
+        try:
+            last_post = Post.last(post.busline_id)
+            last_post.user.pontuation = last_post.user.pontuation + \
+                pontuation
+            last_post.user.save()
+        except LineWithoutPostError:
+            pass
 
         post.save()
-        last_post.user.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
     except:
