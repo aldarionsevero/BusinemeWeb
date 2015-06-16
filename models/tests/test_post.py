@@ -2,6 +2,7 @@
 
 from django.test import SimpleTestCase
 from models.busline import Busline
+from models.user import User
 from models.terminal import Terminal
 from models.post import Post
 
@@ -24,8 +25,18 @@ class BuslineTest(SimpleTestCase):
         busline.terminals.add(terminal)
         return busline
 
+    def create_user(self):
+        user = User()
+        user.username = 'test_username'
+        user.password = 'test_password'
+        user.name = 'test_name'
+        user.email = 'test@email.tes'
+        user.save()
+        return user
+
     def create_post(self):
         busline = self.create_busline()
+        user = self.create_user()
         post = Post()
         post.comment = 'comentario'
         post.latitude = '0'
@@ -35,6 +46,7 @@ class BuslineTest(SimpleTestCase):
         post.date = '01/01/01'
         post.time = '00:00'
         post.busline = busline
+        post.user = user
         post.save()
         return post
 
