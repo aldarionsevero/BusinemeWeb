@@ -7,6 +7,7 @@
 
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'stylesheets/foundation.css' %}" />
+    <link rel="stylesheet" href="{% static 'stylesheets/busineme.css' %}" />
     <link href='http://fonts.googleapis.com/css?family=Lobster|Lobster+Two:400,700|Roboto:400,700' rel='stylesheet' type='text/css'>
     <script src="{% static 'vendor/modernizr/modernizr.js' %}"></script>
     {% block css %}
@@ -23,6 +24,7 @@
       <p>{% block "modal_error_message" %}{% endblock %}</p>
       <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
+    
 
     <script src="{% static 'vendor/foundation/js/vendor/jquery.js' %}"></script>
     <script src="{% static 'vendor/foundation/js/foundation.min.js' %}"></script>

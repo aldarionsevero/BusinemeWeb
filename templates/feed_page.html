@@ -34,3 +34,19 @@
 		</div>
 	</div>
 {% endblock %}
+
+{% block "scripts" %}
+    {% if error_lead %}
+        <script>
+            $('#modal_error').foundation('reveal', 'open');
+        </script>
+    {% endif %}
+
+{% endblock %}
+
+
+
+
+{% block "modal_error_lead" %} {{error_lead}}{% endblock %}
+{% block "modal_error_message" %} {{modal_message}} {% endblock %} 
+{% block "modal_alert_title" %} {{alert_title}} {% endblock %}
