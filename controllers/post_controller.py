@@ -7,6 +7,7 @@ from django.template import RequestContext
 from controllers.utils import modal_message
 from django.contrib.auth.decorators import login_required
 from exception.line_without_post import LineWithoutPostError
+from exception.api import ApiException
 
 
 def make_post_page(request):
@@ -47,7 +48,6 @@ def make_post_action(request):
         pontuation = 0
     else:
         pontuation = int(request.POST['review'])
-
     try:
         busline = Busline.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
@@ -62,7 +62,7 @@ def make_post_action(request):
         post.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
-    except:
+    except ApiException:
         response = modal_message('Erro :(', 'Servidor não disponível', 'O \
         acesso ao servidor está indisponível no momento, verifique sua \
         conexão', 'login_page.html', request)

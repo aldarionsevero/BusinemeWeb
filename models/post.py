@@ -34,7 +34,7 @@ class Post(models.Model):
     def last(cls, busline_id):
         """Return the last post from busline."""
         try:
-            return cls.objects.filter(busline_id=busline_id).order_by("-date",
-                                                                      "-time")[0]
+            return cls.objects.filter(
+                busline_id=busline_id).order_by("-date", "-time")[0]
         except:
             raise LineWithoutPostError()
