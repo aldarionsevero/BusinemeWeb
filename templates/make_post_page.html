@@ -68,9 +68,9 @@
     <div class="panel callout">
         <h2>{{last_post.comment}}</h2>
         {% if last_post.user.pontuation > 0 %}
-        <h3><span class="green">Pontuação do Usuario: {{last_post.user.pontuation}}</span></h2>
+        <h3><span class="busineme_green">Pontuação do Usuario: {{last_post.user.pontuation}}</span></h2>
         {% elif last_post.user.pontuation < 0 %}
-        <h3><span class="red">Pontuação do Usuario (ruim): {{last_post.user.pontuation}}</span></h2>
+        <h3><span class="busineme_red">Pontuação do Usuario (ruim): {{last_post.user.pontuation}}</span></h2>
 
         {% endif %}
         <p class="lead">{{last_post.date}} {{last_post.time}}</p>
@@ -124,7 +124,9 @@
             make_review(-1)
             });    
     </script>
-    <script type="text/javascript"
+
+
+       <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwmUpp3KwXz_wY2EDYzjzgTFtHNOOVOzM" >
     </script>
     
@@ -158,7 +160,6 @@
 
 
     </script>
-
     
 
 {% endblock %}
