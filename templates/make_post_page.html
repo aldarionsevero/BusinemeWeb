@@ -19,7 +19,7 @@
     <div class="panel small-10 medium-4 large-4 small-centered columns">
         <form action="/realizar_post/" method="POST" id="post_form">
         {% csrf_token %}
-            <a href="/busline_feed_page/" title="Clique aqui para ver todos os posts sobre a linha"><h2>{{line_number}}</h2></a>
+            <a href="/perfil_de_linha/{{line_number}}/" title="Clique aqui para ver todos os posts sobre a linha"><h2>{{line_number}}</h2></a>
             <br>
 
             <h2>Trânsito</h2>
@@ -67,13 +67,18 @@
     <h2>Como vc julga esse post?</h2>
     <div class="panel callout">
         <h2>{{last_post.comment}}</h2>
+        {% if last_post.user.pontuation > 0 %}
+        <h3><span class="busineme_green">Pontuação do Usuario: {{last_post.user.pontuation}}</span></h2>
+        {% elif last_post.user.pontuation < 0 %}
+        <h3><span class="busineme_red">Pontuação do Usuario (ruim): {{last_post.user.pontuation}}</span></h2>
+
+        {% endif %}
         <p class="lead">{{last_post.date}} {{last_post.time}}</p>
         <p>Lotação:{{last_post.capacity}} Trânsito: {{last_post.traffic}}</p>
         <center> <div class="flex-video">
           <div id="map_canvas" style="width:290px;height:200px;"></div>
         </div></center>
     </div>
-
       <ul class="button-group even-3">
         <li><a class="button success" id="good_review">Bom</a></li>
         <li><a class="button secondary" id="whatever_review">Indiferente</a></li>
@@ -119,7 +124,9 @@
             make_review(-1)
             });    
     </script>
-    <script type="text/javascript"
+
+
+       <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwmUpp3KwXz_wY2EDYzjzgTFtHNOOVOzM" >
     </script>
     
@@ -153,7 +160,6 @@
 
 
     </script>
-
     
 
 {% endblock %}

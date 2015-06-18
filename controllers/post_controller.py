@@ -2,8 +2,8 @@
 """Post controller docstring"""
 from django.shortcuts import render_to_response
 from models.post import Post
+from models.busline import Busline
 from django.template import RequestContext
-from api.busline import BuslineAPI
 from controllers.utils import modal_message
 from exception.api import ApiException
 from django.contrib.auth.decorators import login_required
@@ -43,14 +43,26 @@ def make_post_action(request):
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
     post.user_id = request.user.id
-    api = BuslineAPI()
+    pontuation = 0
+    if request.POST['review'] == '':
+        pontuation = 0
+    else:
+        pontuation = int(request.POST['review'])
     try:
-        busline = api.filter_by_line_equals(request.POST['line_number'])
+        busline = Busline.filter_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
+        try:
+            last_post = Post.last(post.busline_id)
+            last_post.user.pontuation = last_post.user.pontuation + \
+                pontuation
+            last_post.user.save()
+        except LineWithoutPostError:
+            pass
+
         post.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
-            com sucesso!', 'login_page.html', request)
-    except ApiException, e:
+            com sucesso!', 'feed_page.html', request)
+    except ApiException:
         response = modal_message('Erro :(', 'Servidor não disponível', 'O \
         acesso ao servidor está indisponível no momento, verifique sua \
         conexão', 'login_page.html', request)
