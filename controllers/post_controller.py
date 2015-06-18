@@ -8,6 +8,7 @@ from controllers.utils import modal_message
 from django.contrib.auth.decorators import login_required
 from exception.line_without_post import LineWithoutPostError
 from exception.api import ApiException
+# from twitter.api import Twitter
 
 
 def make_post_page(request):
@@ -60,6 +61,9 @@ def make_post_action(request):
             pass
 
         post.save()
+        # twitter = Twitter('businemeweb@gmail.com', 'busineme123')
+        # twitter.statuses.update(status='I am tweeting from Python!')
+
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
     except ApiException:
@@ -83,4 +87,5 @@ def make_post(request):
         response = make_post_page(request)
     elif request.method == 'POST':
         response = make_post_action(request)
+
     return response

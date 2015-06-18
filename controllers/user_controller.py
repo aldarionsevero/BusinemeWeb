@@ -63,6 +63,11 @@ def register_user(request):
         if user.validate_email() and user.validate_unique_email() and \
                 user.validade_user_password(request.POST["password"]):
             user.save()
+            response = modal_message(
+                "Usuário cadastrado com sucesso :)",
+                "Seu usuário foi cadastrado com sucesso.",
+                "Insira Nome de usuário e senha para acessar sua página",
+                "login_page.html", request)
 
     except IntegrityError:
         if not user.validate_user_name():
