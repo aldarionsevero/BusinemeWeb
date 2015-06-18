@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from controllers.utils import modal_message
+from models.favorite import Favorite
+from models.busline import Busline
 
 
 def register_user_page(request):
@@ -260,3 +262,15 @@ def change_password(request):
     elif request.method == 'POST':
         response = change_password_action(request)
     return response
+
+
+@login_required
+def favorite_busline(request, line_number):
+    if request.user.is_authenticated:
+        busline = Busline.filter_by_line_equals(line_number)
+        favorite = Favorite()
+        favorite.user_id = request.user.id
+        favorite.busline_id = busline.id
+        favorite.save()
+        return render_to_response(
+            "login_page.html", context_instance=RequestContext(request))

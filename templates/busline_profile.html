@@ -11,7 +11,11 @@
             <div class="row collapse prefix-round">
                 <form action="/realizar_post/" method="GET">
                     <div class="panel">
-                        <h3 class="left" value="Resultado"> {{ busline.line_number }}</h3><br><br>
+                        <h3 class="left" value="Resultado"> {{ busline.line_number }}</h3>
+                        {% if user.is_authenticated %}
+                        <span class="right"><a href="/fav/{{busline.line_number}}" class="fa fa-star-o fa-3x busineme_green"></a></span>
+                        {% endif %}
+                        <br><br>
                         <p>Rota: {{ busline.description }}</p>
                         <p>{{ busline.via }}</p>
                         <p>Percurso: {{ busline.route_size }} KM</p>
