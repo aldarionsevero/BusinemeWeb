@@ -8,7 +8,7 @@ from controllers.utils import modal_message
 from django.contrib.auth.decorators import login_required
 from exception.line_without_post import LineWithoutPostError
 from exception.api import ApiException
-# from twitter.api import Twitter
+from twitter.api import *
 
 
 def make_post_page(request):
@@ -61,6 +61,9 @@ def make_post_action(request):
             pass
 
         post.save()
+        t = Twitter(auth=OAuth(token, token_key, con_secret, con_secret_key))
+        t.statuses.update(
+            status="Using @sixohsix's sweet Python Twitter Tools.")
         # twitter = Twitter('businemeweb@gmail.com', 'busineme123')
         # twitter.statuses.update(status='I am tweeting from Python!')
 
