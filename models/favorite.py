@@ -13,7 +13,7 @@ class Favorite (models.Model):
 
     def __unicode__(self):
         """return comments of the favorite"""
-        return 'User: %s, Busline id: %s' % (str(self.user),
+        return 'User: %s, Busline id: %s' % (str(self.user_id),
                                              str(self.busline_id))
 
     @classmethod

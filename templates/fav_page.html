@@ -4,6 +4,40 @@
 {% endblock %}
 {% block content %}
 
+ <div class="row">
+    <div class="small-12 large-12 columns">
+        <div class="row collapse prefix-round">
+        {% if posts %}
+
+
+            {% for post in posts %}
+                <form>
+                    <div class="panel">
+                      <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
+                                <p>
+                                    <h4>Trânsito:</h4>
+                                    <p class="left">Livre</p>
+                                    <p class="right">Parado</p>
+                                    <br>
+                                    <div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
+                                    <h4>Lotação:</h4>
+                                    <p class="left">Vazio</p>
+                                    <p class="right">Lotado</p>
+                                    <br>
+                                    <div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+                                    <small class="right">{{ post.time }}</small>
+                        </p>
+                    </div>
+                </form>
+            {% endfor %}
+            {% else %}
+                 <h3>Teste de existencia. 0 posts at all (preencha o banco de dados para testar)</h3>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
 
 
 

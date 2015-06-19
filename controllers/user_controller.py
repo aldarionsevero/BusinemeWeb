@@ -9,6 +9,7 @@ from django.db import IntegrityError
 from controllers.utils import modal_message
 from models.favorite import Favorite
 from models.busline import Busline
+from models.post import Post
 
 
 def register_user_page(request):
@@ -272,5 +273,22 @@ def favorite_busline(request, line_number):
         favorite.user_id = request.user.id
         favorite.busline_id = busline.id
         favorite.save()
-        return render_to_response(
-            "login_page.html", context_instance=RequestContext(request))
+        return redirect(
+            "/",
+            context_instance=RequestContext(request))
+
+
+@login_required
+def favorite_busline_page(request):
+    favorites = Favorite.objects.filter(user_id=request.user)
+    buslines = {}
+    for favorite in favorites:
+        buslines[favorite] = favorite.busline_id
+    post = {}
+    for key in buslines:
+        post[key] = Post.objects.filter(
+            busline_id=buslines[key]).order_by("-date", "-time")
+
+    return render_to_response("fav_page.html",
+                              {"post": post},
+                              context_instance=RequestContext(request))
