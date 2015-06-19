@@ -284,11 +284,11 @@ def favorite_busline_page(request):
     buslines = {}
     for favorite in favorites:
         buslines[favorite] = favorite.busline_id
-    post = {}
+    posts = {}
     for key in buslines:
-        post[key] = Post.objects.filter(
+        posts[key] = Post.objects.filter(
             busline_id=buslines[key]).order_by("-date", "-time")
 
     return render_to_response("fav_page.html",
-                              {"post": post},
+                              {"posts": posts},
                               context_instance=RequestContext(request))
