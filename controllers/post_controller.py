@@ -67,10 +67,10 @@ def make_post_action(request):
         acesso ao servidor está indisponível no momento, verifique sua \
         conexão', 'login_page.html', request)
 
-    if post.latitude == "" or post.longitude == "":
-        response = modal_message('Erro :(', 'Serviço não disponível',
-                                 'Não conseguimos obter sua geolocalização',
-                                 'feed_page.html', request)
+    # if post.latitude == "" or post.longitude == "":
+    #     response = modal_message('Erro :(', 'Serviço não disponível',
+    #                              'Não conseguimos obter sua geolocalização',
+    #                              'feed_page.html', request)
     return response
 
 
