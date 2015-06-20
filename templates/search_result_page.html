@@ -26,7 +26,7 @@
                         <div class="row collapse prefix-round">
                             {% for busline in buslines %}
                                 <form action="/realizar_post/" method="GET">
-                                    <div class="panel">
+                                    <div class="panel radius">
                                         <h3> <a href="/perfil_de_linha/{{busline.line_number}}/"  name="busca_avancada"
                                         class="left" value="{{busline.line_numeber}}" >{{ busline.line_number }}  </a></h3><br>
                                         <p>Rota: {{ busline.description }}
