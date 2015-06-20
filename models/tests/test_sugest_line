@@ -1,0 +1,7 @@
+# -*- coding: utf-8 -*-
+from django.test import SimpleTestCase
+from models.busline import Busline
+from models.sugest_line import Sugest_line
+
+class Sugest_linetest(SimpleTestCase):
+
