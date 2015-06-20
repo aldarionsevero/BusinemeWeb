@@ -2,18 +2,20 @@
 
 """ docstring for package sugest_line """
 from django.db import models
-from busline import Busline
+from terminal import Terminal
 
 
 class LineSugested(models.Model):
 
-    busline = models.ForeignKey(Busline)
+    busline = models.IntegerField()
     description = models.CharField(max_length=255)
     justify = models.CharField(max_length=255)
+    via = models.CharField(max_length=255, null=True)
+    Terminal = models.ForeignKey(Terminal, null=True)
 
     def __unicode__(self):
         """Return data of sugested line."""
-        return 'line_number: %s description: %s justify: %s' % (self.buline_id,
+        return 'line_number: %s description: %s justify: %s' % (self.buline,
                                                                 self.description,
                                                                 self.justify)
 

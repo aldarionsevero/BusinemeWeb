@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+    Busine.me | sugerir linha
+{% endblock %}
+{% block content %}
+ <div class="row"> 
+    <div class="small-10 medium-4 large-4 small-centered columns">
+        <form action="/sugerir/linha/" method='POST'>
+        {% csrf_token %}
+            <input type = "text" name="busline" placeholder="Numero da Linha" required>
+            <input type = "text" name="description" placeholder="Descrição" required>
+            <input type = "text" name="justify" placeholder="Justifique a inclusao da linha" required>
+            <!-- <input type = "text" name="terminal__description" placeholder="Terminal"> -->
+            <input type = "text" name="via" placeholder="Via por onde passa">
+            <div class="large-4 columns">
+            <label for="customDropdown1">Terminais</label>
+            <select id="customDropdown1" name="terminal" class="medium">
+                {% for terminal in terminals %}
+                    <option>terminal.description</option>
+                {% endfor %}
+            </select>
+            </div>
+            <input type = "submit" class="default button expand" name="registar" value="Registrar sugestao de linha"> 
+        </form>
+    </div>
+ </div>
+{% endblock %}
+
+{% block "scripts" %}
+{% if error_lead %}
+<script>
+    $('#modal_error').foundation('reveal', 'open');
+</script>
+{% endif %}
+{% endblock %}
+
+{% block "mensagem1" %} {{error_lead}}{% endblock %}
+{% block "mensagem2" %} {{modal_message}} {% endblock %} 
+{% block "mensagem3" %} {{alert_title}} {% endblock %} 

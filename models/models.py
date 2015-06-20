@@ -6,3 +6,4 @@ from post import Post
 from review import Review
 from terminal import Terminal
 from user import User
+from line_sugested import LineSugested
