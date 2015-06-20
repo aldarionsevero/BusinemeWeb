@@ -59,7 +59,6 @@ def make_post_action(request):
         except LineWithoutPostError:
             pass
 
-        post.save()
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
     except ApiException:
@@ -68,9 +67,10 @@ def make_post_action(request):
         conexão', 'login_page.html', request)
 
     if post.latitude == "" or post.longitude == "":
-        response = modal_message('Erro :(', 'Serviço não disponível',
-                                 'Não conseguimos obter sua geolocalização',
-                                 'feed_page.html', request)
+        return modal_message('Erro :(', 'Serviço não disponível',
+                             'Não conseguimos obter sua geolocalização',
+                             'feed_page.html', request)
+    post.save()
     return response
 
 

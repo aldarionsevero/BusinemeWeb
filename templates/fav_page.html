@@ -7,11 +7,14 @@
  <div class="row">
     <div class="small-12 large-12 columns">
         <div class="row collapse prefix-round">
-        {% if posts %}
-            {% for post in posts %}
+        {% if favorites %}
+            {% for favorite in favorites %}
                 <form>
                     <div class="panel">
-                    <h2>Busline_line_number aqui</h2>
+                    <h2>{{favorite.busline.line_number}}</h2>
+
+                    {% for post in favorite.busline.posts %}
+                    <div class="panel">
                       <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
                         <p>
                         <h4>Capacidade: {{post.capacity}} </h4>
@@ -21,6 +24,9 @@
                         </h4>
                          <small class="right">{{ post.time }}</small>
                         </p>
+                    </div> 
+                    {% endfor %}
+
                     </div>
                 </form>
             {% endfor %} 
