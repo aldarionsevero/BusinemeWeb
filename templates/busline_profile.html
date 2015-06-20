@@ -13,7 +13,7 @@
                     <div class="panel">
                         <h3 class="left" value="Resultado"> {{ busline.line_number }}</h3>
                         {% if user.is_authenticated %}
-                        <span class="right"><a href="/fav/{{busline.line_number}}" class="fa fa-star-o fa-3x busineme_green"></a></span>
+                        <span class="right"><a href="/fav/{{busline.line_number}}/" class="fa fa-star-o fa-3x busineme_green"></a></span>
                         {% endif %}
                         <br><br>
                         <p>Rota: {{ busline.description }}</p>

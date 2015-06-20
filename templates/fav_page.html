@@ -8,24 +8,24 @@
     <div class="small-12 large-12 columns">
         <div class="row collapse prefix-round">
         {% if posts %}
-
-
             {% for post in posts %}
                 <form>
                     <div class="panel">
+                    <h2>Busline_line_number aqui</h2>
                       <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
                         <p>
-                        <h4>{{ post.comment }} alo
-                            {{ post.busline.line_number}}
-                            {{ post.user.username }}
+                        <h4>Capacidade: {{post.capacity}} </h4>
+                        <h4>Trânsito: {{post.traffic}}</h4>
+                        <h4>Comentario:
+                            {{ post.comment }}
                         </h4>
                          <small class="right">{{ post.time }}</small>
                         </p>
                     </div>
                 </form>
-            {% endfor %}
+            {% endfor %} 
             {% else %}
-                 <h3>Teste de existencia. 0 posts at all (preencha o banco de dados para testar)</h3>
+                 <h3> Não há nenhuma linha favoritada</h3>
             {% endif %}
 
         </div>

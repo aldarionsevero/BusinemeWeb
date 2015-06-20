@@ -269,8 +269,9 @@ def change_password(request):
 def favorite_busline(request, line_number):
     if request.user.is_authenticated:
         favorite = Favorite()
-        favorite.user = request.user
-        favorite.busline = Busline.filter_by_line_equals(line_number)
+        favorite.user_id = request.user.id
+        busline = Busline.filter_by_line_equals(line_number)
+        favorite.busline_id = busline.id
         favorite.save()
         return redirect(
             "/",
@@ -280,11 +281,11 @@ def favorite_busline(request, line_number):
 @login_required
 def favorite_busline_page(request):
     favorites = Favorite.objects.filter(user_id=request.user)
-    posts = {}
+    posts = []
     for favorite in favorites:
-        posts[favorite.busline] = Post.objects.filter(
+        posts += Post.objects.filter(
             busline_id=favorite.busline_id)
 
     return render_to_response("fav_page.html",
-                              {"posts": posts},
+                              {'posts': posts},
                               context_instance=RequestContext(request))
