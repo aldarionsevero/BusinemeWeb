@@ -8,7 +8,20 @@ from controllers.utils import modal_message
 from django.contrib.auth.decorators import login_required
 from exception.line_without_post import LineWithoutPostError
 from exception.api import ApiException
-from twitter.api import *
+from configuration import security
+import twitter
+
+capacity_dictionary = {1: "OnibusVazio",
+                       2: "ComPoucosAssentosVagos",
+                       3: "SemAssentosVagos",
+                       4: "OnibusCheio",
+                       5: "OnibusLotado"}
+
+traffic_dictionary = {1: "TransitoLivre",
+                      2: "ComPontosdeRetencao",
+                      3: "LevementeEngarrafado",
+                      4: "TransitoEngarrafado",
+                      5: "TransitoParado"}
 
 
 def make_post_page(request):
@@ -38,8 +51,8 @@ def make_post_action(request):
     """Perform the action of saving the post. """
 
     post = Post()
-    post.capacity = request.POST['capacity']
-    post.traffic = request.POST['traffic']
+    post.capacity = int(request.POST['capacity'])
+    post.traffic = int(request.POST['traffic'])
     post.comment = request.POST['description']
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
@@ -61,11 +74,17 @@ def make_post_action(request):
             pass
 
         post.save()
-        t = Twitter(auth=OAuth(token, token_key, con_secret, con_secret_key))
-        t.statuses.update(
-            status="Using @sixohsix's sweet Python Twitter Tools.")
-        # twitter = Twitter('businemeweb@gmail.com', 'busineme123')
-        # twitter.statuses.update(status='I am tweeting from Python!')
+        post_line_number = request.POST['line_number']
+        post_line_number = post_line_number.replace('.', '')
+        api = twitter.Api(consumer_key=security.TWITTER_CONSUMER_KEY,
+                          consumer_secret=security.TWITTER_CONSUMER_SECRET,
+                          access_token_key=security.TWITTER_ACCESS_TOKEN_KEY,
+                          access_token_secret=security.TWITTER_ACCESS_TOKEN_SECRET)
+        message = '#Busine%s #%s  #%s' % \
+            (post_line_number, capacity_dictionary[
+             post.traffic], traffic_dictionary[post.capacity])
+
+        api.PostUpdate(message)
 
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
