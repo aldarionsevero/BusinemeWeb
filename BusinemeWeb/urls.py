@@ -36,4 +36,6 @@ urlpatterns = patterns(
         'controllers.user_controller.favorite_busline_page'),
     url(r'^fav/(?P<line_number>[0-9]+\.[0-9]+)',
         'controllers.user_controller.favorite_busline'),
+    url(r'^sobre/',
+        'controllers.app.about_page'),
 )
