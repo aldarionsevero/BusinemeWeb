@@ -7,13 +7,13 @@
             <li class="toggle-topbar menu-icon"><a href="#"><span>Painel</span></a></li>
         </ul>
         <section class="top-bar-section">
-            {% if user.is_authenticated %}
                 <ul class="left">
+            {% if user.is_authenticated %}
                     <li><a href="/">Terminal</a></li>
                     <li><a href="#">Busine</a></li>
-                    <li><a href="#">Favoritos</a></li>
-                </ul>
             {% endif %}
+                    <li><a href="#">Sobre</a></li>
+                </ul>
             <ul class="right">
                 <li class="has-form">
                     <form action="/buscar_linha/" method="GET">
@@ -26,15 +26,15 @@
                                 <input type="submit" name="pesquisar" class="success button expand" value="Pesquisar">
                             </div>
                             
-                            <!-- <div class="row collapse postfix-radius">
+                            <!-- <div class="row collapse postfix-round">
                                 <div class="large-8 small-9 medium-6 columns">
-                                    <input type="text" name="busline" placeholder="Buscar Linhas">
+                                    <input type="text" name="busline" placeholder="Aniversário do Parley">
                                 </div>
                                 <div class="large-4 small-3 medium-6 columns">
-                                    <input type="submit" name="pesquisar" class="success button expand postfix text-center" value="Pesquisar">
+                                    <input type="submit" name="pesquisar" class="success button postfix round" value="Pesquisar">
                                 </div>
-                            </div> -->
-                            
+                            </div>
+ -->                            
                         </div>
                     </form>
                 </li>
