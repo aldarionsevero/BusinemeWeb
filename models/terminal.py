@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from api.terminal import TerminalAPI
+from exception.api import ApiException
 
 
 class Terminal(models.Model):
@@ -17,7 +19,12 @@ class Terminal(models.Model):
     @classmethod
     def all(cls):
         """Returns all terminals."""
-        return cls.objects.all()
+        api = TerminalAPI()
+        try:
+            objects = api.all()
+        except ApiException:
+            objects = cls.objects.all()
+        return objects
 
     @classmethod
     def filter_by_address(cls, address):

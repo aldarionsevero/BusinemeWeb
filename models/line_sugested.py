@@ -2,7 +2,7 @@
 
 """ docstring for package sugest_line """
 from django.db import models
-from terminal import Terminal
+# from terminal import Terminal
 
 
 class LineSugested(models.Model):
@@ -11,11 +11,12 @@ class LineSugested(models.Model):
     description = models.CharField(max_length=255)
     justify = models.CharField(max_length=255)
     via = models.CharField(max_length=255, null=True)
-    Terminal = models.ForeignKey(Terminal, null=True)
+    terminal = models.CharField(max_length=255, null=True)
+    # terminal = models.ForeignKey(Terminal, null=True)
 
     def __unicode__(self):
         """Return data of sugested line."""
-        return 'line_number: %s description: %s justify: %s' % (self.buline,
+        return 'line_number: %s description: %s justify: %s' % (self.busline,
                                                                 self.description,
                                                                 self.justify)
 

@@ -12,14 +12,15 @@
             <input type = "text" name="justify" placeholder="Justifique a inclusao da linha" required>
             <!-- <input type = "text" name="terminal__description" placeholder="Terminal"> -->
             <input type = "text" name="via" placeholder="Via por onde passa">
-            <div class="large-4 columns">
+            <input type = "text" name="terminal" placeholder="Terminal">
+            <!--<div class="large-4 columns">
             <label for="customDropdown1">Terminais</label>
             <select id="customDropdown1" name="terminal" class="medium">
                 {% for terminal in terminals %}
-                    <option>terminal.description</option>
+                    <option value = "{{terminal.id}}">{{terminal.description}}</option>
                 {% endfor %}
             </select>
-            </div>
+            </div> -->
             <input type = "submit" class="default button expand" name="registar" value="Registrar sugestao de linha"> 
         </form>
     </div>
