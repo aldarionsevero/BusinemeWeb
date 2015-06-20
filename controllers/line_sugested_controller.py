@@ -19,9 +19,8 @@ def sugesting_line(request):
 
 
 def sugesting_line_page(request):
-    # terminals = Terminal.all()
-    # response = render_to_response('line_sugested_page.html', terminals, context_instance=RequestContext(request))
-    response = render_to_response('line_sugested_page.html', context_instance=RequestContext(request))
+    terminals = Terminal.all()
+    response = render_to_response('line_sugested_page.html', {'terminals': terminals}, context_instance=RequestContext(request))
     return response
 
 
@@ -32,8 +31,8 @@ def sugesting_line_action(request):
     line_sugest.description = request.POST['description']
     line_sugest.justify = request.POST['justify']
     line_sugest.via = request.POST['via']
-    # line_sugest.terminal_id = request.POST['terminal']
-    line_sugest.terminal = request.POST['terminal']
+    line_sugest.terminal_id = request.POST['terminal']
+    # line_sugest.terminal = request.POST['terminal']
     line_sugest.save()
 
     response = modal_message('Sucesso', 'linha sugerida com sucesso', 'Lnha sugerida \
