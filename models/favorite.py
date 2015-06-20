@@ -22,6 +22,11 @@ class Favorite (models.Model):
         return cls.objects.all()
 
     @classmethod
-    def alredy_favorite(cls, user_id, busline_id):
+    def favorites(cls, user_id, busline_id):
         """return a list of favorites """
-        return cls.objects.filter(user_id=user_id, busline_id=busline_id)
+        return cls.objects.filter(user_id=user_id)
+
+    @classmethod
+    def is_favorite(cls, user_id, busline_id):
+        count = cls.objects.filter(user_id=user_id, busline_id=busline_id)
+        return count.count() != 0

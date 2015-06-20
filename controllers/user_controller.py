@@ -9,7 +9,6 @@ from django.db import IntegrityError
 from controllers.utils import modal_message
 from models.favorite import Favorite
 from models.busline import Busline
-from models.post import Post
 
 
 def register_user_page(request):
@@ -267,16 +266,23 @@ def change_password(request):
 
 @login_required
 def favorite_busline(request, line_number):
+    busline = Busline.filter_by_line_equals(line_number)
+    busline_id = busline.id
+    user_id = request.user.id
     if request.user.is_authenticated:
-        favorite = Favorite()
-        favorite.user_id = request.user.id
-        busline = Busline.filter_by_line_equals(line_number)
-        favorite.busline_id = busline.id
-        # if(Favorite.alredy_favorite(request.user.id, busline.id))
-        favorite.save()
-        return redirect(
-            "/",
-            context_instance=RequestContext(request))
+        if not Favorite.is_favorite(user_id, busline_id):
+            favorite = Favorite()
+            favorite.user_id = user_id
+            favorite.busline_id = busline.id
+            favorite.save()
+            return redirect(
+                "/",
+                context_instance=RequestContext(request))
+        else:
+            return modal_message("Erro :(",
+                                 "não pode salvar",
+                                 "Busline ja favoritada",
+                                 "search_result_page.html", request)
 
 
 @login_required
