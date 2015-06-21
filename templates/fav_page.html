@@ -10,7 +10,7 @@
                     {% for favorite in favorites %}
                         <form>
                             <div class="panel">
-                                <a href="#buslinePost"><h2>{{favorite.busline.line_number}}</h2></a>
+                                <h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
                                 {% for post in favorite.busline.posts %}
                                     <div id = "buslinePost "class="panel content">
                                         <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
