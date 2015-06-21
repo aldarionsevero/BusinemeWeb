@@ -276,13 +276,13 @@ def favorite_busline(request, line_number):
             favorite.busline_id = busline.id
             favorite.save()
             return redirect(
-                "/",
+                "/fav_page/",
                 context_instance=RequestContext(request))
         else:
-            return modal_message("Erro :(",
-                                 "não pode salvar",
-                                 "Busline ja favoritada",
-                                 "search_result_page.html", request)
+            Favorite.delete_favorite(user_id, busline_id)
+            return redirect(
+                "/fav_page/",
+                context_instance=RequestContext(request))
 
 
 @login_required

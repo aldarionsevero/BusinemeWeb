@@ -30,3 +30,8 @@ class Favorite (models.Model):
     def is_favorite(cls, user_id, busline_id):
         count = cls.objects.filter(user_id=user_id, busline_id=busline_id)
         return count.count() != 0
+
+    @classmethod
+    def delete_favorite(cls, user_id, busline_id):
+        Favorite.objects.filter(
+            user_id=user_id, busline_id=busline_id).delete()
