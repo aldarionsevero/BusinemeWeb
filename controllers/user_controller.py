@@ -266,6 +266,8 @@ def change_password(request):
 
 @login_required
 def favorite_busline(request, line_number):
+    """ Favorite a busline and check if the busline is already favorited. \
+    If so, the method will unfavorite the busline """
     busline = Busline.filter_by_line_equals(line_number)
     busline_id = busline.id
     user_id = request.user.id
@@ -287,7 +289,9 @@ def favorite_busline(request, line_number):
 
 @login_required
 def favorite_busline_page(request):
-    favorites = Favorite.objects.filter(user_id=request.user)
+    """ Load the Favorites buslines page """
+    favorites = Favorite.objects.filter(
+        user_id=request.user).order_by("busline_id")
 
     return render_to_response("fav_page.html",
                               {'favorites': favorites},
