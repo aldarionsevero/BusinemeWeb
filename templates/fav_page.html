@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    Busine.me | Feed
+    Busine.me | Favoritos
 {% endblock %}
 {% block content %}
 
@@ -9,26 +9,29 @@
         <div class="row collapse prefix-round">
         {% if favorites %}
             {% for favorite in favorites %}
+            <ul class="accordion" data-accordion>
                 <form>
                     <div class="panel">
-                    <h2>{{favorite.busline.line_number}}</h2>
+                    <li class="accordion-navigation">
+                        <a href="#buslinePost"><h2>{{favorite.busline.line_number}}</h2></a>
 
-                    {% for post in favorite.busline.posts %}
-                    <div class="panel">
-                      <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
-                        <p>
-                        <h4>Capacidade: {{post.capacity}} </h4>
-                        <h4>Trânsito: {{post.traffic}}</h4>
-                        <h4>Comentario:
-                            {{ post.comment }}
-                        </h4>
-                         <small class="right">{{ post.time }}</small>
-                        </p>
-                    </div> 
-                    {% endfor %}
-
+                        {% for post in favorite.busline.posts %}
+                            <div id = "buslinePost "class="panel content">
+                              <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
+                                <p>
+                                <h4>Capacidade: {{post.capacity}} </h4>
+                                <h4>Trânsito: {{post.traffic}}</h4>
+                                <h4>Comentario:
+                                    {{ post.comment }}
+                                </h4>
+                                 <small class="right">{{ post.time }}</small>
+                                </p>
+                            </div> 
+                        {% endfor %}
+                    </li>
                     </div>
                 </form>
+            </ul>
             {% endfor %} 
             {% else %}
                  <h3> Não há nenhuma linha favoritada</h3>
