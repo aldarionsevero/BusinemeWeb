@@ -288,6 +288,18 @@ def favorite_busline(request, line_number):
 
 
 @login_required
+def unfavorite_busline(request, line_number):
+    """ Unfavorite a busline """
+    busline = Busline.filter_by_line_equals(line_number)
+    busline_id = busline.id
+    user_id = request.user.id
+    Favorite.delete_favorite(user_id, busline_id)
+    return redirect(
+        "/fav_page/",
+        context_instance=RequestContext(request))
+
+
+@login_required
 def favorite_busline_page(request):
     """ Load the Favorites buslines page """
     favorites = Favorite.objects.filter(

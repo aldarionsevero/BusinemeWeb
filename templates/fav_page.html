@@ -7,7 +7,7 @@
         <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
                 {% if favorites %}
-                    
+                    <h1 class="busineme_orange">Linhas Favoritadas</h1>
                     <ul class="accordion" data-accordion>
                         {% for favorite in favorites %}
                             <li class="accordion-navigation">
@@ -16,6 +16,7 @@
                             <div id="busline{{forloop.counter}}" class="content" >
                                 <form>
                                     <div>
+                                    <a href="/un_fav/{{favorite.busline.line_number}}"><span class="fa fa-star-o 2x busineme_red fa-2x" ></span></a>
                                         {% for post in favorite.busline.posts %}
                                             <div class="panel">
                                                 <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
