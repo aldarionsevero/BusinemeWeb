@@ -7,28 +7,34 @@
         <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
                 {% if favorites %}
-                    {% for favorite in favorites %}
-                        <form>
-                            <div class="panel">
-                                <h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
-                                {% for post in favorite.busline.posts %}
-                                    <div id = "buslinePost "class="panel content">
-                                        <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
-                                        <p>
-                                            <h4>Capacidade: {{post.capacity}} </h4>
-                                            <h4>Trânsito: {{post.traffic}}</h4>
-                                            <h4>Comentario:
-                                            {{ post.comment }}
-                                            </h4>
-                                            <small class="right">{{ post.time }}</small>
-                                        </p>
+                    
+                    <ul class="accordion" data-accordion>
+                        {% for favorite in favorites %}
+                            <li class="accordion-navigation">
+                                <a href="#busline{{forloop.counter}}"><h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
+                            </a>
+                            <div id="busline{{forloop.counter}}" class="content" >
+                                <form>
+                                    <div>
+                                        {% for post in favorite.busline.posts %}
+                                            <div class="panel">
+                                                <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>
+                                                <p>
+                                                    <h4>Capacidade: {{post.capacity}} </h4>
+                                                    <h4>Trânsito: {{post.traffic}}</h4>
+                                                    <h4>Comentario:
+                                                    {{ post.comment }}
+                                                    </h4>
+                                                    <small class="right">{{ post.time }}</small>
+                                                </p>
+                                            </div>
+                                        {% endfor %}
+                                        
                                     </div>
-                                {% endfor %}
-                                
+                                </form>
                             </div>
-                        </form>
-                        
-                    {% endfor %}
+                        {% endfor %}
+                    </ul>
                 {% else %}
                     <h3> Não há nenhuma linha favoritada</h3>
                 {% endif %}
