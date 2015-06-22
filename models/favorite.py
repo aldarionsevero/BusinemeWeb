@@ -22,7 +22,7 @@ class Favorite (models.Model):
         return cls.objects.all()
 
     @classmethod
-    def favorites(cls, user_id, busline_id):
+    def favorites(cls, user_id):
         """return a list of favorites """
         return cls.objects.filter(user_id=user_id)
 
