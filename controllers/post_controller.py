@@ -74,17 +74,8 @@ def make_post_action(request):
             pass
 
         post.save()
-        post_line_number = request.POST['line_number']
-        post_line_number = post_line_number.replace('.', '')
-        api = twitter.Api(consumer_key=security.TWITTER_CONSUMER_KEY,
-                          consumer_secret=security.TWITTER_CONSUMER_SECRET,
-                          access_token_key=security.TWITTER_ACCESS_TOKEN_KEY,
-                          access_token_secret=security.TWITTER_ACCESS_TOKEN_SECRET)
-        message = '#Busine%s #%s  #%s' % \
-            (post_line_number, capacity_dictionary[
-             post.traffic], traffic_dictionary[post.capacity])
 
-        api.PostUpdate(message)
+        _post_twitter(request.POST['line_number'], post.capacity, post.traffic)
 
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
@@ -99,6 +90,26 @@ def make_post_action(request):
                              'feed_page.html', request)
     post.save()
     return response
+
+
+def _post_twitter(line_number, capacity, traffic):
+    post_line_number = line_number
+    post_line_number = post_line_number.replace('.', '')
+    api = twitter.Api(consumer_key=security.TWITTER_CONSUMER_KEY,
+                      consumer_secret=security.TWITTER_CONSUMER_SECRET,
+                      access_token_key=security.TWITTER_ACCESS_TOKEN_KEY,
+                      access_token_secret=security.
+                      TWITTER_ACCESS_TOKEN_SECRET)
+    message = '#Busine%s #%s  #%s' % \
+        (post_line_number, capacity_dictionary[
+         capacity], traffic_dictionary[traffic])
+
+    tweet_posted = api.PostUpdate(message)
+
+    if tweet_posted is not None:
+        return True
+    else:
+        return False
 
 
 def make_post(request):
