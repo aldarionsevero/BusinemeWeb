@@ -11,9 +11,7 @@
             <div class="row collapse prefix-round">
                 <form action="/realizar_post/" method="GET">
                     <div class="panel">
-                        <h3 class="left" value="Resultado"> {{ busline.line_number }}</h3>
                         {% if user.is_authenticated %}
-                            
                             {% if Favorite.is_favorite %}
                                 <span class="right"><a href="/fav/{{busline.line_number}}/" class="fa fa-star fa-3x busineme_orange"></a></span>
                             {% else %}
@@ -40,6 +38,7 @@
                                 <h3> <a href"#" name="post-details"
                                 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}  </a></h3><br>
                                 <p>
+                                <h4>Sentido: {{post.terminal}}</h4>
                                     <h4>Trânsito:</h4>
                                     <p class="left">Livre</p>
                                     <p class="right">Parado</p>

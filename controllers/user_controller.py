@@ -147,8 +147,6 @@ def user_account_page(request):
     """Load the account managment page, that lets the user change his data."""
     if request.user.is_authenticated():
         user = request.user
-    else:
-        user = None
     return render_to_response('account_page.html', {'user': user},
                               context_instance=RequestContext(request))
 
@@ -161,8 +159,6 @@ def change_password_page(request):
     """
     if request.user.is_authenticated():
         user = request.user
-    else:
-        user = None
     return render_to_response('change_password_page.html', {'user': user},
                               context_instance=RequestContext(request))
 
@@ -172,8 +168,6 @@ def change_password_action(request):
     """Change user password checking for his current password."""
     if request.user.is_authenticated():
         user = request.user
-    else:
-        user = None
 
     old_password = request.POST["old_password"]
     new_password1 = request.POST["new_password1"]
@@ -218,8 +212,6 @@ def deactivate_account_page(request):
     """Load user account deactivation page."""
     if request.user.is_authenticated():
         user = request.user
-    else:
-        user = None
     return render_to_response('deactivate_account_page.html', {'user': user},
                               context_instance=RequestContext(request))
 

@@ -28,6 +28,8 @@ def make_post_page(request):
     """Return the post page when requested. """
     line_number = request.GET['line_number']
     busline_id = request.GET['busline_id']
+    busline = Busline.filter_by_line_equals(line_number)
+    terminals = busline.terminals
     try:
         last_post = Post.last(busline_id)
     except LineWithoutPostError:
@@ -35,7 +37,8 @@ def make_post_page(request):
     if request.user.is_authenticated():
         return render_to_response("make_post_page.html",
                                   {'line_number': line_number,
-                                   'last_post': last_post},
+                                   'last_post': last_post,
+                                   'terminals': terminals},
                                   context_instance=RequestContext(request))
     else:
         return modal_message(
@@ -57,6 +60,7 @@ def make_post_action(request):
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
     post.user_id = request.user.id
+    post.terminal_id = request.POST["terminal"]
     pontuation = 0
     if request.POST['review'] == '':
         pontuation = 0
@@ -77,18 +81,20 @@ def make_post_action(request):
 
         _post_twitter(request.POST['line_number'], post.capacity, post.traffic)
 
+        if post.latitude == "" or post.longitude == "":
+            return modal_message('Erro :(', 'Serviço não disponível',
+                                 'Não conseguimos obter sua geolocalização',
+                                 'feed_page.html', request)
+        post.save()
+
         response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
             com sucesso!', 'feed_page.html', request)
+
     except ApiException:
         response = modal_message('Erro :(', 'Servidor não disponível', 'O \
         acesso ao servidor está indisponível no momento, verifique sua \
         conexão', 'login_page.html', request)
 
-    if post.latitude == "" or post.longitude == "":
-        return modal_message('Erro :(', 'Serviço não disponível',
-                             'Não conseguimos obter sua geolocalização',
-                             'feed_page.html', request)
-    post.save()
     return response
 
 

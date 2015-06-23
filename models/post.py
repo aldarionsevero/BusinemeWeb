@@ -3,6 +3,7 @@ from django.db import models
 from busline import Busline
 from exception.line_without_post import LineWithoutPostError
 from user import User
+from terminal import Terminal
 
 
 class Post(models.Model):
@@ -18,14 +19,14 @@ class Post(models.Model):
     date = models.DateField(auto_now=True)
     time = models.TimeField(auto_now=True)
     user = models.ForeignKey(User)
+    terminal = models.ForeignKey(Terminal)
 
     def __unicode__(self):
         """Return comment of the post."""
-        return 'id: %s date: %s %s busline: %s comment: %s' % (self.id,
-                                                               str(self.date),
-                                                               str(self.time),
-                                                               self.busline_id,
-                                                               self.comment)
+        return 'id: %s date: %s %s busline: %s' % (self.id,
+                                                   str(self.date),
+                                                   str(self.time),
+                                                   self.busline_id)
 
     @classmethod
     def all(cls):

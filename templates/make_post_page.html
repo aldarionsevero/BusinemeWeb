@@ -39,6 +39,15 @@
           <span class="range-slider-active-segment"></span>
           <input type="hidden" value="numero_lotacao" name='capacity'>
         </div>
+        <div>
+          Indo para: <br>
+          {% for terminal in terminals %}
+            <label>
+              <input type="radio" name="terminal" value="{{terminal.id}}">
+              {{terminal.description}}
+            </label>
+          {% endfor %}
+        </div>
         <label>
           <textarea name="description" placeholder="Conte-nos sobre sua viagem" cols="10" rows="10"></textarea>
         </label>
