@@ -9,7 +9,6 @@ from django.db import IntegrityError
 from controllers.utils import modal_message
 from models.favorite import Favorite
 from models.busline import Busline
-from models.post import Post
 
 
 def register_user_page(request):
@@ -272,28 +271,45 @@ def change_password(request):
 
 @login_required
 def favorite_busline(request, line_number):
+    """ Favorite a busline and check if the busline is already favorited. \
+    If so, the method will unfavorite the busline """
+    busline = Busline.filter_by_line_equals(line_number)
+    busline_id = busline.id
+    user_id = request.user.id
     if request.user.is_authenticated:
-        busline = Busline.filter_by_line_equals(line_number)
-        favorite = Favorite()
-        favorite.user_id = request.user.id
-        favorite.busline_id = busline.id
-        favorite.save()
-        return redirect(
-            "/",
-            context_instance=RequestContext(request))
+        if not Favorite.is_favorite(user_id, busline_id):
+            favorite = Favorite()
+            favorite.user_id = user_id
+            favorite.busline_id = busline.id
+            favorite.save()
+            return redirect(
+                "/fav_page/",
+                context_instance=RequestContext(request))
+        else:
+            Favorite.delete_favorite(user_id, busline_id)
+            return redirect(
+                "/fav_page/",
+                context_instance=RequestContext(request))
+
+
+@login_required
+def unfavorite_busline(request, line_number):
+    """ Unfavorite a busline """
+    busline = Busline.filter_by_line_equals(line_number)
+    busline_id = busline.id
+    user_id = request.user.id
+    Favorite.delete_favorite(user_id, busline_id)
+    return redirect(
+        "/fav_page/",
+        context_instance=RequestContext(request))
 
 
 @login_required
 def favorite_busline_page(request):
-    favorites = Favorite.objects.filter(user_id=request.user)
-    buslines = {}
-    for favorite in favorites:
-        buslines[favorite] = favorite.busline_id
-    post = {}
-    for key in buslines:
-        post[key] = Post.objects.filter(
-            busline_id=buslines[key]).order_by("-date", "-time")
+    """ Load the Favorites buslines page """
+    favorites = Favorite.objects.filter(
+        user_id=request.user).order_by("busline_id")
 
     return render_to_response("fav_page.html",
-                              {"post": post},
+                              {'favorites': favorites},
                               context_instance=RequestContext(request))
