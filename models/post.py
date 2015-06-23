@@ -21,11 +21,10 @@ class Post(models.Model):
 
     def __unicode__(self):
         """Return comment of the post."""
-        return 'id: %s date: %s %s busline: %s comment: %s' % (self.id,
-                                                               str(self.date),
-                                                               str(self.time),
-                                                               self.busline_id,
-                                                               self.comment)
+        return 'id: %s date: %s %s busline: %s' % (self.id,
+                                                   str(self.date),
+                                                   str(self.time),
+                                                   self.busline_id)
 
     @classmethod
     def all(cls):
