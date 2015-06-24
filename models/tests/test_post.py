@@ -46,6 +46,9 @@ class BuslineTest(SimpleTestCase):
         except:
             busline = self.busline_same
         user = self.create_user(username)
+        terminal = Terminal()
+        terminal.description = 'teste'
+        terminal.save()
         post = Post()
         post.comment = 'comentario'
         post.latitude = '0'
@@ -56,6 +59,7 @@ class BuslineTest(SimpleTestCase):
         post.time = '00:00'
         post.busline = busline
         post.user = user
+        post.terminal_id = terminal.id
         post.save()
         return post
 
@@ -68,7 +72,7 @@ class BuslineTest(SimpleTestCase):
         post = Post()
         self.assertIsNotNone(post)
 
-    def test_busline_unicode(self):
+    def test_post_unicode(self):
         post = self.create_post('001', 'username')
         id = str(post.id)
         date = str(post.date)

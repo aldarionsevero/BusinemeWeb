@@ -1,7 +1,4 @@
 from django.test import SimpleTestCase, Client
-from models.post import Post
-from controllers import post_controller
-from exception.api import ApiException
 from models.user import User
 from models.busline import Busline
 from models.terminal import Terminal
@@ -18,6 +15,8 @@ class PostControllerTest (SimpleTestCase):
         Terminal.objects.all().delete()
         Busline.objects.all().delete()
         User.objects.all().delete()
+        self.create_busline()
+        self.create_user('username')
 
     def create_user(self, username):
         self.user = User()
@@ -28,26 +27,27 @@ class PostControllerTest (SimpleTestCase):
         self.user.save()
 
     def create_busline(self):
-        busline = Busline()
-        busline.line_number = "001"
-        busline.description = "description"
-        busline.via = "via"
-        busline.route_size = 2.5
-        busline.fee = 2.0
-        terminal = Terminal(description="terminal")
-        terminal.save()
-        busline.save()
-        busline.terminals.add(terminal)
-        return busline
+        self.busline = Busline()
+        self.busline.line_number = "001"
+        self.busline.description = "description"
+        self.busline.via = "via"
+        self.busline.route_size = 2.5
+        self.busline.fee = 2.0
+        self.terminal = Terminal(description="terminal")
+        self.terminal.save()
+        self.busline.save()
+        self.busline.terminals.add(self.terminal)
+        return self.busline
 
     def post_data(self, codigo_latitude, codigo_longitude, review):
         data = {'capacity': '5',
                 'traffic': '5',
                 'description': 'comment',
-                'codigo_latitude': '0',
-                'codigo_longitude': '0',
+                'codigo_latitude': codigo_latitude,
+                'codigo_longitude': codigo_longitude,
                 'line_number': '001',
-                'review': review}
+                'review': review,
+                'terminal': '1'}
         return data
 
     def test_make_post_page(self):
@@ -56,8 +56,7 @@ class PostControllerTest (SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_make_post_page_with_user(self):
-        self.create_user('username-post-0')
-        self.client.login(username='username-post-0', password='test_password')
+        self.client.login(username='username', password='test_password')
         response = self.client.get(
             "/realizar_post/?line_number=001&busline_id=01")
         self.assertEquals(response.status_code, STATUS_OK)
@@ -65,8 +64,7 @@ class PostControllerTest (SimpleTestCase):
         self.user.delete()
 
     def test_make_post_action_with_user(self):
-        self.create_user('username-post-1')
-        self.client.login(username='username-post-1', password='test_password')
+        self.client.login(username='username', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('0', '0', '0'))
         self.assertEquals(response.status_code, STATUS_OK)
@@ -74,19 +72,15 @@ class PostControllerTest (SimpleTestCase):
         self.user.delete()
 
     def test_make_post_action_with_user_and_line(self):
-        busline = self.create_busline()
-        self.create_user('username-post-2')
-        self.client.login(username='username-post-2', password='test_password')
+        self.client.login(username='username', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('0', '0', '0'))
         self.assertEquals(response.status_code, STATUS_OK)
         self.client.logout()
         self.user.delete()
-        busline.delete()
 
     def test_make_post_action_page_no_review(self):
-        self.create_user('username-post-3')
-        self.client.login(username='username-post-3', password='test_password')
+        self.client.login(username='username', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('0', '0', ''))
         self.assertEquals(response.status_code, STATUS_OK)
@@ -94,8 +88,7 @@ class PostControllerTest (SimpleTestCase):
         self.user.delete()
 
     def test_make_post_action_page_no_geolocation(self):
-        self.create_user('username-post-4')
-        self.client.login(username='username-post-4', password='test_password')
+        self.client.login(username='username', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('', '', '0'))
         self.assertEquals(response.status_code, STATUS_OK)

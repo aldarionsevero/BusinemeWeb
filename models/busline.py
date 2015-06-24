@@ -95,10 +95,10 @@ class Busline(django_models.Model):
         return objects
 
     @classmethod
-    def filter_by_line_equals(cls, line_number):
+    def get_by_line_equals(cls, line_number):
         api = BuslineAPI()
         try:
-            busline = api.filter_by_line_equals(line_number)
+            busline = api.get_by_line_equals(line_number)
         except:
-            busline = cls.objects.filter(line_number__exact=line_number)
+            busline = cls.objects.get(line_number=line_number)
         return busline

@@ -14,7 +14,7 @@ def make_post_page(request):
     """Return the post page when requested. """
     line_number = request.GET['line_number']
     busline_id = request.GET['busline_id']
-    busline = Busline.filter_by_line_equals(line_number)
+    busline = Busline.get_by_line_equals(line_number)
     terminals = busline.terminals
     try:
         last_post = Post.last(busline_id)
@@ -53,7 +53,7 @@ def make_post_action(request):
     else:
         pontuation = int(request.POST['review'])
     try:
-        busline = Busline.filter_by_line_equals(request.POST['line_number'])
+        busline = Busline.get_by_line_equals(request.POST['line_number'])
         post.busline_id = busline.id
         try:
             last_post = Post.last(post.busline_id)
