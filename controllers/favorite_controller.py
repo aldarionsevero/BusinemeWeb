@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response
 def favorite_busline(request, line_number):
     """ Favorite a busline and check if the busline is already favorited. \
     If so, the method will unfavorite the busline """
-    busline = Busline.filter_by_line_equals(line_number)
+    busline = Busline.get_by_line_equals(line_number)
     busline_id = busline.id
     user_id = request.user.id
     if not Favorite.is_favorite(user_id, busline_id):
@@ -31,7 +31,7 @@ def favorite_busline(request, line_number):
 @login_required
 def unfavorite_busline(request, line_number):
     """ Unfavorite a busline """
-    busline = Busline.filter_by_line_equals(line_number)
+    busline = Busline.get_by_line_equals(line_number)
     busline_id = busline.id
     user_id = request.user.id
     Favorite.delete_favorite(user_id, busline_id)
