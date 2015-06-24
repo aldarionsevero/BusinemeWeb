@@ -98,7 +98,7 @@ class UserControllerTest(SimpleTestCase):
         data = self.register_post_data(
             'test_user', 'test@email.com', 'test_user', '1234')
         db_before = User.objects.all().count()
-        print self.client.post('/cadastrar/usuario/', data)
+        self.client.post('/cadastrar/usuario/', data)
         db_after = User.objects.all().count()
         self.assertTrue(db_after > db_before)
 
