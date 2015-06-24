@@ -11,58 +11,65 @@
 					{% if favorites %}
 						<div class="panel">
 							<h3 class="left" value="Feed">Linhas Favoritas</h3><br><br>
+							<ul class="accordion" data-accordion>
 								{% for favorite in favorites %}
-									{% for post in posts %}
-										{% if post.busline == favorite.busline %}
-											<div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel">
-												<h3> <a href"#" name="post-details1"
-												class="left" value="{{ post.busline.line_number }}" >{{ post.busline.line_number }}</a>
-												<a href"#" name="post-details2"
-												class="right" value="@{{ post.user.username }}" >@{{ post.user.username }}</a>
-												</h3><br>
-												<p>
-													<h4>Trânsito:</h4>
-													<p class="left">Livre</p>
-													<p class="right">Parado</p>
-													<br>
-													<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
-													<h4>Lotação:</h4>
-													<p class="left">Vazio</p>
-													<p class="right">Lotado</p>
-													<br>
-													<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
-													<small class="right">{{ post.time }}</small>
-												</p>
+									<ul class="accordion" data-accordion>
+										<li class="accordion-navigation">
+										<a href="#accordion{{favorite.busline.id}}"><h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
+											<!-- <a href="#accordion{{favorite.busline.id}}">{{favorite.busline}}}</a> -->
+											<div id="accordion{{favorite.busline.id}}" class="content">
+												{% for post in favorite.busline.posts %}
+													<div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel">
+														<h3> <a href"#" name="post-details1"
+														class="left" value="{{ post.busline.line_number }}" >{{ post.busline.line_number }}</a>
+														<a href"#" name="post-details2"
+														class="right" value="@{{ post.user.username }}" >@{{ post.user.username }}</a>
+														</h3><br>
+														<p>
+															<h4>Trânsito:</h4>
+															<p class="left">Livre</p>
+															<p class="right">Parado</p>
+															<br>
+															<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
+															<h4>Lotação:</h4>
+															<p class="left">Vazio</p>
+															<p class="right">Lotado</p>
+															<br>
+															<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+															<small class="right">{{ post.time }}</small>
+														</p>
+													</div>
+													
+													<div id="modalPostDetails{{ post.id }}" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+														<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+														<h1 id="modalTitle">{{ post.busline.line_number }}</h1>
+														<h2>@{{ post.user.username }}</h2>
+														<h3>Trânsito:</h3>
+														<p class="left">Livre</p>
+														<p class="right">Parado</p>
+														<br>
+														<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
+														<h3>Lotação:</h3>
+														<p class="left">Vazio</p>
+														<p class="right">Lotado</p>
+														<br>
+														<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+														<h3>Comentário</h3>
+														{% if post.comment %}
+															<p class="left">{{ post.comment }}</p>
+														{% else %}
+															<p class="left">Sem comentário. :(</p><br>
+														{% endif %}
+														<center> <div class="flex-video" style="width:290px;height:200px;">
+															<div id="map_canvas" style="width:290px;height:200px;"></div>
+														</div></center>
+														<div>{{post.latitude}}</div>
+														<p class="right">{{ post.time }}</p>
+													</div>
+												{% endfor %}
 											</div>
-											
-											<div id="modalPostDetails{{ post.id }}" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-												<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-												<h1 id="modalTitle">{{ post.busline.line_number }}</h1>
-												<h2>@{{ post.user.username }}</h2>
-												<h3>Trânsito:</h3>
-												<p class="left">Livre</p>
-												<p class="right">Parado</p>
-												<br>
-												<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
-												<h3>Lotação:</h3>
-												<p class="left">Vazio</p>
-												<p class="right">Lotado</p>
-												<br>
-												<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
-												<h3>Comentário</h3>
-												{% if post.comment %}
-													<p class="left">{{ post.comment }}</p>
-												{% else %}
-													<p class="left">Sem comentário. :(</p><br>
-												{% endif %}
-												<center> <div class="flex-video" style="width:290px;height:200px;">
-													<div id="map_canvas" style="width:290px;height:200px;"></div>
-												</div></center>
-												<div>{{post.latitude}}</div>
-												<p class="right">{{ post.time }}</p>
-											</div>
-										{% endif %}
-									{% endfor %}
+										</li>
+									</ul>
 								{% endfor %}
 							</div>
 						</div>
