@@ -18,9 +18,11 @@ class PostControllerTest (SimpleTestCase):
         self.create_busline()
         self.create_user('username')
 
-    def create_user(self, username):
+    def create_user(self):
+        User.objects.all().delete()
         self.user = User()
-        self.user.username = username
+        self.user.id = 1
+        self.user.username = 'test_user'
         self.user.set_password('test_password')
         self.user.name = 'test_name'
         self.user.email = 'test@email.tes'
@@ -39,7 +41,7 @@ class PostControllerTest (SimpleTestCase):
         self.busline.terminals.add(self.terminal)
         return self.busline
 
-    def post_data(self, codigo_latitude, codigo_longitude, review):
+    def post_data(self, review):
         data = {'capacity': '5',
                 'traffic': '5',
                 'description': 'comment',
@@ -52,21 +54,19 @@ class PostControllerTest (SimpleTestCase):
 
     def test_make_post_page(self):
         response = self.client.get(
-            "/realizar_post/?line_number=001&busline_id=01")
+            "/realizar_post/?line_number=0.001&busline_id=1")
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_make_post_page_with_user(self):
         self.client.login(username='username', password='test_password')
         response = self.client.get(
-            "/realizar_post/?line_number=001&busline_id=01")
+            "/realizar_post/?line_number=0.001&busline_id=01")
         self.assertEquals(response.status_code, STATUS_OK)
-        self.client.logout()
-        self.user.delete()
 
     def test_make_post_action_with_user(self):
         self.client.login(username='username', password='test_password')
         response = self.client.post(
-            "/realizar_post/", self.post_data('0', '0', '0'))
+            "/realizar_post/", self.post_data('0'))
         self.assertEquals(response.status_code, STATUS_OK)
         self.client.logout()
         self.user.delete()
@@ -74,7 +74,7 @@ class PostControllerTest (SimpleTestCase):
     def test_make_post_action_with_user_and_line(self):
         self.client.login(username='username', password='test_password')
         response = self.client.post(
-            "/realizar_post/", self.post_data('0', '0', '0'))
+            "/realizar_post/", self.post_data('0'))
         self.assertEquals(response.status_code, STATUS_OK)
         self.client.logout()
         self.user.delete()
@@ -82,15 +82,13 @@ class PostControllerTest (SimpleTestCase):
     def test_make_post_action_page_no_review(self):
         self.client.login(username='username', password='test_password')
         response = self.client.post(
-            "/realizar_post/", self.post_data('0', '0', ''))
+            "/realizar_post/", self.post_data(''))
         self.assertEquals(response.status_code, STATUS_OK)
         self.client.logout()
-        self.user.delete()
 
     def test_make_post_action_page_no_geolocation(self):
         self.client.login(username='username', password='test_password')
         response = self.client.post(
-            "/realizar_post/", self.post_data('', '', '0'))
+            "/realizar_post/", self.post_data('0'))
         self.assertEquals(response.status_code, STATUS_OK)
         self.client.logout()
-        self.user.delete()

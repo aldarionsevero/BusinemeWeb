@@ -11,6 +11,7 @@ class UserControllerTest(SimpleTestCase):
 
     def setUp(self):
         self.client = Client()
+        User.objects.all().delete()
 
     def create_user(self, username):
         self.user = User()
@@ -91,13 +92,13 @@ class UserControllerTest(SimpleTestCase):
         data = self.register_post_data(
             'test_user', 'test@email.com', 'test_user', '1234')
         response = self.client.post('/cadastrar/usuario/', data)
-        self.assertEquals(response.status_code, STATUS_OK)
+        self.assertEquals(response.status_code, STATUS_REDIRECT)
 
     def test_register_user_success_db(self):
         data = self.register_post_data(
             'test_user', 'test@email.com', 'test_user', '1234')
         db_before = User.objects.all().count()
-        self.client.post('/cadastrar/usuario/', data)
+        print self.client.post('/cadastrar/usuario/', data)
         db_after = User.objects.all().count()
         self.assertTrue(db_after > db_before)
 
@@ -243,3 +244,7 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_OK)
         self.client.logout()
         self.user.delete()
+
+   
+
+    

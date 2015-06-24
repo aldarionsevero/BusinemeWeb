@@ -7,8 +7,6 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from controllers.utils import modal_message
-from models.favorite import Favorite
-from models.busline import Busline
 
 
 def register_user_page(request):
@@ -251,52 +249,6 @@ def change_password(request):
     """Call method to user password depending on the request method."""
     if request.method == 'GET':
         response = change_password_page(request)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         response = change_password_action(request)
     return response
-
-
-@login_required
-def favorite_busline(request, line_number):
-    """ Favorite a busline and check if the busline is already favorited. \
-    If so, the method will unfavorite the busline """
-    busline = Busline.get_by_line_equals(line_number)
-    busline_id = busline.id
-    user_id = request.user.id
-    if request.user.is_authenticated:
-        if not Favorite.is_favorite(user_id, busline_id):
-            favorite = Favorite()
-            favorite.user_id = user_id
-            favorite.busline_id = busline.id
-            favorite.save()
-            return redirect(
-                "/fav_page/",
-                context_instance=RequestContext(request))
-        else:
-            Favorite.delete_favorite(user_id, busline_id)
-            return redirect(
-                "/fav_page/",
-                context_instance=RequestContext(request))
-
-
-@login_required
-def unfavorite_busline(request, line_number):
-    """ Unfavorite a busline """
-    busline = Busline.get_by_line_equals(line_number)
-    busline_id = busline.id
-    user_id = request.user.id
-    Favorite.delete_favorite(user_id, busline_id)
-    return redirect(
-        "/fav_page/",
-        context_instance=RequestContext(request))
-
-
-@login_required
-def favorite_busline_page(request):
-    """ Load the Favorites buslines page """
-    favorites = Favorite.objects.filter(
-        user_id=request.user).order_by("busline_id")
-
-    return render_to_response("fav_page.html",
-                              {'favorites': favorites},
-                              context_instance=RequestContext(request))

@@ -1,14 +1,21 @@
-from django.test import SimpleTestCase
-from models.busline import Busline
+
+from django.test import SimpleTestCase, Client
 from models.user import User
+from models.busline import Busline
 from models.terminal import Terminal
 from models.favorite import Favorite
 
+STATUS_OK = 200
+STATUS_REDIRECT = 302
 
-class TestFavorite (SimpleTestCase):
 
-    def setup(self):
-        pass
+class FavoriteTest(SimpleTestCase):
+
+    def setUp(self):
+        self.client = Client()
+        User.objects.all().delete()
+        Favorite.objects.all().delete()
+        Busline.objects.all().delete()
 
     def create_busline(self):
         Busline.objects.all().delete()
@@ -27,7 +34,7 @@ class TestFavorite (SimpleTestCase):
     def create_user(self):
         User.objects.all().delete()
         user = User()
-        user.username = "test_test"
+        user.username = "test_username"
         user.set_password('1234')
         user.name = 'test_name'
         user.email = 'test@email.tes'
@@ -41,5 +48,18 @@ class TestFavorite (SimpleTestCase):
         favorite.busline = self.create_busline()
         return favorite
 
-    def test_all(self):
+    def test_unfavorite_busline(self):
+        self.create_favorite()
+        self.client.login(
+            username='test_username', password='1234')
+        response = self.client.get('/fav/0.001/')
+        self.assertEquals(response.status_code, STATUS_REDIRECT)
+        self.client.logout()
+
+    def test_favorite_busline(self):
         self.create_busline()
+        self.create_user()
+        self.client.login(
+            username='test_username', password='1234')
+        response = self.client.get('/fav/0.001/')
+        self.assertEquals(response.status_code, STATUS_REDIRECT)
