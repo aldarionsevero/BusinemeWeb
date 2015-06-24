@@ -81,7 +81,7 @@ class PostControllerTest (SimpleTestCase):
         self.create_user()
         self.client.login(username='test_user', password='test_password')
         response = self.client.get(
-            "/realizar_post/?line_number=0.001&busline_id=01")
+            "/realizar_post/?line_number=0.001")
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_make_post_action_with_user(self):
@@ -94,7 +94,7 @@ class PostControllerTest (SimpleTestCase):
         self.user.delete()
 
     def test_make_post_action_with_user_and_line(self):
-        busline = self.create_busline()
+        self.create_busline()
         self.create_user()
         self.client.login(username='test_user', password='test_password')
         response = self.client.post(
