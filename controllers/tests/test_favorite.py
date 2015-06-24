@@ -63,3 +63,18 @@ class FavoriteTest(SimpleTestCase):
             username='test_username', password='1234')
         response = self.client.get('/fav/0.001/')
         self.assertEquals(response.status_code, STATUS_REDIRECT)
+
+    def test_unfavorite_busline2(self):
+        self.create_busline()
+        self.create_user()
+        self.client.login(
+            username='test_username', password='1234')
+        response = self.client.get('/un_fav/0.001/')
+        self.assertEquals(response.status_code, STATUS_REDIRECT)
+
+
+    def test_favorite_busline_page(self):
+        self.create_favorite()
+        self.client.login(username='test_username', password='1234')
+        response = self.client.get('/fav_page/')
+        self.assertEquals(response.status_code, STATUS_OK)

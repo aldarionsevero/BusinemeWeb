@@ -42,4 +42,9 @@ class TestFavorite (SimpleTestCase):
         return favorite
 
     def test_all(self):
-        self.create_busline()
+        Favorite.objects.all().delete()
+        db_before = Favorite.all()
+        favorite = self.create_favorite()
+        favorite.save()
+        db_after = Favorite.all()
+        self.assertTrue(db_before != db_after)
