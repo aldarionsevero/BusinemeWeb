@@ -13,8 +13,8 @@ from exception.api import ApiException
 def make_post_page(request):
     """Return the post page when requested. """
     line_number = request.GET['line_number']
-    busline_id = request.GET['busline_id']
     busline = Busline.get_by_line_equals(line_number)
+    busline_id = busline.id
     terminals = busline.terminals
     try:
         last_post = Post.last(busline_id)
