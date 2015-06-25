@@ -10,6 +10,10 @@ class TestCompany(SimpleTestCase):
         company1.name = "pioneira"
         company1.save()
 
+    def test_post_instance(self):
+        company = Company()
+        self.assertIsNotNone(company)
+
     def test_unicode(self):
         Company.objects.all().delete()
         company1 = Company()
