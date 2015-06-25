@@ -29,7 +29,7 @@ urlpatterns = patterns(
     url(r'^sugerir/linha/',
         'controllers.line_sugested_controller.sugesting_line'),
     url(r'^busca_avancada/',
-        'controllers.busline_controller.advanced_search_busline'),
+        'controllers.busline_controller.advanced_search_busline_page'),
     url(r'^realizar_post/',
         post_controller.make_post),
     url(r'^perfil_de_linha/(?P<line_number>[0-9]+\.[0-9]+)/$',
