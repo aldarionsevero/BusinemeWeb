@@ -1,6 +1,6 @@
-
+# -*- coding: utf-8 -*-
 from django.template import RequestContext
-from controllers.utils import modal_message
+from controllers.utils import call_feed_page
 from models.terminal import Terminal
 from models.line_sugested import LineSugested
 from django.shortcuts import render_to_response
@@ -21,7 +21,8 @@ def sugesting_line(request):
 def sugesting_line_page(request):
     terminals = Terminal.all()
     response = render_to_response('line_sugested_page.html', {
-                                  'terminals': terminals}, context_instance=RequestContext(request))
+                                  'terminals': terminals},
+                                  context_instance=RequestContext(request))
     return response
 
 
@@ -36,6 +37,10 @@ def sugesting_line_action(request):
     # line_sugest.terminal = request.POST['terminal']
     line_sugest.save()
 
-    response = modal_message('Sucesso', 'linha sugerida com sucesso', 'Lnha sugerida \
-            com sucesso!', 'feed_page.html', request)
+    response = call_feed_page(request,
+                              alert_title='Sucesso',
+                              error_lead='linha sugerida com sucesso',
+                              modal_message='Uma nova linha foi sugerida e \
+        será avalida pela nossa equipe! Obrigado pela\
+          sugestão!')
     return response
