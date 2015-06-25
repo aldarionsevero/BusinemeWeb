@@ -7,11 +7,11 @@
         <div class="small-12 large-12 columns">
             <div class="row collapse prefix-round">
                 {% if favorites %}
-                    <h1 class="busineme_orange">Linhas Favoritadas</h1>
+                    <h1 class="busineme_orange" value='Linhas Favoritadas' >Linhas Favoritadas</h1>
                     <ul class="accordion" data-accordion>
                         {% for favorite in favorites %}
                             <li class="accordion-navigation">
-                                <a href="#busline{{forloop.counter}}"><h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
+                                <a href="#busline{{forloop.counter}}" value='linha_favoritada' ><h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
                             </a>
                             <div id="busline{{forloop.counter}}" class="content" >
                                 <div class="row">
@@ -19,7 +19,7 @@
                                     <form action="/realizar_post/" method="GET">
                                         <input class="right" type="hidden" name="line_number" value="{{favorite.busline.line_number}}">
                                         <input type="hidden" name="busline_id" value="{{favorite.busline.id}}">
-                                        <input  type="submit" class="button radius button_size" name='Businar' value="Businar!">
+                                        <input  type="submit" class="button radius button_size" name='Businar!' value="Businar!">
                                         {% for post in favorite.busline.posts %}
                                             <div class="panel">
                                                 <h3 class="left" value="@{{ post.user.username }}" >@{{ post.user.username }} </h3><br>

@@ -13,7 +13,7 @@
                     <div class="panel">
                         {% if user.is_authenticated %}
                             {% if Favorite.is_favorite %}
-                                <span class="right"><a href="/fav/{{busline.line_number}}/" class="fa fa-star fa-3x busineme_orange"></a></span>
+                                <span class="right"><a href="/fav/{{busline.line_number}}/" value='Favoritar' name='Favoritar' class="fa fa-star fa-3x busineme_orange"></a></span>
                             {% else %}
                                 <span class="right"><a href="/fav/{{busline.line_number}}/" class="fa fa-star-o fa-3x busineme_orange"></a></span>
                             {% endif %}
