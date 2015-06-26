@@ -52,7 +52,7 @@ def register_user(request):
                 "Verifique o e-mail inserido. Ele deve conter os caracteres \
                 '@' e '.' (ponto).",
                 "register_user_page.html", request)
-        if not user.validade_user_password(request.POST["password"]):
+        if not user.validate_user_password(request.POST["password"]):
             response = modal_message(
                 "Erro :(",
                 "Campo de senha vazio.",
@@ -61,7 +61,7 @@ def register_user(request):
                 "register_user_page.html", request)
 
         if user.validate_email() and user.validate_unique_email() and \
-                user.validade_user_password(request.POST["password"]):
+                user.validate_user_password(request.POST["password"]):
             user.save()
 
     except IntegrityError:
