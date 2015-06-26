@@ -18,14 +18,14 @@ class TestLineSugested(SimpleTestCase):
         return terminal
 
     def createsugested_line(self, description, justify, line_number):
-            terminal = self.create_terminal()
-            line_sugest = LineSugested()
-            line_sugest.description = description
-            line_sugest.justify = justify
-            line_sugest.busline = line_number
-            line_sugest.terminal = terminal
-            line_sugest.save()
-            return line_sugest
+        terminal = self.create_terminal()
+        line_sugest = LineSugested()
+        line_sugest.description = description
+        line_sugest.justify = justify
+        line_sugest.line_number = line_number
+        line_sugest.terminal = terminal
+        line_sugest.save()
+        return line_sugest
 
     def test_instance(self):
         self.createsugested_line("aeiou", "aeio", "003")
@@ -34,5 +34,5 @@ class TestLineSugested(SimpleTestCase):
 
     def test_filter_by_line_number(self):
         self.createsugested_line("aeioy", "awert", "002")
-        sugested_lines = LineSugested.filter_by_line_number("003")
+        sugested_lines = LineSugested.filter_by_line_number("002")
         self.assertEquals(1, len(sugested_lines))

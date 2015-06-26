@@ -7,7 +7,7 @@ from terminal import Terminal
 
 class LineSugested(models.Model):
 
-    line_number = models.IntegerField()
+    line_number = models.CharField(max_length=6)
     description = models.CharField(max_length=255)
     justify = models.CharField(max_length=255)
     via = models.CharField(max_length=255, null=True)
@@ -15,9 +15,10 @@ class LineSugested(models.Model):
 
     def __unicode__(self):
         """Return data of sugested line."""
-        return 'line_number: %s description: %s justify: %s' % (self.busline,
-                                                                self.description,
-                                                                self.justify)
+        return 'line_number: %s description: %s justify: %s' % \
+            (self.busline,
+             self.description,
+             self.justify)
 
     @classmethod
     def filter_by_line_number(cls, line_number):
