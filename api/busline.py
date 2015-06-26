@@ -73,7 +73,6 @@ class BuslineAPI(object):
             buslines = requests.get(url)
             return self._busline_list(buslines.json())
         except Exception, e:
-            print e
             raise ApiException(str(e))
 
     def _company_json_to_object(self, company_json):

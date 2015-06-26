@@ -1,41 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}
-	Busine.me | Feed
+	Busine.me | Terminal
 {% endblock %}
 {% block content %}
 	<div class="small-12 large-12 columns">
 		<br><h1 class="text-center">Terminal</h1><br><br>
 		<div class="row collapse prefix-round">
-			<div class="panel">
+			<div class="panel radius">
+				<h3 class="left" value="Feed">Linhas Favoritas</h3><br><br>
 				{% if user.is_authenticated %}
 					{% if favorites %}
-						<div class="panel">
-							<h3 class="left" value="Feed">Linhas Favoritas</h3><br><br>
+						<div class="panel radius">
 							<ul class="accordion" data-accordion>
 								{% for favorite in favorites %}
 									<ul class="accordion" data-accordion>
 										<li class="accordion-navigation">
-										<a href="#accordion{{favorite.busline.id}}"><h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
+											<a href="#accordion{{favorite.busline.id}}"><h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
 											<!-- <a href="#accordion{{favorite.busline.id}}">{{favorite.busline}}}</a> -->
 											<div id="accordion{{favorite.busline.id}}" class="content">
 												{% for post in favorite.busline.posts %}
-													<div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel">
-														<h3> <a href"#" name="post-details1"
-														class="left" value="{{ post.busline.line_number }}" >{{ post.busline.line_number }}</a>
-														<a href"#" name="post-details2"
-														class="right" value="@{{ post.user.username }}" >@{{ post.user.username }}</a>
-														</h3><br>
+													<div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel radius">
+														<h3><a href"#" name="post-details2"
+														class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}</a></h3><br>
 														<p>
-															<h4>Trânsito:</h4>
-															<p class="left">Livre</p>
-															<p class="right">Parado</p>
-															<br>
-															<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
-															<h4>Lotação:</h4>
-															<p class="left">Vazio</p>
-															<p class="right">Lotado</p>
-															<br>
-															<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+															<h4>
+															<p class="left">Capacidade: {{post.capacity}}</p>
+															<p class="text-center">Trânsito: {{post.traffic}}</p>
+															</h4>
+															<h4>
+															{% if post.comment %}
+																Comentario: "{{ post.comment }}"
+															{% else %}
+																Sem comentário. :(
+															{% endif %}
+															</h4>
 															<small class="right">{{ post.time }}</small>
 														</p>
 													</div>
@@ -75,26 +73,29 @@
 						</div>
 					{% endif %}
 				{% endif %}
-				<div class="panel">
-					<h3 class="left" value="Feed">Ultimas Businadas Gerais</h3><br><br>
+				<div class="panel radius">
+					<h3 class="left" value="Feed">Ultimas Businadas</h3><br><br>
 					{% if posts %}
 						{% for post in posts %}
-							<div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel">
-								<h3> <a href"#" name="post-details1"
-								class="left" value="{{ post.busline.line_number }}" >{{ post.busline.line_number }}</a></h3><br>
-								<h3> <a href"#" name="post-details2"
-								class="left" value="@{{ post.user.username }}" >@{{ post.user.username }}</a></h3><br>
+							<div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel radius">
+								<h3>
+								<a href"#" name="post-details1"
+								class="left" value="{{ post.busline.line_number }}" >{{ post.busline.line_number }}</a>
+								<a href"#" name="post-details2"
+								class="right" value="@{{ post.user.username }}" >@{{ post.user.username }}</a>
+								</h3><br>
 								<p>
-									<h4>Trânsito:</h4>
-									<p class="left">Livre</p>
-									<p class="right">Parado</p>
-									<br>
-									<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.traffic 1 20 %}%"></span> </div>
-									<h4>Lotação:</h4>
-									<p class="left">Vazio</p>
-									<p class="right">Lotado</p>
-									<br>
-									<div class="progress large-12 success round"> <span class="meter" style="width: {% widthratio post.capacity 1 20 %}%"></span> </div>
+									<h4>
+									<p class="left">Capacidade: {{post.capacity}}</p>
+									<p class="text-center">Trânsito: {{post.traffic}}</p>
+									</h4>
+									<h4>
+									{% if post.comment %}
+										Comentario: "{{ post.comment }}"
+									{% else %}
+										Sem comentário. :(
+									{% endif %}
+									</h4>
 									<small class="right">{{ post.time }}</small>
 								</p>
 							</div>

@@ -18,7 +18,7 @@ Feature: Favorite busline.
         And I press "Pesquisar"
         And I follow "/perfil_de_linha/0.205/"
         And I follow "/fav/0.205/"
-        And I should see "Linhas Favoritadas"
+        And I should see "Linhas Favoritas"
         When I follow "#busline1"
         Then I should see "Businar!"
 

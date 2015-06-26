@@ -19,10 +19,10 @@
                             {% endif %}
                         {% endif %}
                         <h3 class="left" value="Resultado">Informações</h3><br><br>
-                        <p>Rota: {{ busline.description }}</p>
+                        <p class="fa fa-bus" > Rota: {{ busline.description }}</p>
                         <p>{{ busline.via }}</p>
                         <p>Percurso: {{ busline.route_size }} KM</p>
-                        <p>Tarifa: R${{ busline.fee }}</p>
+                        <p class="fa fa-money"> Tarifa: R${{ busline.fee }}</p><br>
                         {% if user.is_authenticated %}
                             <input type="submit" class="button round button_size" name='Businar' value="Businar!">
                         {% endif %}

@@ -43,7 +43,7 @@
           Indo para: <br>
           {% for terminal in terminals %}
             <label>
-              <input type="radio" name="terminal" value="{{terminal.id}}">
+              <input type="radio" name="terminal" value="{{terminal.id}}" required>
               {{terminal.description}}
             </label>
           {% endfor %}
@@ -81,9 +81,9 @@
       </div></center>
     </div>
     <ul class="button-group round even-3">
-      <li><a class="button alert" id="bad_review">Ruim</a></li>
-      <li><a class="button secondary" id="whatever_review">Indiferente</a></li>
-      <li><a class="button success" id="good_review">Bom</a></li>
+      <li><a class="button alert fa fa-frown-o" id="bad_review"></a></li>
+      <li><a class="button secondary fa fa-meh-o" id="whatever_review"></a></li>
+      <li><a class="button success fa fa-smile-o" id="good_review"></a></li>
     </ul>
   </div>
 {% endblock %}

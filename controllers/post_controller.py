@@ -3,7 +3,6 @@
 from django.shortcuts import render_to_response
 from models.post import Post
 from models.busline import Busline
-from models.favorite import Favorite
 from django.template import RequestContext
 from controllers.utils import modal_message, call_feed_page
 from django.contrib.auth.decorators import login_required
@@ -47,7 +46,15 @@ def make_post_action(request):
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
     post.user_id = request.user.id
-    post.terminal_id = request.POST["terminal"]
+    try:
+        post.terminal_id = request.POST["terminal"]
+    except:
+        return call_feed_page(request,
+                              alert_title='Erro :(',
+                              error_lead='Campo não preenchido.',
+                              modal_message='O campo de terminal deve ser \
+                              preenchido para realizar uma businada.'
+                              )
     pontuation = 0
 
     if request.POST['review'] == '':
@@ -87,9 +94,12 @@ def make_post_action(request):
                                   )
 
     if post.latitude == "" or post.longitude == "":
-        return modal_message('Erro :(', 'Serviço não disponível',
-                             'Não conseguimos obter sua geolocalização',
-                             'feed_page.html', request)
+        return call_feed_page(request,
+                              alert_title='Erro :(',
+                              error_lead='Servidor não disponível',
+                              modal_message='Não conseguimos obter sua \
+                              geolocalização'
+                              )
     post.save()
     return response
 
