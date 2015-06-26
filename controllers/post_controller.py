@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from exception.line_without_post import LineWithoutPostError
 from exception.api import ApiException
 from configuration import security
-import twitter
+from twython import Twython
 
 capacity_dictionary = {1: "OnibusVazio",
                        2: "ComPoucosAssentosVagos",
@@ -77,9 +77,7 @@ def make_post_action(request):
         except LineWithoutPostError:
             pass
 
-        post.save()
-
-        _post_twitter(request.POST['line_number'], post.capacity, post.traffic)
+        post_twitter(request.POST['line_number'], post.capacity, post.traffic)
 
         if post.latitude == "" or post.longitude == "":
             return modal_message('Erro :(', 'Serviço não disponível',
@@ -98,24 +96,20 @@ def make_post_action(request):
     return response
 
 
-def _post_twitter(line_number, capacity, traffic):
+def post_twitter(line_number, capacity, traffic):
     post_line_number = line_number
     post_line_number = post_line_number.replace('.', '')
-    api = twitter.Api(consumer_key=security.TWITTER_CONSUMER_KEY,
-                      consumer_secret=security.TWITTER_CONSUMER_SECRET,
-                      access_token_key=security.TWITTER_ACCESS_TOKEN_KEY,
-                      access_token_secret=security.
-                      TWITTER_ACCESS_TOKEN_SECRET)
+    APP_KEY = security.TWITTER_CONSUMER_KEY
+    APP_SECRET = security.TWITTER_CONSUMER_SECRET
+    OAUTH_TOKEN = security.TWITTER_ACCESS_TOKEN_KEY
+    OAUTH_TOKEN_SECRET = security.TWITTER_ACCESS_TOKEN_SECRET
+    twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+
     message = '#Busine%s #%s  #%s' % \
         (post_line_number, capacity_dictionary[
          capacity], traffic_dictionary[traffic])
-
-    tweet_posted = api.PostUpdate(message)
-
-    if tweet_posted is not None:
-        return True
-    else:
-        return False
+    tweet_posted = twitter.update_status(status=message)
+    return tweet_posted
 
 
 def make_post(request):

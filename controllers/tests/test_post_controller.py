@@ -1,11 +1,13 @@
 from django.test import SimpleTestCase, Client
 from models.post import Post
-from controllers import post_controller
+from controllers.post_controller import post_twitter
 from exception.api import ApiException
-import urllib2
 from models.user import User
 from models.busline import Busline
 from models.terminal import Terminal
+from mock import Mock
+from mock import patch
+import twitter
 
 STATUS_OK = 200
 STATUS_REDIRECT = 302
@@ -50,32 +52,26 @@ class PostControllerTest (SimpleTestCase):
                 'review': review}
         return data
 
-    def twitter_data(self):
-        data_twitter = {'capacity': '5',
-                        'traffic': '5',
-                        'line_number': '205'
-                        }
-        return data_twitter
-
     def test_make_post_page(self):
         response = self.client.get(
             "/realizar_post/?line_number=001&busline_id=01")
         self.assertEquals(response.status_code, STATUS_OK)
 
-    def test_make_post_twitter(self):
-        try:
-            urllib2.urlopen('http://whatismyip.org').read()
-            tweet_data = self.twitter_data()
-            tweet = self._post_twitter(
-                tweet_data['line_number'], tweet_data['capacity'],
-                tweet_data['traffic'])
-            self.assertTrue(tweet)
-        except Exception:
-            self.assertRaises(Exception)
+    @patch('django.test.Client.post')
+    def test_make_post_twitter(self, mock_get):
+        mock_response = Mock()
+        mock_response.return_value = True
+        mock_get.return_value = mock_response
+        self.client.post("realizar_post/", self.post_data("0", "0", "0"))
+
+        mock_get.assert_called_once_with(
+            "realizar_post/", self.post_data("0", "0", "0"))
+        mock_response.assert_called_once()
 
     def test_make_post_page_with_user(self):
         self.create_user('username-post-0')
-        self.client.login(username='username-post-0', password='test_password')
+        self.client.login(
+            username='username-post-0', password='test_password')
         response = self.client.get(
             "/realizar_post/?line_number=001&busline_id=01")
         self.assertEquals(response.status_code, STATUS_OK)
@@ -84,7 +80,8 @@ class PostControllerTest (SimpleTestCase):
 
     def test_make_post_action_with_user(self):
         self.create_user('username-post-1')
-        self.client.login(username='username-post-1', password='test_password')
+        self.client.login(
+            username='username-post-1', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('0', '0', '0'))
         self.assertEquals(response.status_code, STATUS_OK)
@@ -94,7 +91,8 @@ class PostControllerTest (SimpleTestCase):
     def test_make_post_action_with_user_and_line(self):
         busline = self.create_busline()
         self.create_user('username-post-2')
-        self.client.login(username='username-post-2', password='test_password')
+        self.client.login(
+            username='username-post-2', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('0', '0', '0'))
         self.assertEquals(response.status_code, STATUS_OK)
@@ -104,7 +102,8 @@ class PostControllerTest (SimpleTestCase):
 
     def test_make_post_action_page_no_review(self):
         self.create_user('username-post-3')
-        self.client.login(username='username-post-3', password='test_password')
+        self.client.login(
+            username='username-post-3', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('0', '0', ''))
         self.assertEquals(response.status_code, STATUS_OK)
@@ -113,7 +112,8 @@ class PostControllerTest (SimpleTestCase):
 
     def test_make_post_action_page_no_geolocation(self):
         self.create_user('username-post-4')
-        self.client.login(username='username-post-4', password='test_password')
+        self.client.login(
+            username='username-post-4', password='test_password')
         response = self.client.post(
             "/realizar_post/", self.post_data('', '', '0'))
         self.assertEquals(response.status_code, STATUS_OK)
