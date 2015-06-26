@@ -3,8 +3,9 @@
 from django.shortcuts import render_to_response
 from models.post import Post
 from models.busline import Busline
+from models.favorite import Favorite
 from django.template import RequestContext
-from controllers.utils import modal_message
+from controllers.utils import modal_message, call_feed_page
 from django.contrib.auth.decorators import login_required
 from exception.line_without_post import LineWithoutPostError
 from exception.api import ApiException
@@ -48,6 +49,7 @@ def make_post_action(request):
     post.user_id = request.user.id
     post.terminal_id = request.POST["terminal"]
     pontuation = 0
+
     if request.POST['review'] == '':
         pontuation = 0
     else:
@@ -63,16 +65,26 @@ def make_post_action(request):
         except LineWithoutPostError:
             pass
         if post.latitude == "" or post.longitude == "":
-            return modal_message('Erro :(', 'Serviço não disponível',
-                                 'Não conseguimos obter sua geolocalização',
-                                 'feed_page.html', request)
+            return call_feed_page(request,
+                                  alert_title='Erro :(',
+                                  error_lead='Serviço não disponível',
+                                  modal_message='Não conseguimos obter sua\
+                                       geolocalização.'
+                                  )
         post.save()
-        response = modal_message('Sucesso', 'Post realizado', 'Post realizado \
-            com sucesso!', 'feed_page.html', request)
+        response = call_feed_page(request,
+                                  alert_title='Sucesso',
+                                  error_lead='Post realizado',
+                                  modal_message='Post realizado com sucesso!'
+                                  )
     except ApiException:
-        response = modal_message('Erro :(', 'Servidor não disponível', 'O \
-        acesso ao servidor está indisponível no momento, verifique sua \
-        conexão', 'login_page.html', request)
+        response = call_feed_page(request,
+                                  alert_title='Erro :(',
+                                  error_lead='Servidor não disponível',
+                                  modal_message='O acesso ao servidor está \
+                                  indisponível no momento, verifique sua \
+                                  conexão.'
+                                  )
 
     if post.latitude == "" or post.longitude == "":
         return modal_message('Erro :(', 'Serviço não disponível',
