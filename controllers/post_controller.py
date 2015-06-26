@@ -8,6 +8,20 @@ from controllers.utils import modal_message, call_feed_page
 from django.contrib.auth.decorators import login_required
 from exception.line_without_post import LineWithoutPostError
 from exception.api import ApiException
+from configuration import security
+from twython import Twython
+
+capacity_dictionary = {1: "OnibusVazio",
+                       2: "ComPoucosAssentosVagos",
+                       3: "SemAssentosVagos",
+                       4: "OnibusCheio",
+                       5: "OnibusLotado"}
+
+traffic_dictionary = {1: "TransitoLivre",
+                      2: "ComPontosdeRetencao",
+                      3: "LevementeEngarrafado",
+                      4: "TransitoEngarrafado",
+                      5: "TransitoParado"}
 
 
 def make_post_page(request):
@@ -40,8 +54,8 @@ def make_post_action(request):
     """Perform the action of saving the post. """
 
     post = Post()
-    post.capacity = request.POST['capacity']
-    post.traffic = request.POST['traffic']
+    post.capacity = int(request.POST['capacity'])
+    post.traffic = int(request.POST['traffic'])
     post.comment = request.POST['description']
     post.latitude = request.POST['codigo_latitude']
     post.longitude = request.POST['codigo_longitude']
@@ -71,6 +85,9 @@ def make_post_action(request):
             last_post.user.save()
         except LineWithoutPostError:
             pass
+
+        post_twitter(request.POST['line_number'], post.capacity, post.traffic)
+
         if post.latitude == "" or post.longitude == "":
             return call_feed_page(request,
                                   alert_title='Erro :(',
@@ -92,7 +109,6 @@ def make_post_action(request):
                                   indisponível no momento, verifique sua \
                                   conexão.'
                                   )
-
     if post.latitude == "" or post.longitude == "":
         return call_feed_page(request,
                               alert_title='Erro :(',
@@ -104,6 +120,22 @@ def make_post_action(request):
     return response
 
 
+def post_twitter(line_number, capacity, traffic):
+    post_line_number = line_number
+    post_line_number = post_line_number.replace('.', '')
+    APP_KEY = security.TWITTER_CONSUMER_KEY
+    APP_SECRET = security.TWITTER_CONSUMER_SECRET
+    OAUTH_TOKEN = security.TWITTER_ACCESS_TOKEN_KEY
+    OAUTH_TOKEN_SECRET = security.TWITTER_ACCESS_TOKEN_SECRET
+    twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+
+    message = '#Busine%s #%s  #%s' % \
+        (post_line_number, capacity_dictionary[
+         capacity], traffic_dictionary[traffic])
+    tweet_posted = twitter.update_status(status=message)
+    return tweet_posted
+
+
 def make_post(request):
     r"""
     Call method to make the post depending on the request \
@@ -113,4 +145,5 @@ def make_post(request):
         response = make_post_page(request)
     elif request.method == 'POST':
         response = make_post_action(request)
+
     return response

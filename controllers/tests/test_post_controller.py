@@ -1,11 +1,12 @@
 from django.test import SimpleTestCase, Client
 from models.post import Post
-from controllers import post_controller
+from controllers.post_controller import post_twitter
 from exception.api import ApiException
-import urllib2
 from models.user import User
 from models.busline import Busline
 from models.terminal import Terminal
+from mock import Mock
+from mock import patch
 
 STATUS_OK = 200
 STATUS_REDIRECT = 302
@@ -66,20 +67,21 @@ class PostControllerTest (SimpleTestCase):
             "/realizar_post/?line_number=0.001&busline_id=1")
         self.assertEquals(response.status_code, STATUS_OK)
 
-    def test_make_post_twitter(self):
-        try:
-            urllib2.urlopen('http://whatismyip.org').read()
-            tweet_data = self.twitter_data()
-            tweet = self._post_twitter(
-                tweet_data['line_number'], tweet_data['capacity'],
-                tweet_data['traffic'])
-            self.assertTrue(tweet)
-        except Exception:
-            self.assertRaises(Exception)
+    @patch('django.test.Client.post')
+    def test_make_post_twitter(self, mock_get):
+        mock_response = Mock()
+        mock_response.return_value = True
+        mock_get.return_value = mock_response
+        self.client.post("realizar_post/", self.post_data("0", "0", "0"))
+
+        mock_get.assert_called_once_with(
+            "realizar_post/", self.post_data("0", "0", "0"))
+        mock_response.assert_called_once()
 
     def test_make_post_action_with_user(self):
         self.create_user()
         self.client.login(username='test_user', password='test_password')
+
         response = self.client.post(
             "/realizar_post/", self.post_data('0'))
         self.assertEquals(response.status_code, STATUS_OK)

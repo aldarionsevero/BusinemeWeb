@@ -29,7 +29,7 @@ urlpatterns = patterns(
     url(r'^busca_avancada/',
         'controllers.busline_controller.advanced_search_busline_page'),
     url(r'^realizar_post/',
-        post_controller.make_post),
+        'controllers.post_controller.make_post'),
     url(r'^perfil_de_linha/(?P<line_number>[0-9]+\.[0-9]+)/$',
         'controllers.busline_controller.busline_profile'),
     url(r'^fav_page/',
