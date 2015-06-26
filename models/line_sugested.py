@@ -7,7 +7,7 @@ from terminal import Terminal
 
 class LineSugested(models.Model):
 
-    busline = models.IntegerField()
+    line_number = models.IntegerField()
     description = models.CharField(max_length=255)
     justify = models.CharField(max_length=255)
     via = models.CharField(max_length=255, null=True)
@@ -20,8 +20,8 @@ class LineSugested(models.Model):
                                                                 self.justify)
 
     @classmethod
-    def filter_by_line_number(cls, busline):
-        return cls.objects.filter(busline=busline)
+    def filter_by_line_number(cls, line_number):
+        return cls.objects.filter(line_number__contains=line_number)
 
     @classmethod
     def all(cls):

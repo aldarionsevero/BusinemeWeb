@@ -38,6 +38,15 @@ class BuslineTest(SimpleTestCase):
         user.email = 'test@email.tes'
         user.save()
         return user
+        
+    def create_userrusername(self,username):
+        user = User()
+        user.username = username
+        user.password = 'test_password'
+        user.name = 'test_name'
+        user.email = 'test@email.tes'
+        user.save()
+        return user
 
     def create_post(self, line_number, username):
         try:
