@@ -77,13 +77,6 @@ class PostControllerTest (SimpleTestCase):
         except Exception:
             self.assertRaises(Exception)
 
-    # def test_make_post_page_with_user(self):
-    #     self.create_user()
-    #     self.client.login(username='test_user', password='test_password')
-    #     response = self.client.get(
-    #         "/realizar_post/?line_number=0.001")
-    #     self.assertEquals(response.status_code, STATUS_OK)
-
     def test_make_post_action_with_user(self):
         self.create_user()
         self.client.login(username='test_user', password='test_password')

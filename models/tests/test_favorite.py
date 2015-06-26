@@ -48,3 +48,32 @@ class TestFavorite (SimpleTestCase):
         favorite.save()
         db_after = Favorite.all()
         self.assertTrue(db_before != db_after)
+
+    def test_favorites(self):
+        Favorite.objects.all().delete()
+        favorite = self.create_favorite()
+        favorite.save()
+        user = User.objects.get(username='test_test')
+        favorites = Favorite.favorites(user.id)
+        self.assertEquals(1, len(favorites))
+
+    def test_is_favorite(self):
+        Favorite.objects.all().delete()
+        favorite = self.create_favorite()
+        favorite.save()
+        user = User.objects.get(username='test_test')
+        busline_id = favorite.busline.id
+        user_id = user.id
+        return_value = Favorite.is_favorite(user_id, busline_id)
+        self.assertTrue(return_value)
+
+    def delete_favorite(self):
+        Favorite.objects.all().delete()
+        favorite = self.create_favorite()
+        favorite.save()
+        user = User.objects.get(username='test_test')
+        busline_id = favorite.busline.id
+        user_id = user.id
+        Favorite.delete_favorite(user_id, busline_id)
+        favorites = Favorite.objects.all()
+        self.assertEquals(0, len(favorites))
