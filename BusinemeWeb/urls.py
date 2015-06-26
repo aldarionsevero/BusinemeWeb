@@ -26,6 +26,8 @@ urlpatterns = patterns(
         'controllers.busline_controller.search_line'),
     url(r'^resultado/busca_avancada/',
         'controllers.busline_controller.advanced_search_busline'),
+    url(r'^sugerir/linha/',
+        'controllers.line_sugested_controller.sugesting_line'),
     url(r'^busca_avancada/',
         'controllers.busline_controller.advanced_search_busline_page'),
     url(r'^realizar_post/',

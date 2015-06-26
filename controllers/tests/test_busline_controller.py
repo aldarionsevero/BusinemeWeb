@@ -25,5 +25,6 @@ class BuslineControllerTest (SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_advanced_search_page(self):
-        response = self.client.get("/busca_avancada/")
+        response = self.client.get(
+            "/busca_avancada/?busline_advanced=205&description=leste&terminal__description=gama")
         self.assertEquals(response.status_code, STATUS_OK)
