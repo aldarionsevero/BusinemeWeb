@@ -16,7 +16,6 @@
 									<ul class="accordion" data-accordion>
 										<li class="accordion-navigation">
 											<a href="#accordion{{favorite.busline.id}}"><h2><span class="busineme_blue">{{favorite.busline.line_number}}</span></h2>
-											<!-- <a href="#accordion{{favorite.busline.id}}">{{favorite.busline}}}</a> -->
 											<div id="accordion{{favorite.busline.id}}" class="content">
 												{% for post in favorite.busline.posts %}
 													<div href="#" data-reveal-id="modalPostDetails{{ post.id }}" class="panel radius">
@@ -58,10 +57,10 @@
 														{% else %}
 															<p class="left">Sem comentário. :(</p><br>
 														{% endif %}
-														<center> <div class="flex-video" style="width:290px;height:200px;">
+														<!-- <center> <div class="flex-video" style="width:290px;height:200px;">
 															<div id="map_canvas" style="width:290px;height:200px;"></div>
 														</div></center>
-														<div>{{post.latitude}}</div>
+														<div>{{post.latitude}}</div> -->
 														<p class="right">{{ post.time }}</p>
 													</div>
 												{% endfor %}
@@ -120,10 +119,10 @@
 								{% else %}
 									<p class="left">Sem comentário. :(</p><br>
 								{% endif %}
-								<center> <div class="flex-video" style="width:290px;height:200px;">
+								<!-- <center> <div class="flex-video" style="width:290px;height:200px;">
 									<div id="map_canvas" style="width:290px;height:200px;"></div>
 								</div></center>
-								<div>{{post.latitude}}</div>
+								<div>{{post.latitude}}</div> -->
 								<p class="right">{{ post.time }}</p>
 							</div>
 						{% endfor %}

@@ -58,10 +58,10 @@
                                                     {% else %}
                                                         <p class="left">Sem comentário. :(</p><br>
                                                     {% endif %}
-                                                    <center> <div class="flex-video" style="width:290px;height:200px;">
+                                                    <!-- <center> <div class="flex-video" style="width:290px;height:200px;">
                                                         <div id="map_canvas" style="width:290px;height:200px;"></div>
                                                     </div></center>
-                                                    <div>{{post.latitude}}</div>
+                                                    <div>{{post.latitude}}</div> -->
                                                     <p class="right">{{ post.time }}</p>
                                                 </div>
                                             {% endfor %}
@@ -71,7 +71,7 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                        <h3> Não há nenhuma linha favoritada</h3>
+                        <h4> Não há nenhuma linha favoritada. :(</h4>
                     {% endif %}
                 </div>
             </div>
