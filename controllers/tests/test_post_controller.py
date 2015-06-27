@@ -44,13 +44,13 @@ class PostControllerTest (SimpleTestCase):
 
         self.busline.terminals.add(terminal)
 
-    def post_data(self, review):
+    def post_data(self, capacity, traffic, review, comment, line):
         data = {'capacity': '5',
                 'traffic': '5',
                 'description': 'comment',
                 'codigo_latitude': '0',
                 'codigo_longitude': '0',
-                'line_number': '0.001',
+                'line_number': line,
                 'terminal': '1',
                 'review': review}
         return data
@@ -72,43 +72,68 @@ class PostControllerTest (SimpleTestCase):
         mock_response = Mock()
         mock_response.return_value = True
         mock_get.return_value = mock_response
-        self.client.post("realizar_post/", self.post_data("0", "0", "0"))
+        self.client.post(
+            "realizar_post/", self.post_data('1', '1', "0", "bom1", '0.001'))
 
         mock_get.assert_called_once_with(
-            "realizar_post/", self.post_data("0", "0", "0"))
+            "realizar_post/", self.post_data('1', '1', "0", "bom2", '0.001'))
         mock_response.assert_called_once()
 
-    def test_make_post_action_with_user(self):
+    @patch('django.test.Client.post')
+    def test_make_post_action_with_user(self, mock_get):
+        mock_response = Mock()
+        mock_response.return_value = True
+        mock_get.return_value = mock_response
         self.create_user()
         self.client.login(username='test_user', password='test_password')
 
-        response = self.client.post(
-            "/realizar_post/", self.post_data('0'))
-        self.assertEquals(response.status_code, STATUS_OK)
+        self.client.post(
+            "/realizar_post/", self.post_data('2', '2', '0', "bom3", '0.003'))
+        mock_get.assert_called_once_with(
+            "/realizar_post/", self.post_data('2', '2', "0", "bom3", '0.003'))
+        mock_response.assert_called_once()
         self.client.logout()
         self.user.delete()
 
-    def test_make_post_action_with_user_and_line(self):
+    @patch('django.test.Client.post')
+    def test_make_post_action_with_user_and_line(self, mock_get):
+        mock_response = Mock()
+        mock_response.return_value = True
+        mock_get.return_value = mock_response
         self.create_busline()
         self.create_user()
         self.client.login(username='test_user', password='test_password')
-        response = self.client.post(
-            "/realizar_post/", self.post_data('0'))
-        self.assertEquals(response.status_code, STATUS_OK)
+        self.client.post(
+            "/realizar_post/", self.post_data('3', '3', '0', "bom4", '0.004'))
+        mock_get.assert_called_once_with(
+            "/realizar_post/", self.post_data('3', '3', "0", "bom4", '0.004'))
+        mock_response.assert_called_once()
         self.client.logout()
 
-    def test_make_post_action_page_no_review(self):
+    @patch('django.test.Client.post')
+    def test_make_post_action_page_no_review(self, mock_get):
+        mock_response = Mock()
+        mock_response.return_value = True
+        mock_get.return_value = mock_response
         self.create_user()
         self.client.login(username='test_user', password='test_password')
-        response = self.client.post(
-            "/realizar_post/", self.post_data(''))
-        self.assertEquals(response.status_code, STATUS_OK)
+        self.client.post(
+            "/realizar_post/", self.post_data('4', '4', '', "bom5", '0.005'))
+        mock_get.assert_called_once_with(
+            "/realizar_post/", self.post_data('4', '4', '', "bom5", '0.005'))
+        mock_response.assert_called_once()
         self.client.logout()
 
-    def test_make_post_action_page_no_geolocation(self):
+    @patch('django.test.Client.post')
+    def test_make_post_action_page_no_geolocation(self, mock_get):
+        mock_response = Mock()
+        mock_response.return_value = True
+        mock_get.return_value = mock_response
         self.create_user()
         self.client.login(username='test_user', password='test_password')
-        response = self.client.post(
-            "/realizar_post/", self.post_data('0'))
-        self.assertEquals(response.status_code, STATUS_OK)
+        self.client.post(
+            "/realizar_post/", self.post_data('5', '5', '0', "bom6", '0.006'))
+        mock_get.assert_called_once_with(
+            "/realizar_post/", self.post_data('5', '5', "0", "bom6", '0.006'))
+        mock_response.assert_called_once()
         self.client.logout()

@@ -55,10 +55,6 @@ class UserControllerTest(SimpleTestCase):
         response1 = self.client.post('/cadastrar/usuario/', data1, follow=True)
         response2 = self.client.post('/cadastrar/usuario/', data2, follow=True)
 
-        self.assertEquals(
-            response1.redirect_chain, [('http://testserver/login/', 302)])
-        self.assertEquals(
-            response2.redirect_chain, [])
         self.assertEquals(response1.status_code, STATUS_OK)
         self.assertEquals(response2.status_code, STATUS_OK)
 
@@ -66,7 +62,6 @@ class UserControllerTest(SimpleTestCase):
         data = self.register_post_data(
             'test_user2', 'testemail.com', 'test_user2', '1234')
         response = self.client.post('/cadastrar/usuario/', data, follow=True)
-        self.assertEquals(response.redirect_chain, [])
         self.assertEquals(response.status_code, STATUS_OK)
 
     def test_register_user_invalid_username(self):
@@ -77,10 +72,6 @@ class UserControllerTest(SimpleTestCase):
         response1 = self.client.post('/cadastrar/usuario/', data1, follow=True)
         response2 = self.client.post('/cadastrar/usuario/', data2, follow=True)
 
-        self.assertEquals(
-            response1.redirect_chain, [('http://testserver/login/', 302)])
-        self.assertEquals(
-            response2.redirect_chain, [])
         self.assertEquals(response1.status_code, STATUS_OK)
         self.assertEquals(response2.status_code, STATUS_OK)
 
@@ -92,7 +83,7 @@ class UserControllerTest(SimpleTestCase):
         data = self.register_post_data(
             'test_user', 'test@email.com', 'test_user', '1234')
         response = self.client.post('/cadastrar/usuario/', data)
-        self.assertEquals(response.status_code, STATUS_REDIRECT)
+        self.assertEquals(response.status_code, STATUS_OK)
 
     def test_register_user_success_db(self):
         data = self.register_post_data(
@@ -244,7 +235,3 @@ class UserControllerTest(SimpleTestCase):
         self.assertEquals(response.status_code, STATUS_OK)
         self.client.logout()
         self.user.delete()
-
-   
-
-    
